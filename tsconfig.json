@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@config/*": ["src/config/*"],
+      "@shared/*": ["src/shared/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@fw/*": ["src/framework/*"],
+      "@tps/*": ["types/*"],
+      "@pak/*": ["src/packages/*"]
+    },
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -9,7 +19,6 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
