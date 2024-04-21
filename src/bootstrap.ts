@@ -1,31 +1,13 @@
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
-import * as passport from 'passport';
-import { RolesGuard } from '@fw/roles.guard';
-import { SubscriberRouteGuard } from '@fw/subscriber-route.guard';
 import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
-import {
-  apiVersion,
-  appDesc,
-  appName,
-  appVersion,
-  contextPath,
-  port,
-} from '@config/env';
-import PluginManager from '@pak/plugin-manager';
+import compression from 'compression';
+import { ConfigService } from '@nestjs/config';
 
-// * init plugins
-const manager = new PluginManager(__dirname);
-
-manager.registerPlugin({
-  name: 'uppercase-plugin',
-  packageName: '../plugins/uppercase',
-  isRelative: true,
-});
+declare const module: any;
 
 // * -------------------------------------------------------------------------------------
 
@@ -56,32 +38,9 @@ const corsOptionsDelegate = function (req, callback) {
 export default async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // * swagger
-  const config = new DocumentBuilder()
-    .setTitle(appName)
-    .setDescription(appDesc)
-    .setVersion(appVersion)
-    .addTag('Events')
-    .addTag('Subscribers')
-    .addTag('Topics')
-    .addTag('Notification')
-    .addTag('Integrations')
-    .addTag('Layouts')
-    .addTag('Workflows')
-    .addTag('Notification Templates')
-    .addTag('Workflow groups')
-    .addTag('Changes')
-    .addTag('Environments')
-    .addTag('Inbound Parse')
-    .addTag('Feeds')
-    .addTag('Tenants')
-    .addTag('Messages')
-    .addTag('Organizations')
-    .addTag('Execution Details')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const configService = app.get(ConfigService);
 
+  const apiVersion = configService.get('API_VERSION');
   const extendedBodySizeRoutes = [
     apiVersion + '/events',
     apiVersion + '/notification-templates',
@@ -94,9 +53,7 @@ export default async function bootstrap() {
   app.enableCors(corsOptionsDelegate);
 
   // * context path
-  app.setGlobalPrefix(contextPath + apiVersion);
-
-  app.use(passport.initialize());
+  app.setGlobalPrefix(configService.get('CONTEXT_PATH') + apiVersion);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -105,8 +62,8 @@ export default async function bootstrap() {
     }),
   );
 
-  app.useGlobalGuards(new RolesGuard(app.get(Reflector)));
-  app.useGlobalGuards(new SubscriberRouteGuard(app.get(Reflector)));
+  // app.useGlobalGuards(new RolesGuard(app.get(Reflector)));
+  // app.useGlobalGuards(new SubscriberRouteGuard(app.get(Reflector)));
 
   app.use(extendedBodySizeRoutes, bodyParser.json({ limit: '20mb' }));
   app.use(
@@ -121,8 +78,26 @@ export default async function bootstrap() {
 
   Logger.log('BOOTSTRAPPED SUCCESSFULLY');
 
+  // * swagger
+  const config = new DocumentBuilder()
+    .setTitle(configService.get('APP_NAME'))
+    .setDescription(configService.get('APP_DESCRIPTION'))
+    .setVersion(configService.get('APP_VERSION'))
+    .addTag('Auth')
+    .addBearerAuth()
+    .setBasePath(configService.get('CONTEXT_PATH') + apiVersion)
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+  const port = configService.get('PORT');
   await app.listen(port);
   Logger.log(`Starting UserApplication using Nestjs 10.0.0 on port: ${port}`);
+
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 }
 
 function isWidgetRoute(url: string) {

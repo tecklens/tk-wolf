@@ -5,3 +5,5 @@ export const appName = process.env.APP_NAME ?? 'Tecklens Wolf';
 export const appDesc =
   process.env.APP_DESCRIPTION ?? 'Opensource for notification';
 export const appVersion = process.env.APP_VERSION ?? '0.0.1';
+
+export const secret = process.env.JWT_SECRET ?? 'wolf';

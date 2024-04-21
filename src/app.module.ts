@@ -1,33 +1,36 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { DbService } from '@pak/services/db.service';
-import { FeatureFlagsService } from '@pak/services/feature-flags.service';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { CacheModule } from '@nestjs/cache-manager';
 
-export const featureFlagsService = {
-  provide: FeatureFlagsService,
-  useFactory: async (): Promise<FeatureFlagsService> => {
-    const instance = new FeatureFlagsService();
-    await instance.initialize();
-
-    return instance;
-  },
-};
-
-const dbService = {
-  provide: DbService,
-  useFactory: async () => {
-    const service = new DbService();
-    await service.connect(process.env.MONGO_URL);
-
-    return service;
-  },
-};
+import { redisStore } from 'cache-manager-redis-yet';
+import * as process from 'process';
 
 @Module({
-  imports: [ConfigModule.forRoot()],
-  controllers: [AppController],
-  providers: [AppService, dbService, featureFlagsService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: 5 * 1000,
+      max: 100,
+      useFactory: async () => ({
+        store: await redisStore({
+          socket: {
+            host: process.env.REDIS_HOST,
+            port: process.env.REDIS_PORT
+              ? parseInt(process.env.REDIS_PORT)
+              : 6379,
+          },
+        }),
+      }),
+    }),
+    AuthModule,
+    UsersModule,
+  ],
+  providers: [AppService],
 })
 export class AppModule {}
