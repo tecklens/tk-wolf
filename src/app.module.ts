@@ -6,7 +6,17 @@ import { UsersModule } from './users/users.module';
 import { CacheModule } from '@nestjs/cache-manager';
 
 import { redisStore } from 'cache-manager-redis-yet';
-import * as process from 'process';
+import { DbService } from '@libs/repositories/DbService';
+
+const dalService = {
+  provide: DbService,
+  useFactory: async () => {
+    const service = new DbService();
+    await service.connect(String(process.env.MONGO_URL));
+
+    return service;
+  },
+};
 
 @Module({
   imports: [
@@ -31,6 +41,8 @@ import * as process from 'process';
     AuthModule,
     UsersModule,
   ],
-  providers: [AppService],
+  providers: [AppService, dalService],
+  exports: [dalService],
+  controllers: [],
 })
 export class AppModule {}

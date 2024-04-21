@@ -18,8 +18,6 @@ export class PasswordResetBodyDto {
   password: string;
 
   @IsDefined()
-  @IsUUID(4, {
-    message: 'Bad token provided',
-  })
-  token: string;
+  @MinLength(6, { message: 'OTP min length is 6' })
+  otp: string;
 }

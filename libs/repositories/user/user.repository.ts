@@ -36,7 +36,7 @@ export class UserRepository extends BaseRepository<
     return this.mapEntity(data.toObject());
   }
 
-  private hashResetToken(token: string) {
+  public hashResetToken(token: string) {
     return createHash('sha256').update(token).digest('hex');
   }
 

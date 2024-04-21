@@ -44,6 +44,7 @@ export class GitHubStrategy extends PassportStrategy(
     githubProfile,
     done: (err, data) => void,
   ) {
+    console.log('accessToken' + accessToken);
     try {
       const profile = {
         ...githubProfile._json,

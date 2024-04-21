@@ -10,6 +10,8 @@ import { JwtStrategy } from '@app/auth/strategy/jwt.strategy';
 import { EnvironmentRepository } from '@libs/repositories/environment';
 import { OrganizationRepository } from '@libs/repositories/organization';
 import { UserRepository } from '@libs/repositories/user';
+import { GitHubStrategy } from '@app/auth/strategy/github.strategy';
+import { HttpModule, HttpService } from "@nestjs/axios";
 
 @Module({
   imports: [
@@ -19,16 +21,21 @@ import { UserRepository } from '@libs/repositories/user';
       secret: secret,
       signOptions: { expiresIn: 60 * 30 },
     }),
+    HttpModule.register({
+      timeout: 3000,
+      maxRedirects: 3,
+    }),
   ],
   providers: [
     AuthService,
     LocalStrategy,
     JwtStrategy,
+    GitHubStrategy,
     EnvironmentRepository,
     OrganizationRepository,
     UserRepository,
   ],
-  exports: [AuthService],
+  exports: [AuthService, JwtStrategy, GitHubStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

@@ -41,6 +41,7 @@ import {
 } from 'date-fns';
 import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
 import { LoginBodyDto } from '@app/auth/dtos/login.dto';
+import { Novu } from '@novu/node';
 
 @Injectable()
 export class AuthService {
@@ -65,7 +66,10 @@ export class AuthService {
     password: string,
   ): Promise<UserEntity> {
     const passwordHash = await bcrypt.hash(password, 10);
-    return await this.userRepository.findByEmailAndPassword(email, passwordHash);
+    return await this.userRepository.findByEmailAndPassword(
+      email,
+      passwordHash,
+    );
   }
 
   public async validateUser(payload: IJwtPayload): Promise<UserEntity> {
@@ -94,6 +98,9 @@ export class AuthService {
       email: string;
       avatar_url: string;
       id: string;
+      company: string;
+      blog: string;
+      location: string;
     },
     distinctId: string,
     origin?: SignUpOriginEnum,
@@ -264,6 +271,10 @@ export class AuthService {
     };
   }
 
+  private getRandomNumberString() {
+    return Math.floor(100000 + Math.random() * 900000).toString(10);
+  }
+
   public async resetPassword(d: { email: string }) {
     const email = normalizeEmail(d.email);
     const foundUser = await this.userRepository.findByEmail(email);
@@ -272,7 +283,7 @@ export class AuthService {
       if (isBlocked) {
         throw new UnauthorizedException(error);
       }
-      const token = uuidv4();
+      const token = this.getRandomNumberString();
 
       await this.cacheManager.del(
         buildUserKey({
@@ -286,11 +297,36 @@ export class AuthService {
         token,
         resetTokenCount,
       );
+
+      if (
+        (process.env.NODE_ENV === 'dev' ||
+          process.env.NODE_ENV === 'production') &&
+        process.env.NOVU_API_KEY
+      ) {
+        const novu = new Novu(process.env.NOVU_API_KEY);
+
+        novu.trigger(process.env.NOVU_RESET_WOLF_IDENTIFIER || 'wolf', {
+          to: {
+            subscriberId:
+              'mlsn.ce2b5e0c809f21b59b9a6abcffb8e90cacf296777e518e105cc8233dd63a2bab',
+            email: 'diep.tv1999@gmail.com',
+          },
+          payload: {
+            body: 'Hey dieptv1999! Reset password with OTP: ' + token,
+          },
+        });
+      }
+
+      return {
+        success: true,
+      };
     }
   }
 
   public async passwordReset(d: PasswordResetBodyDto) {
-    const user = await this.userRepository.findUserByToken(d.token);
+    const user = await this.userRepository.findUserByToken(
+      d.otp,
+    );
     if (!user) {
       throw new ApiException('Bad token provided');
     }
@@ -654,6 +690,7 @@ export class AuthService {
         {
           $set: {
             'tokens.$.username': profile.login,
+            profilePicture: profile.avatar_url,
           },
         },
       );

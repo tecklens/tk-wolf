@@ -1,5 +1,5 @@
 export const buildOauthRedirectUrl = (request): string => {
-  let url = process.env.FRONT_BASE_URL + '/auth/login';
+  let url = process.env.FRONT_BASE_URL + '/sign-in';
 
   if (!request.user || !request.user.token) {
     return `${url}?error=AuthenticationError`;
@@ -13,7 +13,7 @@ export const buildOauthRedirectUrl = (request): string => {
    */
   if (
     redirectUrl &&
-    redirectUrl.startsWith('http://127.0.0.1:') &&
+    redirectUrl.startsWith('http://localhost:') &&
     !redirectUrl.includes('@')
   ) {
     url = redirectUrl;
