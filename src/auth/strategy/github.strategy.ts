@@ -8,11 +8,12 @@ import {
 } from 'passport-oauth2';
 import { AuthProviderEnum } from '@libs/shared/entities/user';
 import { AuthService } from '@app/auth/auth.service';
+import { PassportStrategyEnum } from "@libs/shared/types";
 
 @Injectable()
 export class GitHubStrategy extends PassportStrategy(
   githubPassport.Strategy,
-  'github',
+  PassportStrategyEnum.GITHUB,
 ) {
   constructor(private authService: AuthService) {
     super({

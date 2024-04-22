@@ -17,5 +17,7 @@ export enum ApiAuthSchemeEnum {
 
 export enum PassportStrategyEnum {
   JWT = 'jwt',
-  HEADER_API_KEY = 'headerapikey',
+  HEADER_API_KEY = 'apikey',
+  GITHUB = 'github',
+  LOCAL = 'local',
 }

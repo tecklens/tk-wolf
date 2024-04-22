@@ -2,13 +2,17 @@ import { HeaderAPIKeyStrategy } from 'passport-headerapikey';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { AuthService } from '@app/auth/auth.service';
-import { ApiAuthSchemeEnum, IJwtPayload } from '@libs/shared/types';
+import {
+  ApiAuthSchemeEnum,
+  IJwtPayload,
+  PassportStrategyEnum,
+} from '@libs/shared/types';
 import { HttpRequestHeaderKeysEnum } from '@tps/headers.types';
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(
   HeaderAPIKeyStrategy,
-  'api-key',
+  PassportStrategyEnum.HEADER_API_KEY,
 ) {
   constructor(private readonly authService: AuthService) {
     super(

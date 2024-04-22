@@ -11,7 +11,9 @@ import { EnvironmentRepository } from '@libs/repositories/environment';
 import { OrganizationRepository } from '@libs/repositories/organization';
 import { UserRepository } from '@libs/repositories/user';
 import { GitHubStrategy } from '@app/auth/strategy/github.strategy';
-import { HttpModule, HttpService } from "@nestjs/axios";
+import { HttpModule } from '@nestjs/axios';
+import { ApiKeyStrategy } from '@app/auth/strategy/apikey.strategy';
+import { EnvironmentModule } from '@app/environment/environment.module';
 
 @Module({
   imports: [
@@ -25,17 +27,19 @@ import { HttpModule, HttpService } from "@nestjs/axios";
       timeout: 3000,
       maxRedirects: 3,
     }),
+    EnvironmentModule,
   ],
   providers: [
     AuthService,
     LocalStrategy,
     JwtStrategy,
     GitHubStrategy,
+    ApiKeyStrategy,
     EnvironmentRepository,
     OrganizationRepository,
     UserRepository,
   ],
-  exports: [AuthService, JwtStrategy, GitHubStrategy],
+  exports: [AuthService, JwtStrategy, GitHubStrategy, ApiKeyStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}

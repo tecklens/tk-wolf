@@ -1,11 +1,17 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from '@app/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import {
   ApiServiceLevelEnum,
-  IJwtPayload,
-  SignUpOriginEnum,
-} from '@libs/shared/types';
+  IJwtPayload, JobTitleEnum,
+  SignUpOriginEnum
+} from "@libs/shared/types";
 import { Cache, CACHE_MANAGER, CacheKey } from '@nestjs/cache-manager';
 import {
   EnvironmentEntity,
@@ -42,6 +48,8 @@ import {
 import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
 import { LoginBodyDto } from '@app/auth/dtos/login.dto';
 import { Novu } from '@novu/node';
+import { EnvironmentService } from '@app/environment/environment.service';
+import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class AuthService {
@@ -52,13 +60,16 @@ export class AuthService {
 
   private BLOCKED_PERIOD_IN_MINUTES = 5;
   private MAX_LOGIN_ATTEMPTS = 5;
+
   constructor(
     private usersService: UsersService,
+    private environmentService: EnvironmentService,
     private jwtService: JwtService,
     private environmentRepository: EnvironmentRepository,
     private userRepository: UserRepository,
     private organizationRepository: OrganizationRepository,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private moduleRef: ModuleRef,
   ) {}
 
   public async validateUserLocal(
@@ -142,6 +153,14 @@ export class AuthService {
       //   loginType: authProvider,
       //   origin: origin,
       // });
+      let wrapOrg: { organization: OrganizationEntity; environmentId: any };
+      // eslint-disable-next-line prefer-const
+      wrapOrg = await this.createOrg({
+        name: profile.company || profile.email,
+        userId: user._id,
+        jobTitle: JobTitleEnum.OTHER,
+        domain: '',
+      });
     } else {
       if (
         authProvider === AuthProviderEnum.GITHUB ||
@@ -159,11 +178,8 @@ export class AuthService {
 
     return {
       newUser,
-      token: await this.generateUserToken(user),
+      token: await this.getSignedToken(user),
     };
-  }
-  public async generateUserToken(user: UserEntity) {
-    return this.getSignedToken(user);
   }
 
   public async validateApiKey(apiKey: string): Promise<IJwtPayload> {
@@ -185,12 +201,14 @@ export class AuthService {
       exp: 0,
     };
   }
+
   public async refreshToken(userId: string) {
     const user = await this.getUser({ _id: userId });
     if (!user) throw new UnauthorizedException('User not found');
 
     return this.getSignedToken(user);
   }
+
   public async getSignedToken(
     user: UserEntity,
     organizationId?: string,
@@ -218,6 +236,7 @@ export class AuthService {
       },
     );
   }
+
   public async userRegistration(body: UserRegistrationBodyDto) {
     if (process.env.DISABLE_USER_REGISTRATION === 'true')
       throw new ApiException('Account creation is disabled');
@@ -248,15 +267,14 @@ export class AuthService {
       );
     }
 
-    let organization: OrganizationEntity;
-    if (body.organizationName) {
-      this.createOrg({
-        name: body.organizationName,
-        userId: user._id,
-        jobTitle: body.jobTitle,
-        domain: body.domain,
-      });
-    }
+    let wrapOrg: { organization: OrganizationEntity; environmentId: any };
+    // eslint-disable-next-line prefer-const
+    wrapOrg = await this.createOrg({
+      name: body.organizationName || body.email,
+      userId: user._id,
+      jobTitle: body.jobTitle,
+      domain: body.domain,
+    });
 
     // this.analyticsService.upsertUser(user, user._id);
 
@@ -267,7 +285,11 @@ export class AuthService {
 
     return {
       user: await this.userRepository.findById(user._id),
-      token: await this.generateUserToken(user),
+      token: await this.getSignedToken(
+        user,
+        wrapOrg.organization._id,
+        wrapOrg.environmentId,
+      ),
     };
   }
 
@@ -324,9 +346,7 @@ export class AuthService {
   }
 
   public async passwordReset(d: PasswordResetBodyDto) {
-    const user = await this.userRepository.findUserByToken(
-      d.otp,
-    );
+    const user = await this.userRepository.findUserByToken(d.otp);
     if (!user) {
       throw new ApiException('Bad token provided');
     }
@@ -363,7 +383,7 @@ export class AuthService {
     );
 
     return {
-      token: await this.generateUserToken(user),
+      token: await this.getSignedToken(user),
     };
   }
 
@@ -457,7 +477,7 @@ export class AuthService {
     }
 
     return {
-      token: await this.generateUserToken(user),
+      token: await this.getSignedToken(user),
     };
   }
 
@@ -473,6 +493,7 @@ export class AuthService {
       diff < this.BLOCKED_PERIOD_IN_MINUTES
     );
   }
+
   private async updateFailedAttempts(user: UserEntity) {
     const now = new Date();
     let times = user?.failedLogin?.times ?? 1;
@@ -526,6 +547,7 @@ export class AuthService {
 
     return this.BLOCKED_PERIOD_IN_MINUTES - diff;
   }
+
   private getUpdatedRequestCount(user: UserEntity): IUserResetTokenCount {
     const now = new Date().toISOString();
     const lastResetAttempt = user.resetTokenDate ?? now;
@@ -547,6 +569,7 @@ export class AuthService {
 
     return resetTokenCount;
   }
+
   private isRequestBlocked(user: UserEntity) {
     const lastResetAttempt = user.resetTokenDate;
 
@@ -587,6 +610,7 @@ export class AuthService {
       error: '',
     };
   }
+
   private async createOrg(d: ICreateOrganizationDto) {
     const user = await this.userRepository.findById(d.userId);
     if (!user) throw new ApiException('User not found');
@@ -610,13 +634,21 @@ export class AuthService {
     //   })
     // );
     //
-    // const devEnv = await this.createEnvironmentUsecase.execute(
-    //   CreateEnvironmentCommand.create({
-    //     userId: user._id,
-    //     name: 'Development',
-    //     organizationId: createdOrganization._id,
-    //   })
-    // );
+    const devEnv = await this.environmentService.createEnvironment(
+      {
+        _id: user._id,
+        organizationId: createdOrganization._id,
+        environmentId: '',
+        exp: 0,
+        roles: [],
+      },
+      {
+        name: 'Development',
+        parentId: '',
+        // organizationId: createdOrganization._id,
+      },
+      null,
+    );
     //
     // await this.createNovuIntegrations.execute(
     //   CreateNovuIntegrationsCommand.create({
@@ -626,14 +658,21 @@ export class AuthService {
     //   })
     // );
     //
-    // const prodEnv = await this.createEnvironmentUsecase.execute(
-    //   CreateEnvironmentCommand.create({
-    //     userId: user._id,
-    //     name: 'Production',
-    //     organizationId: createdOrganization._id,
-    //     parentEnvironmentId: devEnv._id,
-    //   })
-    // );
+    const prodEnv = await this.environmentService.createEnvironment(
+      {
+        _id: user._id,
+        organizationId: createdOrganization._id,
+        environmentId: '',
+        exp: 0,
+        roles: [],
+      },
+      {
+        name: 'Production',
+        parentId: '',
+        // organizationId: createdOrganization._id,
+      },
+      devEnv._id,
+    );
     //
     // await this.createNovuIntegrations.execute(
     //   CreateNovuIntegrationsCommand.create({
@@ -648,19 +687,48 @@ export class AuthService {
     // this.analyticsService.track('[Authentication] - Create Organization', user._id, {
     //   _organization: createdOrganization._id,
     // });
-    //
-    // const organizationAfterChanges = await this.getOrganizationUsecase.execute(
-    //   GetOrganizationCommand.create({
-    //     id: createdOrganization._id,
-    //     userId: command.userId,
-    //   })
-    // );
-    //
-    // if (organizationAfterChanges !== null) {
-    //   await this.startFreeTrial(user._id, organizationAfterChanges._id);
-    // }
 
-    return createdOrganization as OrganizationEntity;
+    const organizationAfterChanges = await this.organizationRepository.findById(
+      createdOrganization._id,
+    );
+
+    if (organizationAfterChanges !== null) {
+      await this.startFreeTrial(user._id, organizationAfterChanges._id);
+    }
+
+    return {
+      organization: createdOrganization as OrganizationEntity,
+      environmentId: devEnv._id,
+    };
+  }
+
+  private async startFreeTrial(userId: string, organizationId: string) {
+    // try {
+    //   if (
+    //     process.env.NOVU_ENTERPRISE === 'true' ||
+    //     process.env.CI_EE_TEST === 'true'
+    //   ) {
+    //     if (!require('@novu/ee-billing')?.StartReverseFreeTrial) {
+    //       throw new BadRequestException('Billing module is not loaded');
+    //     }
+    //     const usecase = this.moduleRef.get(
+    //       require('@novu/ee-billing')?.StartReverseFreeTrial,
+    //       {
+    //         strict: false,
+    //       },
+    //     );
+    //     await usecase.execute({
+    //       userId,
+    //       organizationId,
+    //     });
+    //   }
+    // } catch (e) {
+    //   Logger.error(
+    //     e,
+    //     `Unexpected error while importing enterprise modules`,
+    //     'StartReverseFreeTrial',
+    //   );
+    // }
   }
 
   private async updateUserUsername(
@@ -701,9 +769,11 @@ export class AuthService {
 
     return user;
   }
+
   private async getUser({ _id }: { _id: string }) {
     return await this.userRepository.findById(_id);
   }
+
   @CacheKey('user:api-key')
   private async getApiKeyUser({ apiKey }: { apiKey: string }): Promise<{
     environment?: EnvironmentEntity;

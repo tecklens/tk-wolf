@@ -7,8 +7,18 @@ import { CacheModule } from '@nestjs/cache-manager';
 
 import { redisStore } from 'cache-manager-redis-yet';
 import { DbService } from '@libs/repositories/DbService';
+import { S3Module } from 'nestjs-s3';
+import { FileModule } from './file/file.module';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { WorkflowController } from './workflow/workflow.controller';
+import { WorkflowService } from './workflow/workflow.service';
+import { EnvironmentService } from './environment/environment.service';
+import { EnvironmentController } from './environment/environment.controller';
+import { EnvironmentModule } from './environment/environment.module';
+import { WorkflowModule } from './workflow/workflow.module';
+import { OrganizationModule } from './organization/organization.module';
 
-const dalService = {
+const dbService = {
   provide: DbService,
   useFactory: async () => {
     const service = new DbService();
@@ -38,11 +48,44 @@ const dalService = {
         }),
       }),
     }),
+    S3Module.forRoot({
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_STORAGE_ACCESS_KEY_ID,
+          secretAccessKey: process.env.S3_STORAGE_SECRET_ACCESS_KEY,
+        },
+        region: 'ap-southeast-1',
+        // endpoint:
+        //   's3://arn:aws:s3:ap-southeast-1:879019563185:accesspoint/wolf-point',
+        forcePathStyle: true,
+      },
+    }),
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000, // * millisecond
+        limit: 30,
+      },
+      {
+        name: 'medium',
+        ttl: 1000, // * millisecond
+        limit: 200,
+      },
+      {
+        name: 'long',
+        ttl: 1000,
+        limit: 1000,
+      },
+    ]),
     AuthModule,
     UsersModule,
+    FileModule,
+    EnvironmentModule,
+    WorkflowModule,
+    OrganizationModule,
   ],
-  providers: [AppService, dalService],
-  exports: [dalService],
+  providers: [AppService, dbService],
+  exports: [dbService],
   controllers: [],
 })
 export class AppModule {}
