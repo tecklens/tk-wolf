@@ -1,53 +1,8 @@
-import {
-  ApiExtraModels,
-  ApiProperty,
-  ApiPropertyOptional,
-} from '@nestjs/swagger';
-import {
-  IWfTemplate,
-  TriggerTypeEnum,
-} from '@libs/shared/entities/wf-template';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IWfTemplate } from '@libs/shared/entities/wf-template';
+import { INodeEntity } from '@libs/shared/entities/workflow/node.interface';
+import { IEdgeEntity } from '@libs/shared/entities/workflow/edge.interface';
 
-class NotificationGroup {
-  @ApiPropertyOptional()
-  _id?: string;
-
-  @ApiProperty()
-  name: string;
-
-  @ApiProperty()
-  _environmentId: string;
-
-  @ApiProperty()
-  _organizationId: string;
-
-  @ApiPropertyOptional()
-  _parentId?: string;
-}
-
-class NotificationTriggerVariable {
-  name: string;
-}
-
-class NotificationTrigger {
-  @ApiProperty()
-  type: TriggerTypeEnum;
-
-  @ApiProperty()
-  identifier: string;
-
-  @ApiProperty({
-    type: [NotificationTriggerVariable],
-  })
-  variables: NotificationTriggerVariable[];
-
-  @ApiProperty({
-    type: [NotificationTriggerVariable],
-  })
-  subscriberVariables?: NotificationTriggerVariable[];
-}
-
-@ApiExtraModels(NotificationGroup)
 export class WorkflowResponse implements IWfTemplate {
   @ApiPropertyOptional()
   _id?: string;
@@ -80,4 +35,10 @@ export class WorkflowResponse implements IWfTemplate {
 
   @ApiProperty()
   deletedBy: string;
+
+  @ApiPropertyOptional()
+  nodes?: INodeEntity[];
+
+  @ApiPropertyOptional()
+  edges?: IEdgeEntity[];
 }

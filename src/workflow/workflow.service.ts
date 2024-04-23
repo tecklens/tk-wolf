@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { IJwtPayload } from '@libs/shared/types';
 import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
@@ -8,6 +8,8 @@ import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.r
 import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
+import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
+import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
 
 @Injectable()
 export class WorkflowService {
@@ -60,11 +62,79 @@ export class WorkflowService {
     });
   }
 
+  async updateNodeToWorkflow(
+    u: IJwtPayload,
+    payload: UpdateNodeWorkflowRequestDto[],
+  ) {
+    for (const e of payload) {
+      await this.nodeRepository.updateOne(
+        {
+          _id: e.id,
+        },
+        {
+          ...e,
+        },
+      );
+    }
+  }
+
+  async addEdgeToWorkflow(u: IJwtPayload, payload: AddEdgeWorkflowRequestDto) {
+    return this.edgeRepository.create({
+      _workflowId: payload.workflowId,
+      ...payload,
+    });
+  }
+
   async updateActive(u: IJwtPayload, payload: UpdateActiveWorkflowRequestDto) {
-    this.workflowRepository.updateActive(payload.workflowId, u._id);
+    await this.workflowRepository.updateActive(payload.workflowId, u._id);
   }
 
   async getActive(u: IJwtPayload) {
-    return this.workflowRepository.getActive(u._id);
+    const wf = await this.workflowRepository.getActive(u._id);
+
+    if (!wf) return null;
+
+    const nodes = await this.nodeRepository.findByWorkflowId(wf._id);
+    const edges = await this.edgeRepository.findByWorkflowId(wf._id);
+
+    return {
+      deletedAt: wf.deletedAt,
+      deletedBy: wf.deletedBy,
+      _id: wf._id,
+      _environmentId: wf._environmentId,
+      _organizationId: wf._organizationId,
+      _userId: wf._userId,
+      active: wf.active,
+      tags: wf.tags,
+      deleted: wf.deleted,
+      name: wf.name,
+      description: wf.description,
+      nodes,
+      edges,
+    };
+  }
+
+  async getDetail(id: string): Promise<WorkflowResponse> {
+    const wf = await this.workflowRepository.findById(id);
+    if (!wf) throw new NotFoundException('Workflow not existed');
+
+    const nodes = await this.nodeRepository.findByWorkflowId(wf._id);
+    const edges = await this.edgeRepository.findByWorkflowId(wf._id);
+
+    return {
+      deletedAt: wf.deletedAt,
+      deletedBy: wf.deletedBy,
+      _id: wf._id,
+      _environmentId: wf._environmentId,
+      _organizationId: wf._organizationId,
+      _userId: wf._userId,
+      active: wf.active,
+      tags: wf.tags,
+      deleted: wf.deleted,
+      name: wf.name,
+      description: wf.description,
+      nodes,
+      edges,
+    };
   }
 }

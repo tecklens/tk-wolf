@@ -11,10 +11,10 @@ export class CreateWorkflowRequestDto implements ICreateWorkflowDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsArray()
-  tags: string[];
+  tags?: string[];
 
   @ApiProperty()
   @IsString()
-  @IsDefined()
-  description: string;
+  @IsOptional()
+  description?: string;
 }

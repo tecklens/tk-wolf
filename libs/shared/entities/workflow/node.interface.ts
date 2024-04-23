@@ -16,14 +16,6 @@ export interface INodeEntity {
   sourcePosition?: Position;
   targetPosition?: Position;
   hidden?: boolean;
-  selected?: boolean;
-  dragging?: boolean;
-  draggable?: boolean;
-  selectable?: boolean;
-  connectable?: boolean;
-  resizing?: boolean;
-  deletable?: boolean;
-  dragHandle?: string;
   width?: number | null;
   height?: number | null;
   /** @deprecated - use `parentId` instead */
@@ -36,7 +28,7 @@ export interface INodeEntity {
   ariaLabel?: string;
   focusable?: boolean;
   className?: string;
-  style?: string;
+  style?: any;
 
   deleted: boolean;
 

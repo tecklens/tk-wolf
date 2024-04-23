@@ -1,7 +1,7 @@
 export interface ICreateWorkflowDto {
   name: string;
 
-  tags: string[];
+  tags?: string[];
 
   description?: string;
 }

@@ -29,6 +29,9 @@ import { CreateWorkflowRequestDto } from '@app/workflow/dto';
 import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
+import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
+import { AddEdgeWorkflowRequestDto } from "@app/workflow/dto/add-edge-workflow.request.dto";
+import { UpdateNodeWorkflowRequestDto } from "@app/workflow/dto/update-node-workflow.request.dto";
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -38,9 +41,12 @@ import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 export class WorkflowController {
   constructor(private workflowService: WorkflowService) {}
   @Get('/detail/:id')
-  @UseGuards(ApiKeyAuthGuard)
+  @ApiResponse(WorkflowResponse)
+  @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  getOne(@Param('id') id: string) {}
+  getOne(@Param('id') id: string): Promise<WorkflowResponse> {
+    return this.workflowService.getDetail(id);
+  }
 
   @Get('/')
   @ApiResponse(WorkflowsResponseDto)
@@ -76,6 +82,26 @@ export class WorkflowController {
     return this.workflowService.addNodeToWorkflow(user, payload);
   }
 
+  @Put('/node')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  updateNode(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: UpdateNodeWorkflowRequestDto[],
+  ) {
+    return this.workflowService.updateNodeToWorkflow(user, payload);
+  }
+
+  @Post('/edge')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  addEdge(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: AddEdgeWorkflowRequestDto,
+  ) {
+    return this.workflowService.addEdgeToWorkflow(user, payload);
+  }
+
   @Put('/active')
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
@@ -93,7 +119,7 @@ export class WorkflowController {
   })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  getActiveWorkflow(@UserSession() user: IJwtPayload): Promise<WorkflowEntity> {
+  getActiveWorkflow(@UserSession() user: IJwtPayload): Promise<WorkflowResponse>{
     return this.workflowService.getActive(user);
   }
 }

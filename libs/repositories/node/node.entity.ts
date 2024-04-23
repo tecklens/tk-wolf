@@ -7,7 +7,7 @@ import {
 } from '@libs/shared/entities/workflow/position.interface';
 
 export class NodeEntity implements INodeEntity {
-  id?: NodeId;
+  _id?: NodeId;
   _workflowId: WorkflowId;
 
   deleted: boolean;
@@ -26,13 +26,10 @@ export class NodeEntity implements INodeEntity {
   targetPosition?: Position;
   hidden?: boolean;
   selected?: boolean;
-  dragging?: boolean;
-  draggable?: boolean;
   selectable?: boolean;
   connectable?: boolean;
   resizing?: boolean;
   deletable?: boolean;
-  dragHandle?: string;
   width?: number | null;
   height?: number | null;
   /** @deprecated - use `parentId` instead */
@@ -44,7 +41,7 @@ export class NodeEntity implements INodeEntity {
   positionAbsolute?: XYPosition;
   ariaLabel?: string;
   focusable?: boolean;
-  style?: string;
+  style?: any;
   className?: string;
 }
 
