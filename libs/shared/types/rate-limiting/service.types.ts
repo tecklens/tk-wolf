@@ -1,5 +1,8 @@
 import { ApiServiceLevelEnum } from '../organization';
-import { ApiRateLimitConfigEnum, ApiRateLimitEnvVarNamespace } from './config.types';
+import {
+  ApiRateLimitConfigEnum,
+  ApiRateLimitEnvVarNamespace,
+} from './config.types';
 
 /**
  * The categories of rate limits.
@@ -18,7 +21,10 @@ export type IApiRateLimitMaximum = Record<ApiRateLimitCategoryEnum, number>;
 /**
  * A map of of the API Service level to the maximum number of requests allowed per category.
  */
-export type IApiRateLimitServiceMaximum = Record<ApiServiceLevelEnum, IApiRateLimitMaximum>;
+export type IApiRateLimitServiceMaximum = Record<
+  ApiServiceLevelEnum,
+  IApiRateLimitMaximum
+>;
 
 /**
  * The format of the environment variables used to configure maximum number of requests allowed per category.

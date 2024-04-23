@@ -1,60 +1,43 @@
 import { JSONSchema7 } from 'json-schema';
 
-import type { BuilderFieldType, BuilderGroupValues, TemplateVariableTypeEnum, FilterParts } from '../../types';
+import type {
+  BuilderFieldType,
+  BuilderGroupValues,
+  TemplateVariableTypeEnum,
+  FilterParts,
+} from '../../types';
 import { IMessageTemplate } from '../message-template';
 import { IPreferenceChannels } from '../subscriber-preference';
 import { IWorkflowStepMetadata } from '../step';
 import { INotificationGroup } from '../notification-group';
 
-export enum NotificationTemplateTypeEnum {
+export enum WfTemplateTypeEnum {
   REGULAR = 'REGULAR',
   ECHO = 'ECHO',
 }
 
-export interface INotificationTemplate {
+export interface IWfTemplate {
   _id?: string;
   name: string;
   description?: string;
-  _notificationGroupId: string;
-  _parentId?: string;
   _environmentId: string;
   tags: string[];
-  draft?: boolean;
   active: boolean;
-  critical: boolean;
-  preferenceSettings: IPreferenceChannels;
   createdAt?: string;
   updatedAt?: string;
-  steps: INotificationTemplateStep[] | INotificationChimeraTrigger[];
-  triggers: INotificationTrigger[];
-  isBlueprint?: boolean;
-  type?: NotificationTemplateTypeEnum;
+  type?: WfTemplateTypeEnum;
   payloadSchema?: any;
-}
-
-export class IGroupedBlueprint {
-  name: string;
-  blueprints: IBlueprint[];
-}
-
-export interface IBlueprint extends INotificationTemplate {
-  notificationGroup: INotificationGroup;
 }
 
 export enum TriggerTypeEnum {
   EVENT = 'event',
 }
 
-export interface INotificationChimeraTrigger {
+export interface IWfTrigger {
   type: TriggerTypeEnum;
   identifier: string;
-}
-
-export interface INotificationTrigger {
-  type: TriggerTypeEnum;
-  identifier: string;
-  variables: INotificationTriggerVariable[];
-  subscriberVariables?: INotificationTriggerVariable[];
+  variables: IWfTriggerVariable[];
+  subscriberVariables?: IWfTriggerVariable[];
   reservedVariables?: ITriggerReservedVariable[];
 }
 
@@ -65,10 +48,10 @@ export enum TriggerContextTypeEnum {
 
 export interface ITriggerReservedVariable {
   type: TriggerContextTypeEnum;
-  variables: INotificationTriggerVariable[];
+  variables: IWfTriggerVariable[];
 }
 
-export interface INotificationTriggerVariable {
+export interface IWfTriggerVariable {
   name: string;
   value?: any;
   type?: TemplateVariableTypeEnum;

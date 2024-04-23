@@ -1,5 +1,5 @@
 import { ChannelTypeEnum, PreferenceOverrideSourceEnum } from '../../types';
-import { INotificationTrigger } from '../notification-template';
+import { IWfTrigger } from '../wf-template';
 
 export interface IPreferenceChannels {
   email?: boolean;
@@ -30,7 +30,7 @@ export interface ITemplateConfiguration {
   name: string;
   critical: boolean;
   tags?: string[];
-  triggers: INotificationTrigger[];
+  triggers: IWfTrigger[];
 }
 
 export enum PreferenceLevelEnum {

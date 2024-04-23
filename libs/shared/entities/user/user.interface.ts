@@ -8,6 +8,7 @@ export interface IUserEntity {
   firstName?: string | null;
   lastName?: string | null;
   email?: string | null;
+  username?: string | null;
   profilePicture?: string | null;
   createdAt: string;
   showOnBoarding?: boolean;
@@ -15,4 +16,6 @@ export interface IUserEntity {
   servicesHashes?: IServicesHashes;
   jobTitle?: JobTitleEnum;
   externalId?: string;
+  bio?: string | null;
+  urls?: string[] | null;
 }

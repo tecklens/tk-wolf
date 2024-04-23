@@ -1,6 +1,5 @@
 import { IWorkflowStepMetadata } from '../../entities/step';
 import { BuilderFieldType, BuilderGroupValues, FilterParts } from '../../types';
-import { MessageTemplateDto } from '../message-template';
 
 export class StepVariantDto {
   id?: string;
@@ -8,7 +7,6 @@ export class StepVariantDto {
   name?: string;
   uuid?: string;
   _templateId?: string;
-  template?: MessageTemplateDto;
   filters?: {
     isNegated?: boolean;
     type?: BuilderFieldType;

@@ -1,7 +1,12 @@
-import { EnvironmentId, ITenantDefine, OrganizationId, StepTypeEnum } from '../../types';
+import {
+  EnvironmentId,
+  ITenantDefine,
+  OrganizationId,
+  StepTypeEnum,
+} from '../../types';
 import { IWorkflowStepMetadata } from '../step';
 import { JobStatusEnum } from './status.enum';
-import { INotificationTemplateStep } from '../notification-template';
+import { INotificationTemplateStep } from '@libs/shared/entities/wf-template';
 
 export interface IJob {
   _id: string;

@@ -19,6 +19,7 @@ import { EnvironmentRepository } from '@libs/repositories/environment';
 import { decryptApiKey } from '@libs/shared/encryptions/encrypt-provider';
 import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
+import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
@@ -117,6 +118,38 @@ export class UsersService {
     await this.cacheManager.del(
       buildAuthServiceKey({
         apiKey: decryptedApiKey,
+      }),
+    );
+
+    const updatedUser = await this.userRepository.findById(u._id);
+    if (!updatedUser) throw new NotFoundException('User not found');
+
+    // this.analyticsService.setValue(updatedUser._id, 'email', email);
+
+    return updatedUser;
+  }
+
+  public async updateProfile(u: IJwtPayload, d: ChangeProfileDto) {
+    const email = normalizeEmail(d.email);
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) throw new BadRequestException('Account not exited');
+
+    await this.userRepository.update(
+      {
+        _id: u._id,
+      },
+      {
+        $set: {
+          bio: d.bio,
+          urls: d.urls,
+          username: d.username,
+        },
+      },
+    );
+
+    await this.cacheManager.del(
+      buildUserKey({
+        _id: u._id,
       }),
     );
 

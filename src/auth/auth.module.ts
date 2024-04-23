@@ -14,6 +14,7 @@ import { GitHubStrategy } from '@app/auth/strategy/github.strategy';
 import { HttpModule } from '@nestjs/axios';
 import { ApiKeyStrategy } from '@app/auth/strategy/apikey.strategy';
 import { EnvironmentModule } from '@app/environment/environment.module';
+import { MemberRepository } from '@libs/repositories/member';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { EnvironmentModule } from '@app/environment/environment.module';
     ApiKeyStrategy,
     EnvironmentRepository,
     OrganizationRepository,
+    MemberRepository,
     UserRepository,
   ],
   exports: [AuthService, JwtStrategy, GitHubStrategy, ApiKeyStrategy],

@@ -1,12 +1,14 @@
 import { OrganizationDBModel, OrganizationEntity } from './organization.entity';
 import { Organization } from './organization.schema';
 import { BaseRepository } from '@libs/repositories/base-repository';
+import { MemberRepository } from "@libs/repositories/member";
 
 export class OrganizationRepository extends BaseRepository<
   OrganizationDBModel,
   OrganizationEntity,
   object
 > {
+  private memberRepository = new MemberRepository();
   constructor() {
     super(Organization, OrganizationEntity);
   }
@@ -50,5 +52,19 @@ export class OrganizationRepository extends BaseRepository<
         },
       },
     );
+  }
+
+  async findUserActiveOrganizations(userId: string): Promise<OrganizationEntity[]> {
+    const organizationIds = await this.getUsersMembersOrganizationIds(userId);
+
+    return await this.find({
+      _id: { $in: organizationIds },
+    });
+  }
+
+  private async getUsersMembersOrganizationIds(userId: string): Promise<string[]> {
+    const members = await this.memberRepository.findUserActiveMembers(userId);
+
+    return members.map((member) => member._organizationId);
   }
 }

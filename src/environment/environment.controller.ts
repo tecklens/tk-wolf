@@ -3,9 +3,10 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  Post, UseGuards,
-  UseInterceptors
-} from "@nestjs/common";
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiExcludeController,
@@ -21,7 +22,7 @@ import { EnvironmentService } from '@app/environment/environment.service';
 import { EnvironmentResponseDto } from '@app/environment/dtos/environment-response.dto';
 import { ApiResponse } from '@tps/decorators/api-response.decorator';
 import { CreateEnvironmentRequestDto } from '@app/environment/dtos/create-environment-request.dto';
-import { JwtAuthGuard } from "@app/auth/strategy/jwt-auth.guard";
+import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 
 @ApiBearerAuth()
 @Controller('environment')
@@ -55,6 +56,22 @@ export class EnvironmentController {
     @Body() body: CreateEnvironmentRequestDto,
   ): Promise<EnvironmentResponseDto> {
     return await this.environmentService.createEnvironment(user, body, null);
+  }
+
+  @Get('/')
+  @ApiOperation({
+    summary: 'Get environments',
+  })
+  @ApiResponse(EnvironmentResponseDto, 200, true)
+  @ExternalApiAccessible()
+  async getMyEnvironments(
+    @UserSession() user: IJwtPayload,
+  ): Promise<EnvironmentResponseDto[]> {
+    return await this.environmentService.getListEnvironment({
+      environmentId: user.environmentId,
+      userId: user._id,
+      organizationId: user.organizationId,
+    });
   }
 
   @Post('/api-keys/regenerate')

@@ -8,6 +8,7 @@ import { AuthService } from '@app/auth/auth.service';
 import { OrganizationRepository } from '@libs/repositories/organization';
 import { JwtService } from '@nestjs/jwt';
 import { EnvironmentModule } from '@app/environment/environment.module';
+import { MemberRepository } from '@libs/repositories/member';
 
 @Module({
   imports: [EnvironmentModule],
@@ -18,6 +19,7 @@ import { EnvironmentModule } from '@app/environment/environment.module';
     JwtStrategy,
     AuthService,
     OrganizationRepository,
+    MemberRepository,
     JwtService,
   ],
   exports: [UsersService],

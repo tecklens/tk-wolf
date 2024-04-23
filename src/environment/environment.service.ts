@@ -1,7 +1,9 @@
 import {
   Injectable,
   InternalServerErrorException,
+  Logger,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import {
   EnvironmentEntity,
@@ -18,6 +20,7 @@ import {
   encryptApiKey,
 } from '@libs/shared/encryptions/encrypt-provider';
 import { CreateEnvironmentRequestDto } from '@app/environment/dtos/create-environment-request.dto';
+import { EnvironmentResponseDto } from '@app/environment/dtos/environment-response.dto';
 
 const API_KEY_GENERATION_MAX_RETRIES = 5;
 
@@ -85,6 +88,38 @@ export class EnvironmentService {
       );
 
     return environment;
+  }
+
+  async getListEnvironment({
+    environmentId,
+    organizationId,
+    userId,
+  }: {
+    environmentId: string;
+    organizationId: string;
+    userId: string;
+  }) {
+    Logger.verbose('Getting Environments');
+
+    const environments =
+      await this.environmentRepository.findOrganizationEnvironments(
+        organizationId,
+      );
+
+    if (!environments?.length)
+      throw new NotFoundException(
+        `Environments for organization ${organizationId} not found`,
+      );
+
+    return environments.map((environment) => {
+      if (environment._id === environmentId) {
+        return this.decryptApiKeys(environment);
+      }
+
+      environment.apiKeys = [];
+
+      return environment;
+    });
   }
 
   async getApiKey(user: IJwtPayload) {
@@ -168,5 +203,19 @@ export class EnvironmentService {
    */
   private generateApiKey(): string {
     return hat();
+  }
+  private decryptApiKeys(
+    environment: EnvironmentEntity,
+  ): EnvironmentResponseDto {
+    const decryptedApiKeysEnvironment = { ...environment };
+
+    decryptedApiKeysEnvironment.apiKeys = environment.apiKeys.map((apiKey) => {
+      return {
+        ...apiKey,
+        key: decryptApiKey(apiKey.key),
+      };
+    });
+
+    return decryptedApiKeysEnvironment;
   }
 }

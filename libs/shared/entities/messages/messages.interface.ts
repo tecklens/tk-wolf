@@ -1,7 +1,12 @@
-import { INotificationTemplate } from '../notification-template';
 import { ButtonTypeEnum } from './action.enum';
 
-import { ChannelCTATypeEnum, ChannelTypeEnum, IEmailBlock, ActorTypeEnum } from '../../types';
+import {
+  ChannelCTATypeEnum,
+  ChannelTypeEnum,
+  IEmailBlock,
+  ActorTypeEnum,
+} from '../../types';
+import { IWfTemplate } from '@libs/shared/entities/wf-template';
 
 export interface IMessage {
   _id: string;
@@ -10,7 +15,7 @@ export interface IMessage {
   _organizationId: string;
   _notificationId: string;
   _subscriberId: string;
-  template?: INotificationTemplate;
+  template?: IWfTemplate;
   templateIdentifier?: string;
   content: string | IEmailBlock[];
   channel: ChannelTypeEnum;

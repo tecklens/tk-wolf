@@ -1,17 +1,17 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
-  Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from '@app/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import {
   ApiServiceLevelEnum,
-  IJwtPayload, JobTitleEnum,
-  SignUpOriginEnum
-} from "@libs/shared/types";
+  IJwtPayload,
+  JobTitleEnum,
+  SignUpOriginEnum,
+} from '@libs/shared/types';
 import { Cache, CACHE_MANAGER, CacheKey } from '@nestjs/cache-manager';
 import {
   EnvironmentEntity,
@@ -35,7 +35,6 @@ import {
 import { ICreateOrganizationDto } from '@libs/shared/dto';
 import { createHash as createHashHmac } from '@pak/utils/hmac';
 import { createHash } from 'crypto';
-import { v4 as uuidv4 } from 'uuid';
 import { buildUserKey } from '@libs/shared/entities/key-builder';
 import {
   differenceInHours,
@@ -50,6 +49,8 @@ import { LoginBodyDto } from '@app/auth/dtos/login.dto';
 import { Novu } from '@novu/node';
 import { EnvironmentService } from '@app/environment/environment.service';
 import { ModuleRef } from '@nestjs/core';
+import { MemberEntity, MemberRepository } from '@libs/repositories/member';
+import { MemberStatusEnum } from '@novu/shared';
 
 @Injectable()
 export class AuthService {
@@ -68,6 +69,7 @@ export class AuthService {
     private environmentRepository: EnvironmentRepository,
     private userRepository: UserRepository,
     private organizationRepository: OrganizationRepository,
+    private memberRepository: MemberRepository,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private moduleRef: ModuleRef,
   ) {}
@@ -86,7 +88,12 @@ export class AuthService {
   public async validateUser(payload: IJwtPayload): Promise<UserEntity> {
     // We run these in parallel to speed up the query time
     const userPromise = this.getUser({ _id: payload._id });
-    const isMemberPromise = Promise.resolve(true);
+    const isMemberPromise = payload.organizationId
+      ? await this.isAuthenticatedForOrganization(
+          payload._id,
+          payload.organizationId,
+        )
+      : true;
     const [user, isMember] = await Promise.all([userPromise, isMemberPromise]);
 
     if (!user) throw new UnauthorizedException('User not found');
@@ -178,7 +185,7 @@ export class AuthService {
 
     return {
       newUser,
-      token: await this.getSignedToken(user),
+      token: await this.generateUserToken(user),
     };
   }
 
@@ -209,15 +216,138 @@ export class AuthService {
     return this.getSignedToken(user);
   }
 
+  public async generateUserToken(user: UserEntity) {
+    const userActiveOrganizations =
+      await this.organizationRepository.findUserActiveOrganizations(user._id);
+
+    if (userActiveOrganizations && userActiveOrganizations.length) {
+      const organizationToSwitch = userActiveOrganizations[0];
+
+      const userActiveProjects =
+        await this.environmentRepository.findOrganizationEnvironments(
+          organizationToSwitch._id,
+        );
+      let environmentToSwitch = userActiveProjects[0];
+
+      const reduceEnvsToOnlyDevelopment = (prev, current) =>
+        current.name === 'Development' ? current : prev;
+
+      if (userActiveProjects.length > 1) {
+        environmentToSwitch = userActiveProjects.reduce(
+          reduceEnvsToOnlyDevelopment,
+          environmentToSwitch,
+        );
+      }
+
+      if (environmentToSwitch) {
+        return await this.switchEnvironment({
+          newEnvironmentId: environmentToSwitch._id,
+          organizationId: organizationToSwitch._id,
+          userId: user._id,
+        });
+      }
+
+      return await this.switchOrg({
+        newOrganizationId: organizationToSwitch._id,
+        userId: user._id,
+      });
+    }
+
+    return this.getSignedToken(user);
+  }
+
+  private async switchOrg({
+    newOrganizationId,
+    userId,
+  }: {
+    newOrganizationId: string;
+    userId: string;
+  }) {
+    const isAuthenticated = await this.isAuthenticatedForOrganization(
+      userId,
+      newOrganizationId,
+    );
+    if (!isAuthenticated) {
+      throw new UnauthorizedException(
+        `Not authorized for organization ${newOrganizationId}`,
+      );
+    }
+
+    const member = await this.memberRepository.findMemberByUserId(
+      newOrganizationId,
+      userId,
+    );
+    if (!member) throw new ApiException('Member not found');
+
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new ApiException(`User ${userId} not found`);
+
+    const environment = await this.environmentRepository.findOne({
+      _organizationId: newOrganizationId,
+      _parentId: { $exists: false },
+    });
+
+    return await this.getSignedToken(
+      user,
+      newOrganizationId,
+      member,
+      environment?._id,
+    );
+  }
+
+  private async isAuthenticatedForOrganization(
+    userId: string,
+    organizationId: string,
+  ): Promise<boolean> {
+    return !!(await this.memberRepository.isMemberOfOrganization(
+      organizationId,
+      userId,
+    ));
+  }
+  async switchEnvironment({
+    newEnvironmentId,
+    organizationId,
+    userId,
+  }: {
+    newEnvironmentId: string;
+    organizationId: string;
+    userId: string;
+  }) {
+    const project = await this.environmentRepository.findOne({
+      _id: newEnvironmentId,
+    });
+    if (!project) throw new NotFoundException('Environment not found');
+    if (project._organizationId !== organizationId) {
+      throw new UnauthorizedException('Not authorized for organization');
+    }
+
+    const member = await this.memberRepository.findMemberByUserId(
+      organizationId,
+      userId,
+    );
+    if (!member) throw new NotFoundException('Member is not found');
+
+    const user = await this.userRepository.findById(userId);
+    if (!user) throw new NotFoundException('User is not found');
+
+    return await this.getSignedToken(
+      user,
+      organizationId,
+      member,
+      newEnvironmentId,
+    );
+  }
+
   public async getSignedToken(
     user: UserEntity,
     organizationId?: string,
+    member?: MemberEntity,
     environmentId?: string,
   ): Promise<string> {
     const roles: MemberRoleEnum[] = [];
-    // if (member && member.roles) {
-    //   roles.push(...member.roles);
-    // }
+    if (member && member.roles) {
+      roles.push(...member.roles);
+    }
 
     return this.jwtService.sign(
       {
@@ -622,18 +752,16 @@ export class AuthService {
       domain: d.domain,
     });
 
-    // if (d.jobTitle) {
-    //   await this.updateJobTitle(user, command.jobTitle);
-    // }
-    //
-    // await this.addMemberUsecase.execute(
-    //   AddMemberCommand.create({
-    //     roles: [MemberRoleEnum.ADMIN],
-    //     organizationId: createdOrganization._id,
-    //     userId: command.userId,
-    //   })
-    // );
-    //
+    if (d.jobTitle) {
+      await this.updateJobTitle(user, d.jobTitle);
+    }
+
+    await this.addMember({
+      roles: [MemberRoleEnum.ADMIN],
+      organizationId: createdOrganization._id,
+      userId: user._id,
+    });
+
     const devEnv = await this.environmentService.createEnvironment(
       {
         _id: user._id,
@@ -643,7 +771,7 @@ export class AuthService {
         roles: [],
       },
       {
-        name: 'Development',
+        name: 'DEV',
         parentId: '',
         // organizationId: createdOrganization._id,
       },
@@ -667,7 +795,7 @@ export class AuthService {
         roles: [],
       },
       {
-        name: 'Production',
+        name: 'PROD',
         parentId: '',
         // organizationId: createdOrganization._id,
       },
@@ -700,6 +828,50 @@ export class AuthService {
       organization: createdOrganization as OrganizationEntity,
       environmentId: devEnv._id,
     };
+  }
+
+  private async updateJobTitle(user, jobTitle: JobTitleEnum) {
+    await this.userRepository.update(
+      {
+        _id: user._id,
+      },
+      {
+        $set: {
+          jobTitle: jobTitle,
+        },
+      },
+    );
+
+    // this.analyticsService.setValue(user._id, 'jobTitle', jobTitle);
+  }
+
+  private async addMember({
+    organizationId,
+    userId,
+    roles,
+  }: {
+    organizationId: string;
+    userId: string;
+    roles: MemberRoleEnum[];
+  }) {
+    const isAlreadyMember = await this.isMember(userId, organizationId);
+    if (isAlreadyMember) throw new ApiException('Member already exists');
+
+    await this.memberRepository.addMember(organizationId, {
+      _userId: userId,
+      roles: roles,
+      memberStatus: MemberStatusEnum.ACTIVE,
+    });
+  }
+
+  private async isMember(
+    userId: string,
+    organizationId: string,
+  ): Promise<boolean> {
+    return !!(await this.memberRepository.findMemberByUserId(
+      organizationId,
+      userId,
+    ));
   }
 
   private async startFreeTrial(userId: string, organizationId: string) {

@@ -1,3 +1,5 @@
+import { lowerCase } from "lodash";
+
 const PLUS_ONLY = /\+.*$/;
 const PLUS_AND_DOT = /\.|\+.*$/g;
 const normalizableProviders = {
@@ -24,7 +26,7 @@ export function normalizeEmail(email: string): string {
     throw new TypeError('normalize-email expects a string');
   }
 
-  const lowerCasedEmail = email.toLowerCase();
+  const lowerCasedEmail = lowerCase(email);
   const emailParts = lowerCasedEmail.split(/@/);
 
   if (emailParts.length !== 2) {

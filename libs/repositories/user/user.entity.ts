@@ -32,6 +32,7 @@ export class UserEntity implements IUserEntity {
   lastName?: string | null;
 
   email?: string | null;
+  username?: string | null;
 
   profilePicture?: string | null;
 
@@ -56,6 +57,8 @@ export class UserEntity implements IUserEntity {
   jobTitle?: JobTitleEnum;
 
   externalId?: string;
+  bio?: string;
+  urls?: string[] | null;
 }
 
 export type UserDBModel = UserEntity;

@@ -23,6 +23,7 @@ import { ChangeProfileEmailDto } from '@app/users/dtos/change-profile-email.dto'
 import { UserSession } from '@libs/utils/user.session';
 import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
+import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -54,6 +55,14 @@ export class UsersController {
     @Body() body: ChangeProfileEmailDto,
   ): Promise<UserResponseDto> {
     return await this.usersService.updateProfileEmail(user, body);
+  }
+
+  @Put('/profile')
+  async updateProfile(
+    @UserSession() user: IJwtPayload,
+    @Body() body: ChangeProfileDto,
+  ): Promise<UserResponseDto> {
+    return await this.usersService.updateProfile(user, body);
   }
 
   @Put('/onboarding')

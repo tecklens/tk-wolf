@@ -4,14 +4,14 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  Header,
-  Logger,
+  Header, HttpCode,
+  Logger, Param,
   Post,
   Req,
   Res,
   UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import { AuthService } from '@app/auth/auth.service';
 import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { ApiException } from '@app/packages/utils/exceptions';
@@ -22,6 +22,7 @@ import { UserRegistrationBodyDto } from '@app/auth/dtos/user-registration.dto';
 import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
 import { LoginBodyDto } from '@app/auth/dtos/login.dto';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
+import { UserSession } from "@libs/utils/user.session";
 
 @ApiBearerAuth()
 @Controller('auth')
@@ -108,23 +109,23 @@ export class AuthController {
   //
   //   return await this.switchOrganizationUsecase.execute(command);
   // }
-  //
-  // @Post('/environments/:environmentId/switch')
-  // @Header('Cache-Control', 'no-store')
-  // @UseGuards(UserAuthGuard)
-  // @HttpCode(200)
-  // async projectSwitch(
-  //   @Body() user: IJwtPayload,
-  //   @Param('environmentId') environmentId: string,
-  // ): Promise<{ token: string }> {
-  //   const command = SwitchEnvironmentCommand.create({
-  //     userId: user._id,
-  //     newEnvironmentId: environmentId,
-  //     organizationId: user.organizationId,
-  //   });
-  //
-  //   return {
-  //     token: await this.switchEnvironmentUsecase.execute(command),
-  //   };
-  // }
+
+  @Post('/environments/:environmentId/switch')
+  @Header('Cache-Control', 'no-store')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  async projectSwitch(
+    @UserSession() user: IJwtPayload,
+    @Param('environmentId') environmentId: string,
+  ): Promise<{ token: string }> {
+    const token = await this.authService.switchEnvironment({
+      userId: user._id,
+      newEnvironmentId: environmentId,
+      organizationId: user.organizationId,
+    });
+
+    return {
+      token,
+    };
+  }
 }

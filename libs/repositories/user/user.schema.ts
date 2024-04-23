@@ -9,6 +9,7 @@ const userSchema = new Schema<UserDBModel>(
     firstName: Schema.Types.String,
     lastName: Schema.Types.String,
     email: Schema.Types.String,
+    username: Schema.Types.String,
     profilePicture: Schema.Types.String,
     resetToken: Schema.Types.String,
     resetTokenDate: Schema.Types.Date,
@@ -42,6 +43,8 @@ const userSchema = new Schema<UserDBModel>(
     },
     jobTitle: Schema.Types.String,
     externalId: Schema.Types.String,
+    bio: Schema.Types.String,
+    urls: Schema.Types.Array,
   },
   schemaOptions,
 );
