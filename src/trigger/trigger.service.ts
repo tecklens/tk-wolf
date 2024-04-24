@@ -33,8 +33,9 @@ export class TriggerService implements OnModuleInit {
       {
         eachMessage: async ({ topic, partition, message }) => {
           try {
-            this.event.sendMessage('662715b68448e88ac3b89273', 'send_message', {
+            this.event.server.emit('event_662910acaae1bef4f768f988', {
               message: 'tt',
+              event: 'message',
             });
           } catch (e) {
             console.log(e);
