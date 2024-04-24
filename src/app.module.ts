@@ -10,13 +10,12 @@ import { DbService } from '@libs/repositories/DbService';
 import { S3Module } from 'nestjs-s3';
 import { FileModule } from './file/file.module';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { WorkflowController } from './workflow/workflow.controller';
-import { WorkflowService } from './workflow/workflow.service';
-import { EnvironmentService } from './environment/environment.service';
-import { EnvironmentController } from './environment/environment.controller';
 import { EnvironmentModule } from './environment/environment.module';
 import { WorkflowModule } from './workflow/workflow.module';
 import { OrganizationModule } from './organization/organization.module';
+import { KafkaModule } from './kafka/kafka.module';
+import { TriggerModule } from './trigger/trigger.module';
+import { EventsModule } from './events/events.module';
 
 const dbService = {
   provide: DbService,
@@ -83,6 +82,9 @@ const dbService = {
     EnvironmentModule,
     WorkflowModule,
     OrganizationModule,
+    KafkaModule,
+    TriggerModule,
+    EventsModule,
   ],
   providers: [AppService, dbService],
   exports: [dbService],

@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import * as bodyParser from 'body-parser';
 import compression from 'compression';
 import { ConfigService } from '@nestjs/config';
+import { WsAdapter } from '@app/ws-adapter';
 
 declare const module: any;
 
@@ -75,6 +76,12 @@ export default async function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use(compression());
+
+  app.useWebSocketAdapter(new WsAdapter(app));
+
+  app.enableShutdownHooks();
+
+  await app.init();
 
   Logger.log('BOOTSTRAPPED SUCCESSFULLY');
 

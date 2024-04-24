@@ -31,6 +31,7 @@ export interface INodeEntity {
   style?: any;
 
   deleted: boolean;
+  connected: boolean;
 
   deletedAt?: string;
 

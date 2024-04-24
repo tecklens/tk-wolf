@@ -8,6 +8,7 @@ const nodeSchema = new Schema<NodeDBModel>(
   {
     _workflowId: Schema.Types.String,
     deleted: Schema.Types.Boolean,
+    connected: Schema.Types.Boolean,
     deletedAt: Schema.Types.String,
     deletedBy: Schema.Types.String,
     createdAt: Schema.Types.String,

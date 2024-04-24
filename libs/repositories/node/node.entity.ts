@@ -11,6 +11,7 @@ export class NodeEntity implements INodeEntity {
   _workflowId: WorkflowId;
 
   deleted: boolean;
+  connected: boolean;
 
   deletedAt?: string;
 
@@ -25,11 +26,7 @@ export class NodeEntity implements INodeEntity {
   sourcePosition?: Position;
   targetPosition?: Position;
   hidden?: boolean;
-  selected?: boolean;
-  selectable?: boolean;
-  connectable?: boolean;
   resizing?: boolean;
-  deletable?: boolean;
   width?: number | null;
   height?: number | null;
   /** @deprecated - use `parentId` instead */

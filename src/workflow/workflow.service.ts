@@ -10,6 +10,9 @@ import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
 import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
 import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
+import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
+import mongoose from 'mongoose';
+import { InjectConnection } from '@nestjs/mongoose';
 
 @Injectable()
 export class WorkflowService {
@@ -59,6 +62,7 @@ export class WorkflowService {
     return this.nodeRepository.create({
       _workflowId: payload.workflowId,
       ...payload,
+      connected: false,
     });
   }
 
@@ -136,5 +140,13 @@ export class WorkflowService {
       nodes,
       edges,
     };
+  }
+
+  async delNodeEdge(u: IJwtPayload, payload: DelEleWorkflowRequestDto) {
+    const nodeIds = payload.nodeIds;
+    const edgeIds = payload.edgeIds;
+
+    this.nodeRepository.delByIds(nodeIds);
+    this.edgeRepository.delByIds(edgeIds);
   }
 }

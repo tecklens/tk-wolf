@@ -25,4 +25,12 @@ export class NodeRepository extends BaseRepository<
 
     return await this.find(query);
   }
+
+  async delByIds(ids: string[]) {
+    this.delete({
+      _id: {
+        $in: ids
+      }
+    })
+  }
 }

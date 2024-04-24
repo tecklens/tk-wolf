@@ -2,6 +2,7 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -16,7 +17,6 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from '@app/auth/strategy/apikey.guard';
 import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { UserSession } from '@libs/utils/user.session';
 import { WorkflowsResponseDto } from '@app/workflow/dto/workflows.response.dto';
@@ -30,8 +30,9 @@ import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.r
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
-import { AddEdgeWorkflowRequestDto } from "@app/workflow/dto/add-edge-workflow.request.dto";
-import { UpdateNodeWorkflowRequestDto } from "@app/workflow/dto/update-node-workflow.request.dto";
+import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
+import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
+import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -119,7 +120,23 @@ export class WorkflowController {
   })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  getActiveWorkflow(@UserSession() user: IJwtPayload): Promise<WorkflowResponse>{
+  getActiveWorkflow(
+    @UserSession() user: IJwtPayload,
+  ): Promise<WorkflowResponse> {
     return this.workflowService.getActive(user);
+  }
+
+  @Post('/node/del')
+  @ApiResponse(WorkflowEntity)
+  @ApiOperation({
+    summary: 'del node + edge in workflows',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  delNodeEdge(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: DelEleWorkflowRequestDto,
+  ) {
+    this.workflowService.delNodeEdge(user, payload);
   }
 }
