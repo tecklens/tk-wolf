@@ -16,6 +16,8 @@ import { OrganizationModule } from './organization/organization.module';
 import { KafkaModule } from './kafka/kafka.module';
 import { TriggerModule } from './trigger/trigger.module';
 import { EventsModule } from './events/events.module';
+import { RolesGuard } from '@app/auth/strategy/roles.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 const dbService = {
   provide: DbService,
@@ -86,7 +88,14 @@ const dbService = {
     TriggerModule,
     EventsModule,
   ],
-  providers: [AppService, dbService],
+  providers: [
+    AppService,
+    dbService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
   exports: [dbService],
   controllers: [],
 })
