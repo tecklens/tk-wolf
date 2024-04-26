@@ -10,16 +10,16 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown {
   // Connect to Kafka Server
   private readonly kafka = new Kafka({
     brokers: [process.env.KAFKA_BROKER],
-    ssl: true,
-    sasl: {
-      mechanism: 'plain', // scram-sha-256 or scram-sha-512
-      username: process.env.KAFKA_USER,
-      password: process.env.KAFKA_PASS,
-    },
+    // ssl: true,
+    // sasl: {
+    //   mechanism: 'plain', // scram-sha-256 or scram-sha-512
+    //   username: process.env.KAFKA_USER,
+    //   password: process.env.KAFKA_PASS,
+    // },
   });
 
   private readonly producer: Producer = this.kafka.producer({
-    allowAutoTopicCreation: false,
+    allowAutoTopicCreation: true,
     transactionTimeout: 30000,
   });
 

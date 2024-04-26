@@ -1,21 +1,14 @@
-import {
-  IsArray,
-  IsMongoId,
-  IsOptional,
-  IsString,
-  MaxLength,
-  ValidateNested,
-} from 'class-validator';
-import {
-  IPreferenceChannels,
-  IUpdateWorkflowDto,
-  NotificationTemplateCustomData,
-} from '@novu/shared';
+import { IsArray, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IUpdateWorkflowDto } from '@novu/shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { NotificationStep } from '@libs/shared/dto/notification-step';
-import { PreferenceChannels } from '@libs/shared/dto/preference-channels';
+import { WorkflowId } from '@libs/repositories/workflow/types';
 
 export class UpdateWorkflowRequestDto implements IUpdateWorkflowDto {
+  @ApiProperty()
+  @IsString()
+  @IsOptional()
+  workflowId: WorkflowId;
+
   @ApiProperty()
   @IsString()
   @IsOptional()
@@ -31,32 +24,4 @@ export class UpdateWorkflowRequestDto implements IUpdateWorkflowDto {
   @IsOptional()
   @MaxLength(300)
   description: string;
-
-  @ApiPropertyOptional()
-  @IsString()
-  @IsOptional()
-  identifier?: string;
-
-  @ApiPropertyOptional()
-  @IsArray()
-  @IsOptional()
-  @ValidateNested()
-  steps: NotificationStep[];
-
-  @ApiProperty()
-  @IsOptional()
-  @IsMongoId()
-  notificationGroupId: string;
-
-  @ApiPropertyOptional()
-  critical?: boolean;
-
-  @ApiPropertyOptional({
-    type: PreferenceChannels,
-  })
-  preferenceSettings?: IPreferenceChannels;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  data?: NotificationTemplateCustomData;
 }

@@ -25,7 +25,7 @@ import { IJwtPayload } from '@libs/shared/types';
 import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { WorkflowService } from '@app/workflow/workflow.service';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { CreateWorkflowRequestDto } from '@app/workflow/dto';
+import { CreateWorkflowRequestDto, UpdateWorkflowRequestDto } from "@app/workflow/dto";
 import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
@@ -71,6 +71,16 @@ export class WorkflowController {
     @Body() payload: CreateWorkflowRequestDto,
   ) {
     return this.workflowService.createWorkflow(user, payload);
+  }
+
+  @Put('/')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  updateWorkflow(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: UpdateWorkflowRequestDto,
+  ) {
+    return this.workflowService.updateWorkflow(user, payload);
   }
 
   @Post('/node')

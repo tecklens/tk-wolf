@@ -35,6 +35,20 @@ export class WorkflowRepository extends BaseRepository<
     };
   }
 
+  async findOneByUserIdAndNameAndWorkflowIdNotEqual(
+    userId: string,
+    name: string,
+    workflowId: string,
+  ): Promise<WorkflowEntity> {
+    return await this.findOne({
+      _userId: userId,
+      name: name,
+      _id: {
+        $ne: workflowId
+      }
+    });
+  }
+
   async updateActive(wId: string, uId: string) {
     await this.update(
       {
@@ -54,7 +68,7 @@ export class WorkflowRepository extends BaseRepository<
   async getActive(userId: string) {
     return await this.findOne({
       _userId: userId,
-      active: true
-    })
+      active: true,
+    });
   }
 }

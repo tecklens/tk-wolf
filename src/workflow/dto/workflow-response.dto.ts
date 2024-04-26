@@ -41,4 +41,7 @@ export class WorkflowResponse implements IWfTemplate {
 
   @ApiPropertyOptional()
   edges?: IEdgeEntity[];
+
+  @ApiProperty()
+  identifier: string;
 }

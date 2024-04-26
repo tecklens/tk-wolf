@@ -6,14 +6,14 @@ import { EdgeDBModel } from './edge.entity';
 
 const edgeSchema = new Schema<EdgeDBModel>(
   {
-    _workflowId: Schema.Types.String,
+    _workflowId: { type: Schema.Types.String, index: true },
     deleted: Schema.Types.Boolean,
     deletedAt: Schema.Types.String,
     deletedBy: Schema.Types.String,
     createdAt: Schema.Types.String,
     updatedAt: Schema.Types.String,
     type: Schema.Types.String,
-    source: Schema.Types.String,
+    source: { type: Schema.Types.String, index: true },
     target: Schema.Types.String,
     sourceHandle: Schema.Types.String,
     targetHandle: Schema.Types.String,

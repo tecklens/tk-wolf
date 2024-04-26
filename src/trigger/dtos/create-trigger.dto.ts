@@ -2,7 +2,7 @@ import { WorkflowId } from '@libs/repositories/workflow/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-export class CreateTriggerDto {
+export class CreateTriggerDto implements IDataTrigger {
   @ApiProperty()
   @IsString()
   workflowId: WorkflowId;
@@ -12,7 +12,11 @@ export class CreateTriggerDto {
   data: IDataTrigger;
 }
 
-export interface IDataTrigger {}
+export interface IDataTrigger {
+  workflowId: WorkflowId;
+  target: ITargetTrigger;
+  data: IDataTrigger;
+}
 
 export interface ITargetTrigger {
   subcriberId: string;

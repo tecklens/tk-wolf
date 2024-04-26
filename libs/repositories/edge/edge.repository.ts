@@ -29,8 +29,16 @@ export class EdgeRepository extends BaseRepository<
   async delByIds(ids: string[]) {
     this.delete({
       _id: {
-        $in: ids
-      }
-    })
+        $in: ids,
+      },
+    });
+  }
+
+  async findBySource(source: string): Promise<EdgeEntity[]> {
+    const query = {
+      source: source,
+    };
+
+    return await this.find(query);
   }
 }

@@ -60,13 +60,18 @@ export class WsAdapter implements WebSocketAdapter {
         typeof get(queryData, 'token') === 'string'
       )
         return;
-      const decoded: any = jwtDecode(get(queryData, 'token') as string);
+      let decoded: any = undefined;
+      try {
+        decoded = jwtDecode(get(queryData, 'token') as string);
+      } catch (e) {
+        this.logger.error(e);
+      }
 
-      if (!decoded._id) return;
+      if (!decoded?._id) return;
       const listener = (event: WebSocket, data) =>
         client.send(JSON.stringify({ event, data }));
       server.on('event', listener);
-      server.on(`event_${decoded._id}`, listener);
+      server.on(`event_${decoded?._id}`, listener);
       this.clientData.set(client, { server, listener });
       callback(client);
     });

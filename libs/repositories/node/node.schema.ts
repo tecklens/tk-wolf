@@ -1,12 +1,14 @@
-import * as mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import * as mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-import { schemaOptions } from '../schema-default.options';
-import { NodeDBModel } from './node.entity';
+import { schemaOptions } from "../schema-default.options";
+import { NodeDBModel } from "./node.entity";
+import { ProviderId } from "@libs/repositories/provider/types";
 
 const nodeSchema = new Schema<NodeDBModel>(
   {
-    _workflowId: Schema.Types.String,
+    _workflowId: { type: Schema.Types.String, index: true },
+    _providerId: Schema.Types.String,
     deleted: Schema.Types.Boolean,
     connected: Schema.Types.Boolean,
     deletedAt: Schema.Types.String,
@@ -15,7 +17,7 @@ const nodeSchema = new Schema<NodeDBModel>(
     updatedAt: Schema.Types.String,
     position: Schema.Types.Mixed,
     data: Schema.Types.Mixed,
-    type: Schema.Types.Mixed,
+    type: Schema.Types.String,
     sourcePosition: Schema.Types.Mixed,
     targetPosition: Schema.Types.Mixed,
     resizing: Schema.Types.Boolean,
@@ -30,12 +32,14 @@ const nodeSchema = new Schema<NodeDBModel>(
     ariaLabel: Schema.Types.String,
     focusable: Schema.Types.Boolean,
     style: Schema.Types.Mixed,
-    className: Schema.Types.String,
+    className: Schema.Types.String
   },
-  schemaOptions,
+  schemaOptions
 );
 
+
+nodeSchema.index({ _workflowId: 1, type: 1 });
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const NodeSchema =
   (mongoose.models.Node as mongoose.Model<NodeDBModel>) ||
-  mongoose.model<NodeDBModel>('Node', nodeSchema);
+  mongoose.model<NodeDBModel>("Node", nodeSchema);

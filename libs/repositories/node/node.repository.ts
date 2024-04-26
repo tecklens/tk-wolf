@@ -1,6 +1,7 @@
 import { BaseRepository } from '../base-repository';
 import { NodeDBModel, NodeEntity } from './node.entity';
-import { NodeSchema } from "@libs/repositories/node/node.schema";
+import { NodeSchema } from '@libs/repositories/node/node.schema';
+import { WfNodeType } from '@libs/shared/entities/workflow/node.interface';
 
 export class NodeRepository extends BaseRepository<
   NodeDBModel,
@@ -18,6 +19,14 @@ export class NodeRepository extends BaseRepository<
     return this.mapEntity(data.toObject());
   }
 
+  async findByIdIn(ids: string[]): Promise<NodeEntity[]> {
+    return this.find({
+      _id: {
+        $in: ids,
+      },
+    });
+  }
+
   async findByWorkflowId(workflowId: string): Promise<NodeEntity[]> {
     const query = {
       _workflowId: workflowId,
@@ -26,11 +35,23 @@ export class NodeRepository extends BaseRepository<
     return await this.find(query);
   }
 
+  async findOneByWorkflowIdAndType(
+    workflowId: string,
+    type: WfNodeType,
+  ): Promise<NodeEntity> {
+    const query = {
+      _workflowId: workflowId,
+      type: type,
+    };
+
+    return await this.findOne(query);
+  }
+
   async delByIds(ids: string[]) {
     this.delete({
       _id: {
-        $in: ids
-      }
-    })
+        $in: ids,
+      },
+    });
   }
 }

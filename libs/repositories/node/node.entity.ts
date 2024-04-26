@@ -5,10 +5,12 @@ import {
   Position,
   XYPosition,
 } from '@libs/shared/entities/workflow/position.interface';
+import { ProviderId } from '@libs/repositories/provider/types';
 
 export class NodeEntity implements INodeEntity {
   _id?: NodeId;
   _workflowId: WorkflowId;
+  _providerId: ProviderId;
 
   deleted: boolean;
   connected: boolean;
@@ -22,7 +24,7 @@ export class NodeEntity implements INodeEntity {
   updatedAt?: string;
   position: XYPosition;
   data: any;
-  type?: any;
+  type?: string;
   sourcePosition?: Position;
   targetPosition?: Position;
   hidden?: boolean;

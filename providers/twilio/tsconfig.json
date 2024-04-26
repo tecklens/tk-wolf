@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "build/main",
+    "types": ["node", "jest"],
+    "typeRoots": ["./node_modules/@types", "../../node_modules/@types"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**"]
+}

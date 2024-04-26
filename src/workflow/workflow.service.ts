@@ -1,9 +1,16 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { IJwtPayload } from '@libs/shared/types';
 import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
 import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
-import { CreateWorkflowRequestDto } from '@app/workflow/dto';
+import {
+  CreateWorkflowRequestDto,
+  UpdateWorkflowRequestDto,
+} from '@app/workflow/dto';
 import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
 import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
@@ -11,8 +18,7 @@ import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-
 import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
 import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
 import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
-import mongoose from 'mongoose';
-import { InjectConnection } from '@nestjs/mongoose';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class WorkflowService {
@@ -37,6 +43,7 @@ export class WorkflowService {
       description: e.description,
       deletedBy: e.deletedBy,
       name: e.name,
+      identifier: e.identifier,
     }));
 
     return {
@@ -52,6 +59,7 @@ export class WorkflowService {
       name: payload.name,
       tags: payload.tags,
       description: payload.description,
+      identifier: uuidv4(),
       _userId: u._id,
       _environmentId: u.environmentId,
       _organizationId: u.organizationId,
@@ -93,7 +101,7 @@ export class WorkflowService {
     await this.workflowRepository.updateActive(payload.workflowId, u._id);
   }
 
-  async getActive(u: IJwtPayload) {
+  async getActive(u: IJwtPayload): Promise<WorkflowResponse> {
     const wf = await this.workflowRepository.getActive(u._id);
 
     if (!wf) return null;
@@ -115,6 +123,7 @@ export class WorkflowService {
       description: wf.description,
       nodes,
       edges,
+      identifier: wf.identifier,
     };
   }
 
@@ -139,6 +148,7 @@ export class WorkflowService {
       description: wf.description,
       nodes,
       edges,
+      identifier: wf.identifier,
     };
   }
 
@@ -148,5 +158,28 @@ export class WorkflowService {
 
     this.nodeRepository.delByIds(nodeIds);
     this.edgeRepository.delByIds(edgeIds);
+  }
+
+  async updateWorkflow(u: IJwtPayload, payload: UpdateWorkflowRequestDto) {
+    const objForUpdate: any = {};
+    const wf =
+      await this.workflowRepository.findOneByUserIdAndNameAndWorkflowIdNotEqual(
+        u._id,
+        payload.name,
+        payload.workflowId,
+      );
+
+    if (wf) throw new ConflictException('Workflow name existed');
+
+    if (payload.name) objForUpdate.name = payload.name;
+    if (payload.description) objForUpdate.description = payload.description;
+    if (payload.tags) objForUpdate.tags = payload.tags;
+
+    return this.workflowRepository.updateOne(
+      {
+        _id: payload.workflowId,
+      },
+      objForUpdate,
+    );
   }
 }

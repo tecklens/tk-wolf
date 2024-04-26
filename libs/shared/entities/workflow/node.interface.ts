@@ -4,15 +4,17 @@ import {
   Position,
   XYPosition,
 } from '@libs/shared/entities/workflow/position.interface';
+import { ProviderId } from '@libs/repositories/provider/types';
 
 export interface INodeEntity {
   id?: NodeId;
 
   _workflowId: WorkflowId;
+  _providerId: ProviderId;
 
   position: XYPosition;
   data: any;
-  type?: any;
+  type?: string;
   sourcePosition?: Position;
   targetPosition?: Position;
   hidden?: boolean;
@@ -40,4 +42,12 @@ export interface INodeEntity {
   createdAt: string;
 
   updatedAt?: string;
+}
+
+export enum WfNodeType {
+  starter = 'starter',
+  sms = 'sms',
+  email = 'email',
+  delay = 'delay',
+  webhook = 'webhook',
 }
