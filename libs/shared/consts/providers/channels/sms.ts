@@ -31,8 +31,8 @@ import {
 } from '../credentials';
 import { SmsProviderIdEnum } from '../provider.enum';
 
-import { ChannelTypeEnum } from '../../../types';
 import { UTM_CAMPAIGN_QUERY_PARAM } from '../../../ui';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const smsProviders: IProviderConfig[] = [
   {
@@ -89,7 +89,8 @@ export const smsProviders: IProviderConfig[] = [
     displayName: 'MessageBird',
     channel: ChannelTypeEnum.SMS,
     credentials: messagebirdConfig,
-    docReference: 'https://developers.messagebird.com/quickstarts/sms-overview/',
+    docReference:
+      'https://developers.messagebird.com/quickstarts/sms-overview/',
     logoFileName: { light: 'messagebird.png', dark: 'messagebird.png' },
   },
   {
@@ -227,7 +228,8 @@ export const smsProviders: IProviderConfig[] = [
     displayName: `Clicksend`,
     channel: ChannelTypeEnum.SMS,
     credentials: clickSendConfig,
-    docReference: 'https://developers.clicksend.com/docs/rest/v3/?javascript--nodejs#send-sms',
+    docReference:
+      'https://developers.clicksend.com/docs/rest/v3/?javascript--nodejs#send-sms',
     logoFileName: { light: 'clicksend.png', dark: 'clicksend.png' },
   },
   {
@@ -252,7 +254,8 @@ export const smsProviders: IProviderConfig[] = [
     displayName: `Azure Sms`,
     channel: ChannelTypeEnum.SMS,
     credentials: azureSmsConfig,
-    docReference: 'https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/sms/receive-sms',
+    docReference:
+      'https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/sms/receive-sms',
     logoFileName: { light: 'azure-sms.png', dark: 'azure-sms.png' },
   },
   {

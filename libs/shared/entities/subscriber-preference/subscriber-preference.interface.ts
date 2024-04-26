@@ -1,5 +1,6 @@
-import { ChannelTypeEnum, PreferenceOverrideSourceEnum } from '../../types';
+import { PreferenceOverrideSourceEnum } from '../../types';
 import { IWfTrigger } from '../wf-template';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export interface IPreferenceChannels {
   email?: boolean;

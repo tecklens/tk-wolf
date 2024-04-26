@@ -1,12 +1,8 @@
 import { ButtonTypeEnum } from './action.enum';
 
-import {
-  ChannelCTATypeEnum,
-  ChannelTypeEnum,
-  IEmailBlock,
-  ActorTypeEnum,
-} from '../../types';
+import { ChannelCTATypeEnum, IEmailBlock, ActorTypeEnum } from '../../types';
 import { IWfTemplate } from '@libs/shared/entities/wf-template';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export interface IMessage {
   _id: string;

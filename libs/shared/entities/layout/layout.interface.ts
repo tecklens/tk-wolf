@@ -1,5 +1,4 @@
 import {
-  ChannelTypeEnum,
   EnvironmentId,
   ITemplateVariable,
   LayoutDescription,
@@ -9,6 +8,7 @@ import {
   OrganizationId,
   UserId,
 } from '../../types';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export interface ILayoutEntity {
   _id?: LayoutId;

@@ -1,9 +1,14 @@
 import { IConfigCredentials, IProviderConfig } from '../provider.interface';
-import { grafanaOnCallConfig, slackConfig, getstreamConfig, rocketChatConfig } from '../credentials';
+import {
+  grafanaOnCallConfig,
+  slackConfig,
+  getstreamConfig,
+  rocketChatConfig,
+} from '../credentials';
 
 import { ChatProviderIdEnum } from '../provider.enum';
-import { ChannelTypeEnum } from '../../../types';
 import { UTM_CAMPAIGN_QUERY_PARAM } from '../../../ui';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const chatProviders: IProviderConfig[] = [
   {
@@ -27,7 +32,8 @@ export const chatProviders: IProviderConfig[] = [
     displayName: 'Grafana On Call Webhook',
     channel: ChannelTypeEnum.CHAT,
     credentials: grafanaOnCallConfig,
-    docReference: 'https://grafana.com/docs/oncall/latest/integrations/webhook/',
+    docReference:
+      'https://grafana.com/docs/oncall/latest/integrations/webhook/',
     logoFileName: { light: 'grafana-on-call.png', dark: 'grafana-on-call.png' },
   },
   {
@@ -43,7 +49,8 @@ export const chatProviders: IProviderConfig[] = [
     displayName: 'Mattermost',
     channel: ChannelTypeEnum.CHAT,
     credentials: [] as IConfigCredentials[],
-    docReference: 'https://developers.mattermost.com/integrate/webhooks/incoming/',
+    docReference:
+      'https://developers.mattermost.com/integrate/webhooks/incoming/',
     logoFileName: { light: 'mattermost.svg', dark: 'mattermost.svg' },
   },
   {
@@ -51,7 +58,8 @@ export const chatProviders: IProviderConfig[] = [
     displayName: 'Ryver',
     channel: ChannelTypeEnum.CHAT,
     credentials: [] as IConfigCredentials[],
-    docReference: 'https://api.ryver.com/ryvrest_api_examples.html#create-chat-message',
+    docReference:
+      'https://api.ryver.com/ryvrest_api_examples.html#create-chat-message',
     logoFileName: { light: 'ryver.png', dark: 'ryver.png' },
   },
   {
@@ -75,7 +83,8 @@ export const chatProviders: IProviderConfig[] = [
     displayName: 'Rocket.Chat',
     channel: ChannelTypeEnum.CHAT,
     credentials: rocketChatConfig,
-    docReference: 'https://developer.rocket.chat/reference/api/rest-api/endpoints',
+    docReference:
+      'https://developer.rocket.chat/reference/api/rest-api/endpoints',
     logoFileName: { light: 'rocket-chat.svg', dark: 'rocket-chat.svg' },
   },
 ];

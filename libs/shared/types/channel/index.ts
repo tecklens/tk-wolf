@@ -1,10 +1,4 @@
-export enum ChannelTypeEnum {
-  IN_APP = 'in_app',
-  EMAIL = 'email',
-  SMS = 'sms',
-  CHAT = 'chat',
-  PUSH = 'push',
-}
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export enum StepTypeEnum {
   IN_APP = 'in_app',
@@ -17,7 +11,10 @@ export enum StepTypeEnum {
   DELAY = 'delay',
 }
 
-export const STEP_TYPE_TO_CHANNEL_TYPE = new Map<StepTypeEnum | string, ChannelTypeEnum>([
+export const STEP_TYPE_TO_CHANNEL_TYPE = new Map<
+  StepTypeEnum | string,
+  ChannelTypeEnum
+>([
   [StepTypeEnum.IN_APP, ChannelTypeEnum.IN_APP],
   [StepTypeEnum.EMAIL, ChannelTypeEnum.EMAIL],
   [StepTypeEnum.SMS, ChannelTypeEnum.SMS],
@@ -51,5 +48,8 @@ export enum SystemAvatarIconEnum {
   QUESTION = 'question',
 }
 
-export const CHANNELS_WITH_PRIMARY = [ChannelTypeEnum.EMAIL, ChannelTypeEnum.SMS];
+export const CHANNELS_WITH_PRIMARY = [
+  ChannelTypeEnum.EMAIL,
+  ChannelTypeEnum.SMS,
+];
 export const DELAYED_STEPS = [StepTypeEnum.DELAY, StepTypeEnum.DIGEST];

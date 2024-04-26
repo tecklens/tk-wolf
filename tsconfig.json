@@ -4,12 +4,12 @@
     "paths": {
       "@app/*": ["src/*"],
       "@config/*": ["src/config/*"],
-      "@shared/*": ["src/shared/*"],
-      "@helpers/*": ["src/helpers/*"],
       "@fw/*": ["src/framework/*"],
-      "@tps/*": ["types/*"],
-      "@pak/*": ["src/packages/*"],
+      "@helpers/*": ["src/helpers/*"],
       "@libs/*": ["libs/*"],
+      "@pak/*": ["src/packages/*"],
+      "@shared/*": ["src/shared/*"],
+      "@tps/*": ["types/*"]
     },
     "module": "commonjs",
     "declaration": true,

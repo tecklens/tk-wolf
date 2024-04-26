@@ -1,10 +1,10 @@
-import AfricasTalking from 'africastalking';
 import {
   ChannelTypeEnum,
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@libs/provider/provider.interface';
+} from '@novu/stateless';
+import AfricasTalking from 'africastalking';
 
 export class AfricasTalkingSmsProvider implements ISmsProvider {
   id: 'africas-talking';
@@ -16,7 +16,7 @@ export class AfricasTalkingSmsProvider implements ISmsProvider {
       apiKey: string;
       username: string;
       from?: string;
-    },
+    }
   ) {
     this.africasTalkingClient = new AfricasTalking({
       apiKey: config.apiKey,
@@ -25,7 +25,7 @@ export class AfricasTalkingSmsProvider implements ISmsProvider {
   }
 
   async sendMessage(
-    options: ISmsOptions,
+    options: ISmsOptions
   ): Promise<ISendMessageSuccessResponse> {
     const response = await this.africasTalkingClient.send({
       from: options.from || this.config.from,

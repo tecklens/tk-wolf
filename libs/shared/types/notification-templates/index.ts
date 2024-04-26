@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '../channel';
 import { CustomDataType } from '../shared';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export type NotificationTemplateCustomData = CustomDataType;
 
@@ -9,7 +9,8 @@ export type WorkflowIntegrationStatus = {
   channels: WorkflowChannelsIntegrationStatus;
 };
 
-export type WorkflowChannelsIntegrationStatus = ActiveIntegrationsStatus & ActiveIntegrationStatusWithPrimary;
+export type WorkflowChannelsIntegrationStatus = ActiveIntegrationsStatus &
+  ActiveIntegrationStatusWithPrimary;
 
 type ActiveIntegrationsStatus = {
   [key in ChannelTypeEnum]: {

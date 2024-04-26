@@ -1,4 +1,4 @@
-import { ChannelTypeEnum } from '../../../types';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export interface IUpdateSubscriberPreferenceDto {
   channel?: IChannelPreference;

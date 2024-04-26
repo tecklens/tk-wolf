@@ -1,0 +1,11 @@
+{
+  "npmClient": "pnpm",
+  "packages": ["providers/*"],
+  "command": {
+    "publish": {
+      "message": "chore(release): publish - ci skip"
+    }
+  },
+  "version": "0.24.1",
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json"
+}

@@ -1,5 +1,4 @@
 import {
-  ChannelTypeEnum,
   EnvironmentId,
   IEmailBlock,
   ITemplateVariable,
@@ -10,6 +9,7 @@ import {
   LayoutIdentifier,
   UserId,
 } from '../../types';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export class LayoutDto {
   _id?: LayoutId;

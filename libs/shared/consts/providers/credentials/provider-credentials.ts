@@ -5,7 +5,8 @@ const mailConfigBase: IConfigCredentials[] = [
   {
     key: CredentialsKeyEnum.From,
     displayName: 'From email address',
-    description: 'Use the same email address you used to authenticate your delivery provider',
+    description:
+      'Use the same email address you used to authenticate your delivery provider',
     type: 'string',
     required: true,
   },
@@ -495,7 +496,8 @@ export const slackConfig: IConfigCredentials[] = [
   {
     key: CredentialsKeyEnum.RedirectUrl,
     displayName: 'Redirect URL',
-    description: 'Redirect after Slack OAuth flow finished (default behaviour will close the tab)',
+    description:
+      'Redirect after Slack OAuth flow finished (default behaviour will close the tab)',
     type: 'string',
     required: false,
   },
@@ -512,7 +514,8 @@ export const grafanaOnCallConfig: IConfigCredentials[] = [
     key: CredentialsKeyEnum.alertUid,
     displayName: 'Alert UID',
     type: 'string',
-    description: 'a unique alert ID for grouping, maps to alert_uid of grafana webhook body content',
+    description:
+      'a unique alert ID for grouping, maps to alert_uid of grafana webhook body content',
     required: false,
   },
   {
@@ -526,7 +529,8 @@ export const grafanaOnCallConfig: IConfigCredentials[] = [
     key: CredentialsKeyEnum.imageUrl,
     displayName: 'Image URL',
     type: 'string',
-    description: 'a URL for an image attached to alert, maps to image_url of grafana webhook body content',
+    description:
+      'a URL for an image attached to alert, maps to image_url of grafana webhook body content',
     required: false,
   },
   {
@@ -949,7 +953,8 @@ export const genericSmsConfig: IConfigCredentials[] = [
     key: CredentialsKeyEnum.ApiKeyRequestHeader,
     displayName: 'API Key Request Header',
     type: 'string',
-    description: 'The name of the header attribute to use for the API key ex. (X-API-KEY, apiKey, ...)',
+    description:
+      'The name of the header attribute to use for the API key ex. (X-API-KEY, apiKey, ...)',
     required: true,
   },
   {
@@ -963,7 +968,8 @@ export const genericSmsConfig: IConfigCredentials[] = [
     key: CredentialsKeyEnum.SecretKeyRequestHeader,
     displayName: 'Secret Key Request Header',
     type: 'string',
-    description: 'The name of the header attribute to use for the secret key ex. (X-SECRET-KEY, secretKey, ...)',
+    description:
+      'The name of the header attribute to use for the secret key ex. (X-SECRET-KEY, secretKey, ...)',
     required: false,
   },
   {
@@ -978,7 +984,8 @@ export const genericSmsConfig: IConfigCredentials[] = [
     displayName: 'Id Path',
     type: 'string',
     value: 'data.id',
-    description: 'The path to the id field in the response data ex. (id, message.id, ...)',
+    description:
+      'The path to the id field in the response data ex. (id, message.id, ...)',
     required: true,
   },
   {
@@ -986,21 +993,24 @@ export const genericSmsConfig: IConfigCredentials[] = [
     displayName: 'Date Path',
     type: 'string',
     value: 'data.date',
-    description: 'The path to the date field in the response data ex. (date, message.date, ...)',
+    description:
+      'The path to the date field in the response data ex. (date, message.date, ...)',
     required: false,
   },
   {
     key: CredentialsKeyEnum.AuthenticateByToken,
     displayName: 'Authenticate by token',
     type: 'switch',
-    description: 'If enabled, the API key and secret key will be sent as a token in the Authorization header',
+    description:
+      'If enabled, the API key and secret key will be sent as a token in the Authorization header',
     required: false,
   },
   {
     key: CredentialsKeyEnum.Domain,
     displayName: 'Auth URL',
     type: 'string',
-    description: 'The URL to use for authentication in case the Authenticate by token option is enabled',
+    description:
+      'The URL to use for authentication in case the Authenticate by token option is enabled',
     required: false,
     tooltip: {
       text: 'The URL to use for authentication in case the Authenticate by token option is enabled',
@@ -1029,7 +1039,8 @@ export const pusherBeamsConfig: IConfigCredentials[] = [
   {
     key: CredentialsKeyEnum.SecretKey,
     displayName: 'Secret Key',
-    description: 'The secret key your server will use to access your Beams instance',
+    description:
+      'The secret key your server will use to access your Beams instance',
     type: 'string',
     required: true,
   },

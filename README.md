@@ -29,6 +29,7 @@
 ## Installation
 
 ```bash
+$ yarn setup
 $ yarn install
 ```
 

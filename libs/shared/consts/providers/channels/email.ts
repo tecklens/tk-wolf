@@ -20,8 +20,8 @@ import {
 } from '../credentials';
 import { IProviderConfig } from '../provider.interface';
 import { EmailProviderIdEnum } from '../provider.enum';
-import { ChannelTypeEnum } from '../../../types';
 import { UTM_CAMPAIGN_QUERY_PARAM } from '../../../ui';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const emailProviders: IProviderConfig[] = [
   {
@@ -141,7 +141,8 @@ export const emailProviders: IProviderConfig[] = [
     displayName: 'Braze',
     channel: ChannelTypeEnum.EMAIL,
     credentials: brazeEmailConfig,
-    docReference: 'https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_messages/',
+    docReference:
+      'https://www.braze.com/docs/api/endpoints/messaging/send_messages/post_send_messages/',
     logoFileName: { light: 'braze.svg', dark: 'braze.svg' },
   },
   {
