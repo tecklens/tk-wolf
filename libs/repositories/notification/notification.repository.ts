@@ -33,7 +33,7 @@ export class NotificationRepository extends BaseRepository<
       transactionId?: string;
     } = {},
     skip = 0,
-    limit = 10
+    limit = 10,
   ) {
     const requestQuery: FilterQuery<NotificationDBModel> = {
       _environmentId: environmentId,
@@ -61,7 +61,10 @@ export class NotificationRepository extends BaseRepository<
       };
     }
 
-    const response = await this.populateFeed(this.MongooseModel.find(requestQuery), environmentId)
+    const response = await this.populateFeed(
+      this.MongooseModel.find(requestQuery),
+      environmentId,
+    )
       .read('secondaryPreferred')
       .skip(skip)
       .limit(limit)
@@ -72,17 +75,29 @@ export class NotificationRepository extends BaseRepository<
     };
   }
 
-  public async getFeedItem(notificationId: string, _environmentId: string, _organizationId: string) {
+  public async getFeedItem(
+    notificationId: string,
+    _environmentId: string,
+    _organizationId: string,
+  ) {
     const requestQuery: FilterQuery<NotificationDBModel> = {
       _id: notificationId,
       _environmentId,
       _organizationId,
     };
 
-    return this.mapEntity(await this.populateFeed(this.MongooseModel.findOne(requestQuery), _environmentId));
+    return this.mapEntity(
+      await this.populateFeed(
+        this.MongooseModel.findOne(requestQuery),
+        _environmentId,
+      ),
+    );
   }
 
-  private populateFeed(query: QueryWithHelpers<unknown, unknown, unknown>, environmentId: string) {
+  private populateFeed(
+    query: QueryWithHelpers<unknown, unknown, unknown>,
+    environmentId: string,
+  ) {
     return query
       .populate({
         options: {
@@ -110,11 +125,13 @@ export class NotificationRepository extends BaseRepository<
             $nin: [StepTypeEnum.TRIGGER],
           },
         },
-        select: 'createdAt digest payload overrides to tenant actorId providerId step status type updatedAt',
+        select:
+          'createdAt digest payload overrides to tenant actorId providerId step status type updatedAt',
         populate: [
           {
             path: 'executionDetails',
-            select: 'createdAt detail isRetry isTest providerId raw source status updatedAt webhookStatus',
+            select:
+              'createdAt detail isRetry isTest providerId raw source status updatedAt webhookStatus',
             options: {
               sort: { createdAt: 1 },
             },
@@ -153,11 +170,13 @@ export class NotificationRepository extends BaseRepository<
       ],
       {
         readPreference: 'secondaryPreferred',
-      }
+      },
     );
   }
 
-  async getStats(environmentId: EnvironmentId): Promise<{ weekly: number; monthly: number }> {
+  async getStats(
+    environmentId: EnvironmentId,
+  ): Promise<{ weekly: number; monthly: number }> {
     const now: number = Date.now();
     const monthBefore = subMonths(now, 1);
     const weekBefore = subWeeks(now, 1);
@@ -175,14 +194,16 @@ export class NotificationRepository extends BaseRepository<
         {
           $group: {
             _id: null,
-            weekly: { $sum: { $cond: [{ $gte: ['$createdAt', weekBefore] }, 1, 0] } },
+            weekly: {
+              $sum: { $cond: [{ $gte: ['$createdAt', weekBefore] }, 1, 0] },
+            },
             monthly: { $sum: 1 },
           },
         },
       ],
       {
         readPreference: 'secondaryPreferred',
-      }
+      },
     );
 
     const stats = result[0] || {};

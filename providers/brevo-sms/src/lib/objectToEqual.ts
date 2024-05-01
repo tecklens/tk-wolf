@@ -19,13 +19,13 @@ declare global {
 export function objectToEqual(
   actual: string | object,
   key: string,
-  value: unknown
+  value: unknown,
 ) {
   if (typeof actual !== 'string' && typeof actual !== 'object') {
     throw new TypeError('Actual value must be a stringified object or object');
   } else if (typeof key !== 'string') {
     throw new TypeError(
-      'Key must be a string (optionally with . for sub keys)'
+      'Key must be a string (optionally with . for sub keys)',
     );
   }
 
@@ -35,7 +35,7 @@ export function objectToEqual(
 
   const invalidKeyMessageFactory = (object: object, subKey: string) => () =>
     `expected ${this.utils.printReceived(
-      object
+      object,
     )} to be an object with key ${subKey}`;
 
   for (const subKey of subKeys) {
@@ -52,7 +52,7 @@ export function objectToEqual(
     return {
       message: () =>
         `expected ${this.utils.printReceived(
-          currentObject
+          currentObject,
         )} to have attribute ${key} with value ${String(value)}`,
       pass: false,
     };
@@ -61,7 +61,7 @@ export function objectToEqual(
   return {
     message: () =>
       `expected ${this.utils.printReceived(
-        currentObject
+        currentObject,
       )} to have attribute ${key} with value ${String(value)}`,
     pass: true,
   };

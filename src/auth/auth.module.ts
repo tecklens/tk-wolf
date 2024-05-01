@@ -15,6 +15,7 @@ import { HttpModule } from '@nestjs/axios';
 import { ApiKeyStrategy } from '@app/auth/strategy/apikey.strategy';
 import { EnvironmentModule } from '@app/environment/environment.module';
 import { MemberRepository } from '@libs/repositories/member';
+import { LimitService } from '@app/auth/limit.service';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MemberRepository } from '@libs/repositories/member';
     EnvironmentModule,
   ],
   providers: [
+    LimitService,
     AuthService,
     LocalStrategy,
     JwtStrategy,
@@ -41,7 +43,13 @@ import { MemberRepository } from '@libs/repositories/member';
     MemberRepository,
     UserRepository,
   ],
-  exports: [AuthService, JwtStrategy, GitHubStrategy, ApiKeyStrategy],
+  exports: [
+    AuthService,
+    JwtStrategy,
+    GitHubStrategy,
+    ApiKeyStrategy,
+    LimitService,
+  ],
   controllers: [AuthController],
 })
 export class AuthModule {}

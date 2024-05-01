@@ -19,6 +19,8 @@ import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.r
 import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
 import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
+import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
 
 @Injectable()
 export class WorkflowService {
@@ -26,6 +28,7 @@ export class WorkflowService {
     private workflowRepository: WorkflowRepository,
     private nodeRepository: NodeRepository,
     private edgeRepository: EdgeRepository,
+    private emailTemplateRepository: EmailTemplateRepository,
   ) {}
 
   async getWorkflows(u: IJwtPayload, d: WorkflowsRequestDto) {
@@ -66,6 +69,10 @@ export class WorkflowService {
     });
   }
 
+  async getOneNode(nodeId: string) {
+    return await this.nodeRepository.findById(nodeId);
+  }
+
   async addNodeToWorkflow(u: IJwtPayload, payload: AddNodeWorkflowRequestDto) {
     return this.nodeRepository.create({
       _workflowId: payload.workflowId,
@@ -88,6 +95,21 @@ export class WorkflowService {
         },
       );
     }
+  }
+
+  async setProviderNode(
+    u: IJwtPayload,
+    payload: SetProviderNodeWorkflowRequestDto,
+  ) {
+    await this.nodeRepository.updateOne(
+      {
+        _id: payload.id,
+      },
+      {
+        _providerId: payload.providerId,
+        updatedAt: new Date(),
+      },
+    );
   }
 
   async addEdgeToWorkflow(u: IJwtPayload, payload: AddEdgeWorkflowRequestDto) {
@@ -181,5 +203,9 @@ export class WorkflowService {
       },
       objForUpdate,
     );
+  }
+
+  async getEmailTemplates(skip = 0, limit = 10) {
+    return await this.emailTemplateRepository.findByPage(skip, limit);
   }
 }

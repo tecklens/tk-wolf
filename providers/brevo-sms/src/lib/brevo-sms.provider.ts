@@ -10,7 +10,7 @@ import 'cross-fetch';
 declare global {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   interface RequestInit {
-    agent: ProxyAgent;
+    agent?: ProxyAgent;
   }
 }
 
@@ -23,11 +23,11 @@ export class BrevoSmsProvider implements ISmsProvider {
     private config: {
       apiKey: string;
       from: string;
-    }
+    },
   ) {}
 
   async sendMessage(
-    options: ISmsOptions
+    options: ISmsOptions,
   ): Promise<ISendMessageSuccessResponse> {
     const sms = {
       sender: options.from || this.config.from,

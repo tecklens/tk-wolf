@@ -1,4 +1,5 @@
 import { JobTitleEnum } from '../../types';
+import { UserPlan } from '@libs/repositories/user';
 
 export interface IServicesHashes {
   intercom?: string;
@@ -18,4 +19,6 @@ export interface IUserEntity {
   externalId?: string;
   bio?: string | null;
   urls?: string[] | null;
+
+  plan: UserPlan;
 }

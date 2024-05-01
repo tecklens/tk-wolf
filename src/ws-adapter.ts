@@ -14,6 +14,7 @@ import { get } from 'lodash';
 
 export class WsAdapter implements WebSocketAdapter {
   constructor(private app: INestApplicationContext) {}
+
   private logger = new Logger('WsAdapter');
   private clientData = new Map<
     WebSocket,
@@ -55,25 +56,39 @@ export class WsAdapter implements WebSocketAdapter {
   bindClientConnect(server: WebSocket, callback: Function) {
     server.on(CONNECTION_EVENT, (client: WebSocket, req: any) => {
       const queryData = url.parse(req.url, true).query;
-      if (
-        !get(queryData, 'token') &&
-        typeof get(queryData, 'token') === 'string'
-      )
-        return;
-      let decoded: any = undefined;
-      try {
-        decoded = jwtDecode(get(queryData, 'token') as string);
-      } catch (e) {
-        this.logger.error(e);
-      }
+      if (get(queryData, 'type') === 'admin') {
+        if (
+          !get(queryData, 'token') ||
+          typeof get(queryData, 'token') == 'string'
+        )
+          return;
+        let decoded: any = undefined;
+        try {
+          decoded = jwtDecode(get(queryData, 'token') as string);
+        } catch (e) {
+          this.logger.error(e);
+        }
 
-      if (!decoded?._id) return;
-      const listener = (event: WebSocket, data) =>
-        client.send(JSON.stringify({ event, data }));
-      server.on('event', listener);
-      server.on(`event_${decoded?._id}`, listener);
-      this.clientData.set(client, { server, listener });
-      callback(client);
+        if (!decoded?._id) return;
+        const listener = (event: WebSocket, data) =>
+          client.send(JSON.stringify({ event, data }));
+        server.on('event', listener);
+        server.on(`event_${decoded?._id}`, listener);
+        this.clientData.set(client, { server, listener });
+        callback(client);
+      } else if (get(queryData, 'type') === 'in-app') {
+        // * for in-app react notification
+
+        const apiKey = get(queryData, 'apiKey');
+        if (!apiKey || typeof apiKey !== 'string') return;
+
+        const listener = (event: WebSocket, data) =>
+          client.send(JSON.stringify({ event, data }));
+        server.on('event', listener);
+        server.on(`event_${apiKey}`, listener);
+        this.clientData.set(client, { server, listener });
+        callback(client);
+      }
     });
   }
 

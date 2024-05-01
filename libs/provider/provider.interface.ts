@@ -7,6 +7,7 @@ export enum ChannelTypeEnum {
   CHAT = 'chat',
   PUSH = 'push',
   WEBHOOK = 'webhook',
+  DELAY = 'delay',
 }
 
 export interface IAttachmentOptions {

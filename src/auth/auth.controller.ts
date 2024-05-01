@@ -130,4 +130,10 @@ export class AuthController {
       token,
     };
   }
+
+  @Get('/limit/remaining')
+  @UseGuards(JwtAuthGuard)
+  async getRemainingRequest(@UserSession() user: IJwtPayload): Promise<number> {
+    return this.authService.getRemainingRequest(user);
+  }
 }

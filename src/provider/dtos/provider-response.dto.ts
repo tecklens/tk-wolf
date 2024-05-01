@@ -3,7 +3,7 @@ import { ChannelTypeEnum } from '@novu/shared';
 import { CredentialsDto } from './credentials.dto';
 import { StepFilter } from '@libs/shared/dto/step-filter';
 
-export class IntegrationResponseDto {
+export class ProviderResponseDto {
   @ApiPropertyOptional()
   _id?: string;
 

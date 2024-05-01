@@ -79,9 +79,9 @@ export default async function bootstrap() {
 
   app.useWebSocketAdapter(new WsAdapter(app));
 
-  // app.enableShutdownHooks();
+  app.enableShutdownHooks();
 
-  // await app.init();
+  await app.init();
 
   Logger.log('BOOTSTRAPPED SUCCESSFULLY');
 

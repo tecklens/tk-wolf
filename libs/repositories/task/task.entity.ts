@@ -1,14 +1,18 @@
 import { NodeId } from '@libs/repositories/node/types';
 import { WorkflowId } from '@libs/repositories/workflow/types';
-import {
-  ITaskEntity,
-  TaskStatus,
-} from '@libs/shared/entities/workflow/task.interface';
+import { ITaskEntity } from '@libs/shared/entities/workflow/task.interface';
 import { TaskId } from '@libs/repositories/task/types';
+import { ProviderId } from '@libs/repositories/provider/types';
+import { TaskStatus } from '@tps/task.interface';
 
 export class TaskEntity implements ITaskEntity {
   _id?: TaskId;
   _workflowId: WorkflowId;
+  workflowName: string;
+  _providerId: ProviderId;
+  providerName: string;
+  payload: any;
+  channel: string;
 
   deletedAt?: string;
   deletedBy?: string;
@@ -23,6 +27,9 @@ export class TaskEntity implements ITaskEntity {
   status: TaskStatus;
   subscriberId: string;
   type: string;
+
+  errorDetail: any;
+  bodyWebhook: any;
 }
 
 export type TaskDBModel = TaskEntity;

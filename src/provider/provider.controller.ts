@@ -2,13 +2,16 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiExcludeController,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
@@ -17,10 +20,11 @@ import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { UserSession } from '@libs/utils/user.session';
 import { IJwtPayload } from '@libs/shared/types';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { CreateIntegrationRequestDto } from '@app/provider/dtos/create-integration-request.dto';
-import { IntegrationResponseDto } from '@app/provider/dtos/integration-response.dto';
+import { CreateProviderRequestDto } from '@app/provider/dtos/create-provider-request.dto';
+import { ProviderResponseDto } from '@app/provider/dtos/provider-response.dto';
 import { ProviderService } from '@app/provider/provider.service';
-import { ProviderEntity } from "@libs/repositories/provider";
+import { ProviderEntity } from '@libs/repositories/provider';
+import { GetProviderRequestDto } from '@app/provider/dtos/get-provider-request.dto';
 
 @Controller('provider')
 @ApiBearerAuth()
@@ -30,7 +34,7 @@ import { ProviderEntity } from "@libs/repositories/provider";
 export class ProviderController {
   constructor(private readonly providerService: ProviderService) {}
   @Post('/')
-  @ApiResponse(IntegrationResponseDto, 201)
+  @ApiResponse(ProviderResponseDto, 201)
   @ApiOperation({
     summary: 'Create integration',
     description:
@@ -40,22 +44,28 @@ export class ProviderController {
   @ExternalApiAccessible()
   async createIntegration(
     @UserSession() user: IJwtPayload,
-    @Body() body: CreateIntegrationRequestDto,
+    @Body() body: CreateProviderRequestDto,
   ): Promise<ProviderEntity> {
     return await this.providerService.createProvider(user, body);
-    //   {
-    //     userId: user._id,
-    //     name: body.name,
-    //     identifier: body.identifier,
-    //     environmentId: body._environmentId ?? user.environmentId,
-    //     organizationId: user.organizationId,
-    //     providerId: body.providerId,
-    //     channel: body.channel,
-    //     credentials: body.credentials,
-    //     active: body.active ?? false,
-    //     check: body.check ?? true,
-    //     conditions: body.conditions,
-    //   },
-    // );
+  }
+
+  @Get('/')
+  @ApiOkResponse({
+    type: [ProviderResponseDto],
+    description:
+      'The list of integrations belonging to the organization that are successfully returned.',
+  })
+  @ApiOperation({
+    summary: 'Get integrations',
+    description:
+      'Return all the integrations the user has created for that organization. Review v.0.17.0 changelog for a breaking change',
+  })
+  @ExternalApiAccessible()
+  async getListProvider(
+    @UserSession() user: IJwtPayload,
+    @Query() body: GetProviderRequestDto,
+  ): Promise<ProviderResponseDto[]> {
+    // @ts-ignore
+    return this.providerService.getListProvider(user, body);
   }
 }

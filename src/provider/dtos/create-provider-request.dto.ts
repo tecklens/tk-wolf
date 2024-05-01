@@ -12,11 +12,11 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { CredentialsDto } from './credentials.dto';
-import { ICreateIntegrationBodyDto } from '@libs/shared/dto';
+import { ICreateProviderBodyDto } from '@libs/shared/dto';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 import { StepFilter } from '@libs/shared/dto/step-filter';
 
-export class CreateIntegrationRequestDto implements ICreateIntegrationBodyDto {
+export class CreateProviderRequestDto implements ICreateProviderBodyDto {
   @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsString()

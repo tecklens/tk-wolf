@@ -25,7 +25,10 @@ import { IJwtPayload } from '@libs/shared/types';
 import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { WorkflowService } from '@app/workflow/workflow.service';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { CreateWorkflowRequestDto, UpdateWorkflowRequestDto } from "@app/workflow/dto";
+import {
+  CreateWorkflowRequestDto,
+  UpdateWorkflowRequestDto,
+} from '@app/workflow/dto';
 import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
 import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
@@ -33,6 +36,8 @@ import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
 import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
 import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
 import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
+import { EmailTemplateEntity } from '@libs/repositories/email-templates/email-template.entity';
+import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -83,6 +88,12 @@ export class WorkflowController {
     return this.workflowService.updateWorkflow(user, payload);
   }
 
+  @Get('/node/:id')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  getOneNode(@Param('id') id: string) {
+    return this.workflowService.getOneNode(id);
+  }
   @Post('/node')
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
@@ -101,6 +112,16 @@ export class WorkflowController {
     @Body() payload: UpdateNodeWorkflowRequestDto[],
   ) {
     return this.workflowService.updateNodeToWorkflow(user, payload);
+  }
+
+  @Post('/node/provider')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  setProviderNode(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: SetProviderNodeWorkflowRequestDto,
+  ) {
+    return this.workflowService.setProviderNode(user, payload);
   }
 
   @Post('/edge')
@@ -148,5 +169,13 @@ export class WorkflowController {
     @Body() payload: DelEleWorkflowRequestDto,
   ) {
     this.workflowService.delNodeEdge(user, payload);
+  }
+
+  @Get('/email/templates')
+  getEmailTemplates(
+    @Query('skip') skip: number,
+    @Query('limit') limit: number,
+  ): Promise<EmailTemplateEntity[]> {
+    return this.workflowService.getEmailTemplates(skip, limit);
   }
 }

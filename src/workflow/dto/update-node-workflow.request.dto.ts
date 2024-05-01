@@ -14,4 +14,8 @@ export class UpdateNodeWorkflowRequestDto {
   @IsDefined()
   @IsNotEmpty({ message: 'Id Node is required' })
   id: string;
+
+  @IsOptional()
+  @ApiPropertyOptional()
+  data: any;
 }

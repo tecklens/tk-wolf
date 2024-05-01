@@ -48,6 +48,7 @@ export class TermiiSmsProvider implements ISmsProvider {
       method: 'POST',
       headers: {
         'Content-Type': ['application/json'],
+        'User-Agent': 'Wolf',
       },
       body: JSON.stringify(params),
     };

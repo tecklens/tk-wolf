@@ -2,12 +2,11 @@ import { FilterQuery } from 'mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
 import { NOVU_PROVIDERS } from '@novu/shared';
 
-import { ProviderEntity, ProviderDBModel } from './provider.entity';
+import { ProviderDBModel, ProviderEntity } from './provider.entity';
 import { Provider } from './provider.schema';
 import type { EnforceEnvOrOrgIds } from '@tps/enforce';
 
 import { BaseRepository } from '../base-repository';
-import { DbException } from '@libs/shared/exceptions/db.exception';
 
 export type IntegrationQuery = FilterQuery<ProviderDBModel> &
   EnforceEnvOrOrgIds;
@@ -22,6 +21,13 @@ export class ProviderRepository extends BaseRepository<
     super(Provider, ProviderEntity);
     // @ts-ignore
     this.provider = Provider;
+  }
+
+  async findById(id: string, select?: string): Promise<ProviderEntity | null> {
+    const data = await this.MongooseModel.findById(id, select);
+    if (!data) return null;
+
+    return this.mapEntity(data.toObject());
   }
 
   async find(
@@ -76,19 +82,19 @@ export class ProviderRepository extends BaseRepository<
     return await super.create(data);
   }
 
-  async delete(query: IntegrationQuery) {
-    const integration = await this.findOne({
-      _id: query._id,
-      _organizationId: query._organizationId,
-    });
-    if (!integration)
-      throw new DbException(`Could not find integration with id ${query._id}`);
-
-    return await this.provider.delete({
-      _id: integration._id,
-      _organizationId: integration._organizationId,
-    });
-  }
+  // async deleteProvider(query: IntegrationQuery) {
+  //   const integration = await this.findOne({
+  //     _id: query._id,
+  //     _organizationId: query._organizationId,
+  //   });
+  //   if (!integration)
+  //     throw new DbException(`Could not find integration with id ${query._id}`);
+  //
+  //   return await this.provider.delete({
+  //     _id: integration._id,
+  //     _organizationId: integration._organizationId,
+  //   });
+  // }
 
   // async deleteMany(query: IntegrationQuery): Promise<IDeleteResult> {
   //   const { _environmentId, _organizationId } = query || {};

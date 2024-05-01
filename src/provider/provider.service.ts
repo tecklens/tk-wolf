@@ -1,22 +1,66 @@
-import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
-import { CHANNELS_WITH_PRIMARY, IJwtPayload } from "@libs/shared/types";
-import { CreateIntegrationRequestDto } from "@app/provider/dtos/create-integration-request.dto";
-import { ApiException } from "@pak/utils/exceptions";
-import { DbException } from "@libs/shared/exceptions/db.exception";
-import { InAppProviderIdEnum, providers } from "@libs/shared/consts";
-import { EmailProviderIdEnum, SmsProviderIdEnum } from "@novu/node";
-import { IntegrationQuery, ProviderRepository } from "@libs/repositories/provider";
-import slugify from "slugify";
-import { MailFactory } from "@app/provider/factories";
-import { ICredentials } from "@libs/shared/entities/integration";
-import { ChannelTypeEnum } from "@libs/provider/provider.interface";
-import { encryptCredentials } from "@libs/shared/encryptions/encrypt-provider";
-import * as shortid from "shortid";
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import {
+  CHANNELS_WITH_PRIMARY,
+  IJwtPayload,
+  OrganizationId,
+} from '@libs/shared/types';
+import { CreateProviderRequestDto } from '@app/provider/dtos/create-provider-request.dto';
+import { ApiException } from '@pak/utils/exceptions';
+import { DbException } from '@libs/shared/exceptions/db.exception';
+import { InAppProviderIdEnum, providers } from '@libs/shared/consts';
+import { EmailProviderIdEnum, SmsProviderIdEnum } from '@novu/node';
+import {
+  IntegrationQuery,
+  ProviderEntity,
+  ProviderRepository,
+} from '@libs/repositories/provider';
+import slugify from 'slugify';
+import { MailFactory } from '@app/provider/factories';
+import { ICredentials } from '@libs/shared/entities/integration';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import {
+  decryptCredentials,
+  encryptCredentials,
+} from '@libs/shared/encryptions/encrypt-provider';
+import * as shortid from 'shortid';
+import { ProviderId } from '@libs/repositories/provider/types';
+import { GetProviderRequestDto } from '@app/provider/dtos/get-provider-request.dto';
 
 @Injectable()
 export class ProviderService {
   constructor(private readonly providerRepository: ProviderRepository) {}
-  async createProvider(u: IJwtPayload, payload: CreateIntegrationRequestDto) {
+
+  async getListProvider(u: IJwtPayload, payload: GetProviderRequestDto) {
+    const query: Partial<ProviderEntity> & { _organizationId: string } = {
+      _organizationId: u.organizationId,
+    };
+
+    if (payload.active) {
+      query.active = payload.active;
+    }
+
+    if (payload.channel) {
+      query.channel = payload.channel;
+    }
+
+    if (payload.providerId) {
+      query.providerId = payload.providerId;
+    }
+
+    const foundIntegrations = payload.findOne
+      ? [await this.providerRepository.findOne(query)]
+      : await this.providerRepository.find(query);
+
+    return foundIntegrations
+      .filter((p) => p)
+      .map((p: ProviderEntity) => this.getDecryptedCredentials(p));
+  }
+
+  async createProvider(u: IJwtPayload, payload: CreateProviderRequestDto) {
     await this.validate(
       u.environmentId,
       u.organizationId,
@@ -89,6 +133,11 @@ export class ProviderService {
     }
   }
 
+  private getDecryptedCredentials(integration: ProviderEntity) {
+    integration.credentials = decryptCredentials(integration.credentials);
+
+    return integration;
+  }
   private async calculatePriorityAndPrimary(
     environmentId: string,
     organizationId: string,

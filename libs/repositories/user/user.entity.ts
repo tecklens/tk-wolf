@@ -4,6 +4,20 @@ import { UserId } from './types';
 import { AuthProviderEnum, IUserEntity } from '@libs/shared/entities/user';
 import { JobTitleEnum } from '@libs/shared/types';
 
+export enum UserPlan {
+  free,
+  silver,
+  gold,
+  diamond,
+}
+
+export const consumePoints = {
+  [UserPlan.free]: 10000000,
+  [UserPlan.silver]: 100000,
+  [UserPlan.gold]: 10000,
+  [UserPlan.diamond]: 1000,
+};
+
 export interface IUserToken {
   providerId: string;
   provider: AuthProviderEnum;
@@ -59,6 +73,8 @@ export class UserEntity implements IUserEntity {
   externalId?: string;
   bio?: string;
   urls?: string[] | null;
+
+  plan: UserPlan;
 }
 
 export type UserDBModel = UserEntity;

@@ -19,6 +19,7 @@ import { EventsModule } from './events/events.module';
 import { RolesGuard } from '@app/auth/strategy/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ProviderModule } from './provider/provider.module';
+import { LogModule } from './log/log.module';
 
 const dbService = {
   provide: DbService,
@@ -89,6 +90,7 @@ const dbService = {
     TriggerModule,
     EventsModule,
     ProviderModule,
+    LogModule,
   ],
   providers: [
     AppService,

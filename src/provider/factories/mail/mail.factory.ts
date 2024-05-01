@@ -1,7 +1,6 @@
 import {
   SendgridHandler,
   MailgunHandler,
-  EmailJsHandler,
   MailjetHandler,
   MailtrapHandler,
   MandrillHandler,
@@ -28,7 +27,6 @@ export class MailFactory {
     new SendgridHandler(),
     new MailgunHandler(),
     new NetCoreHandler(),
-    new EmailJsHandler(),
     new MailjetHandler(),
     new MailtrapHandler(),
     new MandrillHandler(),

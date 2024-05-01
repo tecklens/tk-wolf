@@ -31,5 +31,14 @@ export interface IWorkflowEntity {
 
 export interface INextJob extends IDataTrigger {
   workflowId: WorkflowId;
+  workflowName: string;
   currentNodeId: NodeId;
+  organizationId: string;
+  userId: string;
+}
+
+export interface IWebhookData {
+  _workflowId: string;
+  _userId: string;
+  requestData: any;
 }

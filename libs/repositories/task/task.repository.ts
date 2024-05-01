@@ -1,6 +1,7 @@
 import { BaseRepository } from '../base-repository';
 import { TaskDBModel, TaskEntity } from './task.entity';
 import { Task } from '@libs/repositories/task/task.schema';
+import { TaskStatus } from '@tps/task.interface';
 
 export class TaskRepository extends BaseRepository<
   TaskDBModel,
@@ -32,5 +33,23 @@ export class TaskRepository extends BaseRepository<
         $in: ids,
       },
     });
+  }
+
+  async updateStatus(
+    taskId: string,
+    status: TaskStatus,
+    errorDetail: any,
+    bodyWebhook: any | undefined,
+  ) {
+    this.updateOne(
+      {
+        _id: taskId,
+      },
+      {
+        status,
+        errorDetail,
+        bodyWebhook,
+      },
+    );
   }
 }

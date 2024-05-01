@@ -12,14 +12,21 @@ import {
   JobTitleEnum,
   SignUpOriginEnum,
 } from '@libs/shared/types';
-import { Cache, CACHE_MANAGER, CacheKey } from '@nestjs/cache-manager';
+import {
+  Cache,
+  CACHE_MANAGER,
+  CacheKey,
+  CacheTTL,
+} from '@nestjs/cache-manager';
 import {
   EnvironmentEntity,
   EnvironmentRepository,
 } from '@libs/repositories/environment';
 import {
+  consumePoints,
   IUserResetTokenCount,
   UserEntity,
+  UserPlan,
   UserRepository,
 } from '@libs/repositories/user';
 import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
@@ -50,7 +57,8 @@ import { Novu } from '@novu/node';
 import { EnvironmentService } from '@app/environment/environment.service';
 import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
-import { MemberStatusEnum } from '@novu/shared';
+import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
+import { LimitService, MAX_POINT_IN_MONTH } from '@app/auth/limit.service';
 
 @Injectable()
 export class AuthService {
@@ -64,6 +72,7 @@ export class AuthService {
 
   constructor(
     private usersService: UsersService,
+    private limitService: LimitService,
     private environmentService: EnvironmentService,
     private jwtService: JwtService,
     private environmentRepository: EnvironmentRepository,
@@ -196,17 +205,38 @@ export class AuthService {
 
     if (error) throw new UnauthorizedException(error);
 
-    return {
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      profilePicture: user.profilePicture,
-      roles: [MemberRoleEnum.ADMIN],
-      organizationId: environment._organizationId,
-      environmentId: environment._id,
-      exp: 0,
-    };
+    let plan: UserPlan = user.plan;
+    if (!plan) plan = UserPlan.free;
+
+    const cPoint = consumePoints[plan];
+
+    try {
+      const rspLimit = await this.limitService
+        .getLimiter()
+        .consume(`${user._id}_${environment._id}`, cPoint);
+
+      this.cacheManager.set(
+        `r_p_${user._id}_${environment._id}`,
+        rspLimit.remainingPoints,
+        30 * 24 * 60 * 60 * 1000, // * millisecond
+      );
+
+      return {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        profilePicture: user.profilePicture,
+        roles: [MemberRoleEnum.ADMIN],
+        organizationId: environment._organizationId,
+        environmentId: environment._id,
+        exp: 0,
+      };
+    } catch (e) {
+      throw new UnauthorizedException(
+        'Exceeding the bucket limit for your Wolf account',
+      );
+    }
   }
 
   public async refreshToken(userId: string) {
@@ -947,6 +977,7 @@ export class AuthService {
   }
 
   @CacheKey('user:api-key')
+  @CacheTTL(5)
   private async getApiKeyUser({ apiKey }: { apiKey: string }): Promise<{
     environment?: EnvironmentEntity;
     user?: UserEntity;
@@ -985,5 +1016,24 @@ export class AuthService {
     }
 
     return { environment, user };
+  }
+
+  @CacheKey('user.remain-req')
+  @CacheTTL(30)
+  async getRemainingRequest(user: IJwtPayload) {
+    const u = await this.userRepository.findById(user._id);
+    if (!u) throw new UnauthorizedException('User not existed');
+    const remainPointStr: string = await this.cacheManager.get(
+      `r_p_${user._id}_${user.environmentId}`,
+    );
+
+    let remainPoint = MAX_POINT_IN_MONTH;
+    if (remainPointStr) remainPoint = parseInt(remainPointStr);
+    let plan: UserPlan = u.plan;
+    if (!plan) plan = UserPlan.free;
+
+    const cPoint = consumePoints[plan];
+
+    return Math.ceil(remainPoint / cPoint);
   }
 }

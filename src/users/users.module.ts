@@ -9,10 +9,12 @@ import { OrganizationRepository } from '@libs/repositories/organization';
 import { JwtService } from '@nestjs/jwt';
 import { EnvironmentModule } from '@app/environment/environment.module';
 import { MemberRepository } from '@libs/repositories/member';
+import { LimitService } from '@app/auth/limit.service';
 
 @Module({
   imports: [EnvironmentModule],
   providers: [
+    LimitService,
     UsersService,
     UserRepository,
     EnvironmentRepository,

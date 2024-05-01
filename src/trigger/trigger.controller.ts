@@ -2,7 +2,9 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Get,
   Post,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -18,6 +20,11 @@ import { ApiResponse } from '@tps/decorators/api-response.decorator';
 import { CreateTriggerDto } from '@app/trigger/dtos/create-trigger.dto';
 import { CreateTriggerResponse } from '@app/trigger/dtos/create-trigger.response';
 import { ApiKeyAuthGuard } from '@app/auth/strategy/apikey.guard';
+import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
+import { TaskEntity } from '@libs/repositories/task/task.entity';
+import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
+import { TaskService } from '@app/trigger/task.service';
+import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
 
 @ApiBearerAuth()
 @Controller('trigger')
@@ -25,7 +32,10 @@ import { ApiKeyAuthGuard } from '@app/auth/strategy/apikey.guard';
 @ApiTags('Trigger')
 @ApiExcludeController()
 export class TriggerController {
-  constructor(private readonly triggerService: TriggerService) {}
+  constructor(
+    private readonly triggerService: TriggerService,
+    private readonly taskService: TaskService,
+  ) {}
 
   @Post('/')
   @ApiResponse(CreateTriggerResponse, 200)
@@ -38,5 +48,16 @@ export class TriggerController {
     @Body() payload: CreateTriggerDto,
   ): Promise<CreateTriggerResponse> {
     return this.triggerService.createTrigger(payload);
+  }
+
+  @Get('/task')
+  @ApiResponse(CreateTriggerResponse, 200)
+  @ApiOperation({
+    summary: 'API get task of workflow',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  getTask(@Query() payload: GetTaskRequestDto): Promise<TaskResponseDto> {
+    return this.taskService.getTasks(payload);
   }
 }

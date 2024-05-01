@@ -45,6 +45,8 @@ const userSchema = new Schema<UserDBModel>(
     externalId: Schema.Types.String,
     bio: Schema.Types.String,
     urls: Schema.Types.Array,
+
+    plan: { type: Schema.Types.Number, default: 0 },
   },
   schemaOptions,
 );
