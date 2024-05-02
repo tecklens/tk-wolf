@@ -20,6 +20,7 @@ import { RolesGuard } from '@app/auth/strategy/roles.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ProviderModule } from './provider/provider.module';
 import { LogModule } from './log/log.module';
+import { PaymentModule } from './payment/payment.module';
 
 const dbService = {
   provide: DbService,
@@ -91,6 +92,7 @@ const dbService = {
     EventsModule,
     ProviderModule,
     LogModule,
+    PaymentModule,
   ],
   providers: [
     AppService,
