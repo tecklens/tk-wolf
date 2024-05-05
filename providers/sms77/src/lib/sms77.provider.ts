@@ -21,13 +21,13 @@ export class Sms77SmsProvider implements ISmsProvider {
     private config: {
       apiKey?: string;
       from?: string;
-    }
+    },
   ) {
     this.sms77Client = new Sms77Client(config.apiKey, 'Novu');
   }
 
   async sendMessage(
-    options: ISmsOptions
+    options: ISmsOptions,
   ): Promise<ISendMessageSuccessResponse> {
     const params: SmsParams = {
       from: options.from || this.config.from,

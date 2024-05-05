@@ -63,6 +63,7 @@
     "jwt-decode": "^4.0.0",
     "kafkajs": "^2.2.4",
     "lerna": "^8.1.2",
+    "libphonenumber-js": "^1.10.62",
     "lodash": "^4.17.21",
     "mixpanel": "^0.18.0",
     "mongoose": "^8.3.2",

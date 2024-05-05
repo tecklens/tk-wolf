@@ -21,6 +21,7 @@ const taskSchema = new Schema<TaskDBModel>(
     code: Schema.Types.String,
     createdBy: Schema.Types.String,
     email: Schema.Types.String,
+    phone: Schema.Types.String,
     name: Schema.Types.String,
     priority: Schema.Types.String,
     status: Schema.Types.Number,

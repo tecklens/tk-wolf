@@ -6,6 +6,7 @@ import { ProviderId } from '@libs/repositories/provider/types';
 import { TaskStatus } from '@tps/task.interface';
 
 export class TaskEntity implements ITaskEntity {
+  id?: string;
   _id?: TaskId;
   _workflowId: WorkflowId;
   workflowName: string;
@@ -22,6 +23,7 @@ export class TaskEntity implements ITaskEntity {
   code: string;
   createdBy: string;
   email: string;
+  phone: string;
   name: string;
   priority: string;
   status: TaskStatus;

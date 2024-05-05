@@ -1,12 +1,11 @@
 import {
   BadRequestException,
-  HttpStatus,
   Injectable,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
 import {
-  IDataTrigger,
+  IOverridesDataTrigger,
   ITargetTrigger,
 } from '@app/trigger/dtos/create-trigger.dto';
 import { ProducerService } from '@app/kafka/producer/producer.service';
@@ -22,7 +21,7 @@ import {
   ProviderRepository,
 } from '@libs/repositories/provider';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { MailFactory } from '@app/provider/factories';
+import { MailFactory, SmsFactory } from '@app/provider/factories';
 import { NodeEntity } from '@libs/repositories/node/node.entity';
 import { INodeData } from '@tps/i-node.data';
 import { makeid } from '@libs/utils';
@@ -31,7 +30,9 @@ import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
 import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
 import { HttpService } from '@nestjs/axios';
-import { map } from 'rxjs';
+import { PlatformException } from '@pak/utils/exceptions';
+import { get } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TaskService {
@@ -53,7 +54,7 @@ export class TaskService {
     workflowName: string,
     orgId: string,
     target: ITargetTrigger,
-    data: IDataTrigger,
+    overrides: IOverridesDataTrigger,
     userId: string,
     type: string,
     previousNodeId: string | undefined,
@@ -82,10 +83,10 @@ export class TaskService {
           currentNodeId: n._id,
           organizationId: orgId,
           target: target,
-          data: data,
           workflowId,
           workflowName,
           userId,
+          overrides: overrides,
         };
 
         this.sender.produce({
@@ -148,6 +149,9 @@ export class TaskService {
             break;
           case ChannelTypeEnum.WEBHOOK:
             await this.executeWebhook(node, data);
+            break;
+          case ChannelTypeEnum.SMS:
+            await this.executeSms(provider, node, data, members);
             break;
           default:
             return;
@@ -232,6 +236,104 @@ export class TaskService {
     }
   }
 
+  private async executeSms(
+    provider: ProviderEntity,
+    node: NodeEntity,
+    inp: INextJob,
+    members: MemberEntity[],
+    overrides: Record<string, any> = {},
+  ) {
+    const task = await this.taskRepository.create({
+      _workflowId: node._workflowId,
+      workflowName: inp.workflowName,
+      _nodeId: node._id,
+      _providerId: null,
+      providerName: provider.name,
+      payload: node.data,
+      channel: null,
+      code: 'TASK-' + makeid(8),
+      name: provider.name,
+      type: node.type,
+      status: TaskStatus.in_process,
+      priority: 'medium',
+      subscriberId: inp.target.subcriberId,
+      email: inp.target.email,
+      phone: inp.target.phone,
+    });
+    try {
+      const overrides = inp.overrides;
+
+      const smsFactory = new SmsFactory();
+      const smsHandler = smsFactory.getHandler(
+        this.buildFactoryIntegration(provider),
+      );
+      if (!smsHandler) {
+        throw new PlatformException(
+          `Sms handler for provider ${provider.providerId} is  not found`,
+        );
+      }
+
+      const result = await smsHandler.send({
+        to: overrides.to || inp.target.phone,
+        from: overrides.from || provider.credentials.from,
+        content: overrides.content || get(node.data, 'content'),
+        id: uuidv4(),
+        customData: overrides.customData || {},
+      });
+
+      // await this.executionLogRoute.execute(
+      //   ExecutionLogRouteCommand.create({
+      //     ...ExecutionLogRouteCommand.getDetailsFromJob(command.job),
+      //     messageId: message._id,
+      //     detail: DetailEnum.MESSAGE_SENT,
+      //     source: ExecutionDetailsSourceEnum.INTERNAL,
+      //     status: ExecutionDetailsStatusEnum.SUCCESS,
+      //     isTest: false,
+      //     isRetry: false,
+      //     raw: JSON.stringify(result),
+      //   }),
+      // );
+
+      if (!result?.id) {
+        return;
+      }
+
+      // await this.messageRepository.update(
+      //   { _environmentId: command.environmentId, _id: message._id },
+      //   {
+      //     $set: {
+      //       identifier: result.id,
+      //     },
+      //   },
+      // );
+
+      await this.taskRepository.updateStatus(
+        task._id,
+        TaskStatus.done,
+        null,
+        undefined,
+      );
+    } catch (e) {
+      // await this.sendErrorStatus(
+      //   message,
+      //   'error',
+      //   'unexpected_sms_error',
+      //   e.message || e.name || 'Un-expect SMS provider error',
+      //   command,
+      //   LogCodeEnum.SMS_ERROR,
+      //   e,
+      // );
+
+      this.logger.error(e);
+      await this.taskRepository.updateStatus(
+        task._id,
+        TaskStatus.cancel,
+        e,
+        undefined,
+      );
+    }
+  }
+
   private async executeEmail(
     provider: ProviderEntity,
     node: NodeEntity,
@@ -306,7 +408,7 @@ export class TaskService {
           inp.workflowName,
           inp.organizationId,
           inp.target,
-          inp.data,
+          inp.overrides,
           inp.userId,
           node.type,
           node._id,

@@ -22,6 +22,7 @@ export interface ITaskEntity {
   priority: string;
   subscriberId: string;
   email: string;
+  phone: string;
   errorDetail: any;
   bodyWebhook: any;
 
