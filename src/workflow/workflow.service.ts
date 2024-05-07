@@ -21,6 +21,9 @@ import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.req
 import { v4 as uuidv4 } from 'uuid';
 import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
 import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
+import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { WorkflowId } from '@libs/repositories/workflow/types';
+import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
 
 @Injectable()
 export class WorkflowService {
@@ -29,6 +32,7 @@ export class WorkflowService {
     private nodeRepository: NodeRepository,
     private edgeRepository: EdgeRepository,
     private emailTemplateRepository: EmailTemplateRepository,
+    private variableRepository: VariableRepository,
   ) {}
 
   async getWorkflows(u: IJwtPayload, d: WorkflowsRequestDto) {
@@ -207,5 +211,23 @@ export class WorkflowService {
 
   async getEmailTemplates(skip = 0, limit = 10) {
     return await this.emailTemplateRepository.findByPage(skip, limit);
+  }
+
+  async getVariables(u: IJwtPayload, workflowId: WorkflowId) {
+    return await this.variableRepository.findByWfId(workflowId);
+  }
+
+  async saveVariables(
+    u: IJwtPayload,
+    payload: ChangeVariablesWorkflowRequestDto[],
+  ) {
+    for (const v of payload) {
+      this.variableRepository.create({
+        _workflowId: v.workflowId,
+        name: v.name,
+        defaultValue: v.defaultValue,
+        type: v.type,
+      });
+    }
   }
 }

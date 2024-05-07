@@ -38,6 +38,7 @@ import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-work
 import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
 import { EmailTemplateEntity } from '@libs/repositories/email-templates/email-template.entity';
 import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
+import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -177,5 +178,22 @@ export class WorkflowController {
     @Query('limit') limit: number,
   ): Promise<EmailTemplateEntity[]> {
     return this.workflowService.getEmailTemplates(skip, limit);
+  }
+
+  @Post('/variable')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  changeVariableWf(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: ChangeVariablesWorkflowRequestDto[],
+  ) {
+    return this.workflowService.saveVariables(user, payload);
+  }
+
+  @Get('/variable/:wfId')
+  @ExternalApiAccessible()
+  @UseGuards(JwtAuthGuard)
+  getVariables(@UserSession() user: IJwtPayload, @Param('wfId') wfId: string) {
+    return this.workflowService.getVariables(user, wfId);
   }
 }

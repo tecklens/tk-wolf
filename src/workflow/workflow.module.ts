@@ -4,7 +4,8 @@ import { WorkflowController } from '@app/workflow/workflow.controller';
 import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
 import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
-import { EmailTemplateRepository } from "@libs/repositories/email-templates/email-template.repository";
+import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
+import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 
 @Module({
   providers: [
@@ -13,6 +14,7 @@ import { EmailTemplateRepository } from "@libs/repositories/email-templates/emai
     NodeRepository,
     EdgeRepository,
     EmailTemplateRepository,
+    VariableRepository,
   ],
   exports: [WorkflowService],
   controllers: [WorkflowController],
