@@ -6,7 +6,6 @@ import {
   IsString,
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ICreateWorkflowDto } from '@libs/shared/dto';
 
 export class UpdateNodeWorkflowRequestDto {
   @ApiProperty()

@@ -1,8 +1,11 @@
 import { IsDefined, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { ICreateWorkflowDto } from '@libs/shared/dto';
 
 export class ChangeVariablesWorkflowRequestDto {
+  @ApiPropertyOptional()
+  @IsString()
+  _id: string;
   @ApiProperty()
   @IsString()
   @IsDefined()
@@ -20,4 +23,8 @@ export class ChangeVariablesWorkflowRequestDto {
   @ApiProperty()
   @IsString()
   defaultValue: string;
+
+  @ApiProperty()
+  @IsString()
+  required: boolean;
 }

@@ -9,6 +9,7 @@ const variableSchema = new Schema<VariableDBModel>(
     _workflowId: { type: Schema.Types.String, index: true },
     type: Schema.Types.String,
     name: Schema.Types.String,
+    required: Schema.Types.Boolean,
     defaultValue: Schema.Types.Mixed,
     isDefault: Schema.Types.Boolean,
     createdAt: Schema.Types.String,

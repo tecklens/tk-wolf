@@ -14,6 +14,7 @@ import { MemberRepository } from '@libs/repositories/member';
 import { TaskService } from '@app/trigger/task.service';
 import { HttpModule } from '@nestjs/axios';
 import { LogRepository } from '@libs/repositories/log/log.repository';
+import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { LogRepository } from '@libs/repositories/log/log.repository';
     WorkflowRepository,
     MemberRepository,
     LogRepository,
+    VariableRepository,
   ],
   controllers: [TriggerController],
 })

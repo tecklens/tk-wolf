@@ -1,4 +1,10 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  NotFoundException,
+  OnModuleInit,
+  PreconditionFailedException,
+} from '@nestjs/common';
 import { CreateTriggerResponse } from '@app/trigger/dtos/create-trigger.response';
 import { CreateTriggerDto } from '@app/trigger/dtos/create-trigger.dto';
 import { ProducerService } from '@app/kafka/producer/producer.service';
@@ -9,6 +15,9 @@ import { WorkflowRepository } from '@libs/repositories/workflow/workflow.reposit
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { TaskService } from '@app/trigger/task.service';
 import { LogRepository } from '@libs/repositories/log/log.repository';
+import { IVariable } from '@libs/repositories/variable/types';
+import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { get } from 'lodash';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {
@@ -18,6 +27,7 @@ export class TriggerService implements OnModuleInit {
     private readonly consumerService: ConsumerService,
     private readonly logRepository: LogRepository,
     private readonly workflowRepository: WorkflowRepository,
+    private readonly variableRepository: VariableRepository,
     private readonly taskService: TaskService,
   ) {
     this.onInit();
@@ -32,10 +42,18 @@ export class TriggerService implements OnModuleInit {
   ): Promise<CreateTriggerResponse> {
     const wf: WorkflowEntity = await this.workflowRepository.findById(
       payload.workflowId,
-      '_organizationId _userId identifier name',
+      '_id _organizationId _userId identifier name',
     );
 
-    this.logRepository.create({
+    if (!wf) throw new NotFoundException('Workflow not found');
+
+    const variables: IVariable[] = await this.variableRepository.findByWfId(
+      wf._id,
+    );
+
+    await this.validateVariables(variables, payload);
+
+    await this.logRepository.create({
       _userId: wf._userId,
       _organizationId: wf._organizationId,
       _environmentId: wf._environmentId,
@@ -91,5 +109,31 @@ export class TriggerService implements OnModuleInit {
         autoCommitInterval: 500,
       },
     );
+  }
+
+  private async validateVariables(
+    variables: IVariable[],
+    payload: CreateTriggerDto,
+  ) {
+    const validateType = (v: IVariable, val: any) => {
+      if (typeof val !== v.type) {
+        throw new PreconditionFailedException({
+          [v.name]: `${v.name} invalid type. Require type ${v.type}`,
+        });
+      }
+    };
+
+    for (const v of variables) {
+      const val = get(payload.target, v.name);
+
+      if (v.required && !val)
+        throw new PreconditionFailedException({
+          [v.name]: `${v.name} is required`,
+        });
+
+      validateType(v, val);
+    }
+
+    return false;
   }
 }

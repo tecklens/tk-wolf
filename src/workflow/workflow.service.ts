@@ -24,6 +24,8 @@ import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provide
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { WorkflowId } from '@libs/repositories/workflow/types';
 import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
+import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
+import { variableWorkflowDefault } from '@libs/repositories/variable/variable.entity';
 
 @Injectable()
 export class WorkflowService {
@@ -62,7 +64,7 @@ export class WorkflowService {
   }
 
   async createWorkflow(u: IJwtPayload, payload: CreateWorkflowRequestDto) {
-    return this.workflowRepository.create({
+    const wf: WorkflowEntity = await this.workflowRepository.create({
       name: payload.name,
       tags: payload.tags,
       description: payload.description,
@@ -71,6 +73,22 @@ export class WorkflowService {
       _environmentId: u.environmentId,
       _organizationId: u.organizationId,
     });
+
+    await this.nodeRepository.create({
+      type: 'starter',
+      data: { label: 'starter node' },
+      _workflowId: wf._id,
+      position: { x: 0, y: 0 },
+    });
+
+    for (const iVariable of variableWorkflowDefault) {
+      await this.variableRepository.create({
+        ...iVariable,
+        _workflowId: wf._id,
+      });
+    }
+
+    return wf;
   }
 
   async getOneNode(nodeId: string) {
@@ -222,12 +240,27 @@ export class WorkflowService {
     payload: ChangeVariablesWorkflowRequestDto[],
   ) {
     for (const v of payload) {
-      this.variableRepository.create({
-        _workflowId: v.workflowId,
-        name: v.name,
-        defaultValue: v.defaultValue,
-        type: v.type,
-      });
+      if (v._id) {
+        await this.variableRepository.updateOne(
+          {
+            _id: v._id,
+          },
+          {
+            _workflowId: v.workflowId,
+            name: v.name,
+            defaultValue: v.defaultValue,
+            type: v.type,
+            required: v.required,
+          },
+        );
+      } else {
+        await this.variableRepository.create({
+          _workflowId: v.workflowId,
+          name: v.name,
+          defaultValue: v.defaultValue,
+          type: v.type,
+        });
+      }
     }
   }
 }
