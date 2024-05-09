@@ -15,3 +15,8 @@ export interface ISmsHandler {
 
   getProvider(): ISmsProvider;
 }
+
+export interface IContent {
+  source: string;
+  plainText: string;
+}

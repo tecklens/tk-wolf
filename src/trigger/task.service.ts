@@ -3,6 +3,7 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  PreconditionFailedException,
 } from '@nestjs/common';
 import {
   IOverridesDataTrigger,
@@ -21,7 +22,7 @@ import {
   ProviderRepository,
 } from '@libs/repositories/provider';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { MailFactory, SmsFactory } from '@app/provider/factories';
+import { IContent, MailFactory, SmsFactory } from '@app/provider/factories';
 import { NodeEntity } from '@libs/repositories/node/node.entity';
 import { INodeData } from '@tps/i-node.data';
 import { makeid } from '@libs/utils';
@@ -231,7 +232,12 @@ export class TaskService {
             );
           });
       } catch (e) {
-        this.taskRepository.updateStatus(task._id, TaskStatus.cancel, e, null);
+        await this.taskRepository.updateStatus(
+          task._id,
+          TaskStatus.cancel,
+          e,
+          null,
+        );
       }
     }
   }
@@ -244,6 +250,16 @@ export class TaskService {
     overrides: Record<string, any> = {},
   ) {
     // * validate sms
+    const content: IContent = get(node.data, 'content');
+    const phone = overrides.to || inp.target.phone;
+    if (!content)
+      throw new PreconditionFailedException('Content sms provider is required');
+    if (!phone)
+      throw new PreconditionFailedException(
+        'Target phone number of sms provider is required',
+      );
+
+    if (!provider) return;
 
     const task = await this.taskRepository.create({
       _workflowId: node._workflowId,
@@ -263,7 +279,7 @@ export class TaskService {
       phone: inp.target.phone,
     });
     try {
-      const overrides = inp.overrides;
+      const overrides = inp.overrides ?? {};
 
       const smsFactory = new SmsFactory();
       const smsHandler = smsFactory.getHandler(
@@ -276,9 +292,9 @@ export class TaskService {
       }
 
       const result = await smsHandler.send({
-        to: overrides.to || inp.target.phone,
+        to: phone,
         from: overrides.from || provider.credentials.from,
-        content: overrides.content || get(node.data, 'content'),
+        content: overrides.content || content.plainText,
         id: uuidv4(),
         customData: overrides.customData || {},
       });
@@ -454,7 +470,7 @@ export class TaskService {
       data: await this.taskRepository.find({}, '', {
         skip: payload.page * payload.limit,
         limit: payload.limit,
-        sort: { createdAt: -1 },
+        sort: { createdAt: 1 },
       }),
     };
   }

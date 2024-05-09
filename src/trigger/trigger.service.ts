@@ -130,8 +130,9 @@ export class TriggerService implements OnModuleInit {
         throw new PreconditionFailedException({
           [v.name]: `${v.name} is required`,
         });
-
-      validateType(v, val);
+      else if (val) {
+        validateType(v, val);
+      }
     }
 
     return false;
