@@ -30,13 +30,14 @@ export class PaymentService {
   }
 
   async createPaymentIndent() {
-    const paymentIndent = await this.stripeClient.paymentIntents.create({
-      currency: 'usd',
-      amount: 1999,
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    });
+    const paymentIndent: Stripe.Response<Stripe.PaymentIntent> =
+      await this.stripeClient.paymentIntents.create({
+        currency: 'usd',
+        amount: 1999,
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
 
     return paymentIndent.client_secret;
   }

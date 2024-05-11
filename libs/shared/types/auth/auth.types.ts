@@ -1,3 +1,5 @@
+import { UserPlan } from '@libs/repositories/user';
+
 export interface IJwtPayload {
   _id: string;
   firstName?: string;
@@ -8,6 +10,7 @@ export interface IJwtPayload {
   environmentId: string;
   roles: string[];
   exp: number;
+  plan: UserPlan;
 }
 
 export enum ApiAuthSchemeEnum {

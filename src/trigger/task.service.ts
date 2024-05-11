@@ -25,7 +25,7 @@ import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 import { IContent, MailFactory, SmsFactory } from '@app/provider/factories';
 import { NodeEntity } from '@libs/repositories/node/node.entity';
 import { INodeData } from '@tps/i-node.data';
-import { makeid } from '@libs/utils';
+import { makeid, transformContent } from '@libs/utils';
 import { TaskStatus } from '@tps/task.interface';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
@@ -34,6 +34,8 @@ import { HttpService } from '@nestjs/axios';
 import { PlatformException } from '@pak/utils/exceptions';
 import { get } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
+import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { VariableEntity } from '@libs/repositories/variable/variable.entity';
 
 @Injectable()
 export class TaskService {
@@ -47,6 +49,7 @@ export class TaskService {
     private readonly taskRepository: TaskRepository,
     private readonly providerRepository: ProviderRepository,
     private readonly memberRepository: MemberRepository,
+    private readonly variableRepository: VariableRepository,
     private readonly httpService: HttpService,
   ) {}
 
@@ -152,7 +155,10 @@ export class TaskService {
             await this.executeWebhook(node, data);
             break;
           case ChannelTypeEnum.SMS:
-            await this.executeSms(provider, node, data, members);
+            const variables = await this.variableRepository.findByWfId(
+              data.workflowId,
+            );
+            await this.executeSms(provider, node, data, members, variables);
             break;
           default:
             return;
@@ -247,19 +253,25 @@ export class TaskService {
     node: NodeEntity,
     inp: INextJob,
     members: MemberEntity[],
+    variables: VariableEntity[],
     overrides: Record<string, any> = {},
   ) {
+    if (!provider) return;
     // * validate sms
     const content: IContent = get(node.data, 'content');
     const phone = overrides.to || inp.target.phone;
+
     if (!content)
       throw new PreconditionFailedException('Content sms provider is required');
     if (!phone)
       throw new PreconditionFailedException(
         'Target phone number of sms provider is required',
       );
-
-    if (!provider) return;
+    let contentPlainText = overrides.content || content.plainText;
+    contentPlainText = transformContent(variables, contentPlainText, {
+      ...inp.target,
+      ...inp.overrides,
+    });
 
     const task = await this.taskRepository.create({
       _workflowId: node._workflowId,
@@ -279,6 +291,7 @@ export class TaskService {
       phone: inp.target.phone,
     });
     try {
+      const identifier = uuidv4();
       const overrides = inp.overrides ?? {};
 
       const smsFactory = new SmsFactory();
@@ -291,39 +304,17 @@ export class TaskService {
         );
       }
 
-      const result = await smsHandler.send({
-        to: phone,
-        from: overrides.from || provider.credentials.from,
-        content: overrides.content || content.plainText,
-        id: uuidv4(),
-        customData: overrides.customData || {},
-      });
-
-      // await this.executionLogRoute.execute(
-      //   ExecutionLogRouteCommand.create({
-      //     ...ExecutionLogRouteCommand.getDetailsFromJob(command.job),
-      //     messageId: message._id,
-      //     detail: DetailEnum.MESSAGE_SENT,
-      //     source: ExecutionDetailsSourceEnum.INTERNAL,
-      //     status: ExecutionDetailsStatusEnum.SUCCESS,
-      //     isTest: false,
-      //     isRetry: false,
-      //     raw: JSON.stringify(result),
-      //   }),
-      // );
-
-      if (!result?.id) {
-        return;
-      }
-
-      // await this.messageRepository.update(
-      //   { _environmentId: command.environmentId, _id: message._id },
-      //   {
-      //     $set: {
-      //       identifier: result.id,
-      //     },
-      //   },
-      // );
+      // const result = await smsHandler.send({
+      //   to: phone,
+      //   from: overrides.from || provider.credentials.from,
+      //   content: contentPlainText,
+      //   id: identifier,
+      //   customData: overrides.customData || {},
+      // });
+      //
+      // if (!result?.id) {
+      //   return;
+      // }
 
       await this.taskRepository.updateStatus(
         task._id,

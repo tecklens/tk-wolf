@@ -7,8 +7,9 @@ export class LogEntity implements ILogWolf {
   _environmentId: string;
   _organizationId: string;
   status: number;
-  createdAt: string;
-  updatedAt?: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt: Date;
 }
 
 export type LogDBModel = LogEntity;

@@ -39,7 +39,7 @@ const dbService = {
     }),
     CacheModule.register({
       isGlobal: true,
-      ttl: 5 * 1000,
+      ttl: 30 * 1000,
       max: 100,
       useFactory: async () => ({
         store: await redisStore({

@@ -3,15 +3,24 @@ import { LogRepository } from '@libs/repositories/log/log.repository';
 import { IJwtPayload } from '@libs/shared/types';
 import { FilterLogDto } from '@app/log/dtos/filter-log.dto';
 import { FilterLogResponse } from '@app/log/dtos/filter-log.response';
+import { CacheKey } from '@nestjs/cache-manager';
 
 @Injectable()
 export class LogService {
   constructor(private readonly logRepository: LogRepository) {}
 
+  @CacheKey('log:analyse')
   async analysisLog(
     user: IJwtPayload,
     payload: FilterLogDto,
   ): Promise<FilterLogResponse> {
+    const formatDateByPeriod =
+      payload.period == 'hour'
+        ? '%Y-%m-%d %Hh'
+        : payload.period == 'day'
+          ? '%Y-%m-%d'
+          : '%Y-%m';
+
     const totalPerPeriod = await this.logRepository.aggregate([
       {
         $match: {
@@ -29,7 +38,7 @@ export class LogService {
         $group: {
           _id: {
             $dateToString: {
-              format: '%Y-%m-%d',
+              format: formatDateByPeriod,
               date: '$createdAtDate',
             },
           },
@@ -45,12 +54,12 @@ export class LogService {
           _id: 0,
         },
       },
+      { $skip: payload.page * payload.limit },
+      { $limit: payload.limit },
     ]);
 
-    console.log(totalPerPeriod);
-
     return {
-      data: [],
+      data: totalPerPeriod,
     };
   }
 }

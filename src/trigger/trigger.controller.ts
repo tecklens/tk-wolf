@@ -25,6 +25,8 @@ import { TaskEntity } from '@libs/repositories/task/task.entity';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { TaskService } from '@app/trigger/task.service';
 import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
+import { UserSession } from "@libs/utils/user.session";
+import { IJwtPayload } from "@libs/shared/types";
 
 @ApiBearerAuth()
 @Controller('trigger')
@@ -45,9 +47,10 @@ export class TriggerController {
   @UseGuards(ApiKeyAuthGuard)
   @ExternalApiAccessible()
   createTrigger(
+    @UserSession() user: IJwtPayload,
     @Body() payload: CreateTriggerDto,
   ): Promise<CreateTriggerResponse> {
-    return this.triggerService.createTrigger(payload);
+    return this.triggerService.createTrigger(user, payload);
   }
 
   @Get('/task')

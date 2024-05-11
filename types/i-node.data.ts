@@ -1,6 +1,7 @@
 export interface INodeData {
   connected: boolean;
   _providerId: string;
+  providerName: string;
   _workflowId: string;
   subject: string;
   sender: string;

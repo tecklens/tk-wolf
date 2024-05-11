@@ -12,8 +12,15 @@ const logSchema = new Schema<LogDBModel>(
     _organizationId: { type: Schema.Types.String, index: true },
     status: Schema.Types.Number,
 
-    createdAt: Schema.Types.String,
-    updatedAt: Schema.Types.String,
+    createdAt: Schema.Types.Date,
+    updatedAt: Schema.Types.Date,
+    deletedAt: {
+      type: Schema.Types.Date,
+      default: Date.now,
+      index: {
+        expireAfterSeconds: 0,
+      },
+    },
   },
   schemaOptions,
 );

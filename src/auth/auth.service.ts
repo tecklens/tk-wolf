@@ -222,6 +222,7 @@ export class AuthService {
       );
 
       return {
+        plan: user.plan,
         _id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -389,6 +390,7 @@ export class AuthService {
         organizationId: organizationId || null,
         roles,
         environmentId: environmentId || null,
+        plan: user.plan,
       },
       {
         expiresIn: '30 days',
@@ -794,6 +796,7 @@ export class AuthService {
 
     const devEnv = await this.environmentService.createEnvironment(
       {
+        plan: user.plan,
         _id: user._id,
         organizationId: createdOrganization._id,
         environmentId: '',
@@ -818,6 +821,7 @@ export class AuthService {
     //
     const prodEnv = await this.environmentService.createEnvironment(
       {
+        plan: user.plan,
         _id: user._id,
         organizationId: createdOrganization._id,
         environmentId: '',

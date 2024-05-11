@@ -12,6 +12,7 @@ export interface ILogWolf {
   _organizationId: OrganizationId;
   status: number;
 
-  createdAt: string;
-  updatedAt?: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  deletedAt: Date;
 }

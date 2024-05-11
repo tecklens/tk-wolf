@@ -18,6 +18,8 @@ import { LogRepository } from '@libs/repositories/log/log.repository';
 import { IVariable } from '@libs/repositories/variable/types';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { get } from 'lodash';
+import { IJwtPayload } from '@libs/shared/types';
+import { getDateDataTimeout } from '@libs/utils';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {
@@ -38,8 +40,10 @@ export class TriggerService implements OnModuleInit {
   }
 
   async createTrigger(
+    user: IJwtPayload,
     payload: CreateTriggerDto,
   ): Promise<CreateTriggerResponse> {
+    console.log(user);
     const wf: WorkflowEntity = await this.workflowRepository.findById(
       payload.workflowId,
       '_id _organizationId _userId identifier name',
@@ -53,14 +57,6 @@ export class TriggerService implements OnModuleInit {
 
     await this.validateVariables(variables, payload);
 
-    await this.logRepository.create({
-      _userId: wf._userId,
-      _organizationId: wf._organizationId,
-      _environmentId: wf._environmentId,
-      status: 1,
-      event_type: 'create_trigger',
-    });
-
     await this.taskService.nextJob(
       wf._id,
       wf.name,
@@ -71,6 +67,15 @@ export class TriggerService implements OnModuleInit {
       'starter',
       undefined,
     );
+
+    await this.logRepository.create({
+      _userId: wf._userId,
+      _organizationId: wf._organizationId,
+      _environmentId: wf._environmentId,
+      status: 1,
+      event_type: 'create_trigger',
+      deletedAt: getDateDataTimeout(user.plan),
+    });
     return null;
   }
 
