@@ -1,4 +1,5 @@
 import {
+  Body,
   ClassSerializerInterceptor,
   Controller,
   Get,
@@ -11,6 +12,9 @@ import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { PaymentService } from '@app/payment/payment.service';
+import { UserSession } from '@libs/utils/user.session';
+import { IJwtPayload } from '@libs/shared/types';
+import { CreatePaymentIndentDto } from '@app/payment/dtos/create-payment-indent.dto';
 
 @Controller('payment')
 @ApiBearerAuth()
@@ -28,7 +32,10 @@ export class PaymentController {
   @UseGuards(JwtAuthGuard)
   @Post('/create-payment-indent')
   @ExternalApiAccessible()
-  createPaymentIndent(): Promise<string> {
-    return this.paymentService.createPaymentIndent();
+  createPaymentIndent(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: CreatePaymentIndentDto,
+  ): Promise<string> {
+    return this.paymentService.createPaymentIndent(user, payload);
   }
 }

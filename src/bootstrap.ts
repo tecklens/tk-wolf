@@ -37,7 +37,9 @@ const corsOptionsDelegate = function (req, callback) {
 };
 
 export default async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true,
+  });
 
   const configService = app.get(ConfigService);
 

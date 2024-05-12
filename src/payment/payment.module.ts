@@ -3,6 +3,8 @@ import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
 import { StripeModule } from '@golevelup/nestjs-stripe';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserRepository } from '@libs/repositories/user';
+import { SkipThrottle } from "@nestjs/throttler";
 
 @Module({
   imports: [
@@ -14,14 +16,19 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         webhookConfig: {
           stripeSecrets: {
             account: 'acct_1OEMRZGcJkgHU4pf',
+            accountTest: 'acct_1OEMRZGcJkgHU4pf',
             connect:
               'whsec_25b58266dcbbcdebc4bd61d9035f11c5463e3b585f7cc4c789097df9e6720e84',
+            connectTest:
+              'whsec_25b58266dcbbcdebc4bd61d9035f11c5463e3b585f7cc4c789097df9e6720e84',
           },
+          requestBodyProperty: 'rawBody',
+          decorators: [SkipThrottle()],
         },
       }),
     }),
   ],
-  providers: [PaymentService],
+  providers: [PaymentService, UserRepository],
   controllers: [PaymentController],
 })
 export class PaymentModule {}
