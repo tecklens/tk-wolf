@@ -792,6 +792,7 @@ export class AuthService {
       roles: [MemberRoleEnum.ADMIN],
       organizationId: createdOrganization._id,
       userId: user._id,
+      isDefault: true,
     });
 
     const devEnv = await this.environmentService.createEnvironment(
@@ -883,19 +884,25 @@ export class AuthService {
     organizationId,
     userId,
     roles,
+    isDefault,
   }: {
     organizationId: string;
     userId: string;
     roles: MemberRoleEnum[];
+    isDefault: boolean;
   }) {
     const isAlreadyMember = await this.isMember(userId, organizationId);
     if (isAlreadyMember) throw new ApiException('Member already exists');
 
-    await this.memberRepository.addMember(organizationId, {
-      _userId: userId,
-      roles: roles,
-      memberStatus: MemberStatusEnum.ACTIVE,
-    });
+    await this.memberRepository.addMember(
+      organizationId,
+      {
+        _userId: userId,
+        roles: roles,
+        memberStatus: MemberStatusEnum.ACTIVE,
+      },
+      isDefault,
+    );
   }
 
   private async isMember(

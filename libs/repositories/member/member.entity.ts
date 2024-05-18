@@ -19,6 +19,8 @@ export class MemberEntity {
   memberStatus: MemberStatusEnum;
 
   _organizationId: OrganizationId;
+
+  isDefault: boolean;
 }
 
 export type MemberDBModel = ChangePropsValueType<

@@ -31,6 +31,7 @@ const memberSchema = new Schema<MemberDBModel>(
       ref: 'Organization',
       index: true,
     },
+    isDefault: { type: Schema.Types.Boolean, default: false },
   },
   schemaOptions,
 );

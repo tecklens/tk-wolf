@@ -16,9 +16,9 @@ export class PaymentService {
   ) {}
 
   @StripeWebhookHandler('payment_intent.succeeded')
-  handlePaymentIntentSuccess(evt: any) {
+  handlePaymentIntentSuccess(evt: Stripe.Event) {
     // execute your custom business logic
-    console.log(evt);
+    console.log('evt', evt);
   }
 
   @StripeWebhookHandler('payment_intent.payment_failed')
@@ -66,6 +66,7 @@ export class PaymentService {
       await this.stripeClient.paymentIntents.create({
         currency: 'usd',
         amount: amountPlan,
+        off_session: false,
         automatic_payment_methods: {
           enabled: true,
         },

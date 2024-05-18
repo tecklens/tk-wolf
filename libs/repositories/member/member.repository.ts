@@ -15,14 +15,18 @@ export interface IAddMemberData {
 
 type MemberQuery = FilterQuery<MemberDBModel> & EnforceOrgId;
 
-export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity, EnforceOrgId> {
+export class MemberRepository extends BaseRepository<
+  MemberDBModel,
+  MemberEntity,
+  EnforceOrgId
+> {
   constructor() {
     super(Member, MemberEntity);
   }
 
   async removeMemberById(
     organizationId: string,
-    memberId: string
+    memberId: string,
   ): Promise<{
     /** Indicates whether this write result was acknowledged. If not, then all other members of this result will be undefined. */
     acknowledged: boolean;
@@ -35,7 +39,11 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
     });
   }
 
-  async updateMemberRoles(organizationId: string, memberId: string, roles: MemberRoleEnum[]) {
+  async updateMemberRoles(
+    organizationId: string,
+    memberId: string,
+    roles: MemberRoleEnum[],
+  ) {
     return this.update(
       {
         _id: memberId,
@@ -43,7 +51,7 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
       },
       {
         roles,
-      }
+      },
     );
   }
 
@@ -54,7 +62,7 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
 
     const members = await this.MongooseModel.find(requestQuery).populate(
       '_userId',
-      'firstName lastName email _id profilePicture createdAt'
+      'firstName lastName email _id profilePicture createdAt',
     );
     if (!members) return [];
 
@@ -88,7 +96,10 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
       _organizationId: organizationId,
     };
 
-    const members = await this.MongooseModel.find(requestQuery).populate('_userId', 'firstName lastName email _id');
+    const members = await this.MongooseModel.find(requestQuery).populate(
+      '_userId',
+      'firstName lastName email _id',
+    );
     if (!members) return [];
 
     const membersEntity = this.mapEntities(members);
@@ -124,7 +135,7 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
       memberStatus: MemberStatusEnum;
       _userId: string;
       answerDate: Date;
-    }
+    },
   ) {
     await this.update(
       {
@@ -135,7 +146,7 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
         memberStatus: data.memberStatus,
         _userId: data._userId,
         'invite.answerDate': data.answerDate,
-      }
+      },
     );
   }
 
@@ -147,7 +158,10 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
     return await this.findOne(requestQuery);
   }
 
-  async findInviteeByEmail(organizationId: string, email: string): Promise<MemberEntity | null> {
+  async findInviteeByEmail(
+    organizationId: string,
+    email: string,
+  ): Promise<MemberEntity | null> {
     const foundMember = await this.findOne({
       _organizationId: organizationId,
       'invite.email': email,
@@ -158,17 +172,25 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
     return foundMember;
   }
 
-  async addMember(organizationId: string, member: IAddMemberData): Promise<void> {
+  async addMember(
+    organizationId: string,
+    member: IAddMemberData,
+    isDefault: boolean,
+  ): Promise<void> {
     await this.create({
       _userId: member._userId,
       roles: member.roles,
       invite: member.invite,
       memberStatus: member.memberStatus,
       _organizationId: organizationId,
+      isDefault,
     });
   }
 
-  async isMemberOfOrganization(organizationId: string, userId: string): Promise<boolean> {
+  async isMemberOfOrganization(
+    organizationId: string,
+    userId: string,
+  ): Promise<boolean> {
     return !!(await this.findOne(
       {
         _organizationId: organizationId,
@@ -177,11 +199,14 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
       '_id',
       {
         readPreference: 'secondaryPreferred',
-      }
+      },
     ));
   }
 
-  async findMemberByUserId(organizationId: string, userId: string): Promise<MemberEntity | null> {
+  async findMemberByUserId(
+    organizationId: string,
+    userId: string,
+  ): Promise<MemberEntity | null> {
     const member = await this.findOne({
       _organizationId: organizationId,
       _userId: userId,
@@ -192,7 +217,10 @@ export class MemberRepository extends BaseRepository<MemberDBModel, MemberEntity
     return this.mapEntity(member) as MemberEntity;
   }
 
-  async findMemberById(organizationId: string, memberId: string): Promise<MemberEntity | null> {
+  async findMemberById(
+    organizationId: string,
+    memberId: string,
+  ): Promise<MemberEntity | null> {
     const member = await this.findOne({
       _organizationId: organizationId,
       _id: memberId,

@@ -39,6 +39,7 @@ const corsOptionsDelegate = function (req, callback) {
 export default async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     rawBody: true,
+    bodyParser: false,
   });
 
   const configService = app.get(ConfigService);
@@ -68,14 +69,17 @@ export default async function bootstrap() {
   // app.useGlobalGuards(new RolesGuard(app.get(Reflector)));
   // app.useGlobalGuards(new SubscriberRouteGuard(app.get(Reflector)));
 
-  app.use(extendedBodySizeRoutes, bodyParser.json({ limit: '20mb' }));
   app.use(
-    extendedBodySizeRoutes,
-    bodyParser.urlencoded({ limit: '20mb', extended: true }),
+    bodyParser.json({
+      limit: '20mb',
+      verify: (req: any, res, buf) => {
+        const url = req.originalUrl;
+        if (url.includes('/stripe/webhook')) {
+          req.rawBody = buf.toString();
+        }
+      },
+    }),
   );
-
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
 
   app.use(compression());
 

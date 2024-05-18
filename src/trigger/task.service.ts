@@ -36,6 +36,10 @@ import { get } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { VariableEntity } from '@libs/repositories/variable/variable.entity';
+import {
+  decryptApiKey,
+  decryptCredentials,
+} from '@libs/shared/encryptions/encrypt-provider';
 
 @Injectable()
 export class TaskService {
@@ -141,7 +145,7 @@ export class TaskService {
             data.organizationId,
           );
         } catch (e) {
-          this.logger.log('Not members in workflwo org');
+          this.logger.log('Not members in workflow org');
         }
 
         switch (node.type) {
@@ -441,7 +445,7 @@ export class TaskService {
     return {
       ...integration,
       credentials: {
-        ...integration.credentials,
+        ...decryptCredentials(integration.credentials),
       },
       providerId: integration.providerId,
     };
@@ -461,7 +465,7 @@ export class TaskService {
       data: await this.taskRepository.find({}, '', {
         skip: payload.page * payload.limit,
         limit: payload.limit,
-        sort: { createdAt: 1 },
+        sort: { createdAt: -1 },
       }),
     };
   }

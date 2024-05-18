@@ -12,7 +12,7 @@ export function encryptSecret(text: string): EncryptedSecret {
 export function decryptSecret(text: string | EncryptedSecret): string {
   let encryptedSecret = text;
 
-  if (isNovuEncrypted(text)) {
+  if (isEncrypted(text)) {
     encryptedSecret = text.slice(WOLF_ENCRYPTION_SUB_MASK.length);
   }
 
@@ -40,7 +40,7 @@ export function decryptCredentials(
 
   for (const key in credentials) {
     decryptedCredentials[key] =
-      typeof credentials[key] === 'string' && isNovuEncrypted(credentials[key])
+      typeof credentials[key] === 'string' && isEncrypted(credentials[key])
         ? decryptSecret(credentials[key])
         : credentials[key];
   }
@@ -49,7 +49,7 @@ export function decryptCredentials(
 }
 
 export function encryptApiKey(apiKey: string): EncryptedSecret {
-  if (isNovuEncrypted(apiKey)) {
+  if (isEncrypted(apiKey)) {
     return apiKey;
   }
 
@@ -57,14 +57,14 @@ export function encryptApiKey(apiKey: string): EncryptedSecret {
 }
 
 export function decryptApiKey(apiKey: string): string {
-  if (isNovuEncrypted(apiKey)) {
+  if (isEncrypted(apiKey)) {
     return decryptSecret(apiKey);
   }
 
   return apiKey;
 }
 
-function isNovuEncrypted(text: string): text is EncryptedSecret {
+function isEncrypted(text: string): text is EncryptedSecret {
   return text.startsWith(WOLF_ENCRYPTION_SUB_MASK);
 }
 

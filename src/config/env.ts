@@ -7,3 +7,5 @@ export const appDesc =
 export const appVersion = process.env.APP_VERSION ?? '0.0.1';
 
 export const secret = process.env.JWT_SECRET ?? 'wolf';
+
+export const BE_HOST = process.env.BE_HOST ?? 'http://localhost:5000';

@@ -1,6 +1,8 @@
-export type CustomDataType = { [key: string]: string | string[] | boolean | number | undefined };
+export type CustomDataType = {
+  [key: string]: string | string[] | boolean | number | undefined;
+};
 
-export const WOLF_ENCRYPTION_SUB_MASK = 'nvsk.';
+export const WOLF_ENCRYPTION_SUB_MASK = 'sk.';
 
 export type EncryptedSecret = `${typeof WOLF_ENCRYPTION_SUB_MASK}${string}`;
 

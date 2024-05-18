@@ -7,7 +7,7 @@ import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 import { ICredentials } from '@libs/shared/entities/integration';
 
 export class ProviderEntity {
-  _id: ProviderId;
+  _id?: ProviderId;
 
   _environmentId: EnvironmentId;
 
@@ -25,15 +25,15 @@ export class ProviderEntity {
 
   identifier: string;
 
-  priority: number;
+  priority?: number;
 
   primary: boolean;
 
-  deleted: boolean;
+  deleted?: boolean;
 
-  deletedAt: string;
+  deletedAt?: string;
 
-  deletedBy: string;
+  deletedBy?: string;
 
   conditions?: StepFilter[];
 }
