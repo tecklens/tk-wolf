@@ -446,10 +446,11 @@ export class AuthService {
     // });
 
     return {
-      user: await this.userRepository.findById(user._id),
+      // user: await this.userRepository.findById(user._id),
       token: await this.getSignedToken(
         user,
         wrapOrg.organization._id,
+        null,
         wrapOrg.environmentId,
       ),
     };
