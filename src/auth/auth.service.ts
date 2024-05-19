@@ -244,15 +244,43 @@ export class AuthService {
     const user = await this.getUser({ _id: userId });
     if (!user) throw new UnauthorizedException('User not found');
 
-    return this.getSignedToken(user);
+    const { organizations, members } =
+      await this.organizationRepository.findUserActiveOrganizations(user._id);
+    // this.analyticsService.track('[Authentication] - Login', user._id, {
+    //   loginType: 'email',
+    //   _organization:
+    //     userActiveOrganizations && userActiveOrganizations[0]
+    //       ? userActiveOrganizations[0]?._id
+    //       : undefined,
+    // });
+
+    if (user?.failedLogin && user?.failedLogin?.times > 0) {
+      await this.resetFailedAttempts(user);
+    }
+
+    if (organizations.length > 0) {
+      const userActiveProjects =
+        await this.environmentRepository.findOrganizationEnvironments(
+          organizations[0]._id,
+        );
+
+      return await this.getSignedToken(
+        user,
+        organizations[0]._id,
+        userActiveProjects[0]._id,
+        members[0],
+      );
+    } else {
+      throw new ApiException('User not Organization. Please contact support');
+    }
   }
 
   public async generateUserToken(user: UserEntity) {
-    const userActiveOrganizations =
+    const { organizations, members } =
       await this.organizationRepository.findUserActiveOrganizations(user._id);
 
-    if (userActiveOrganizations && userActiveOrganizations.length) {
-      const organizationToSwitch = userActiveOrganizations[0];
+    if (organizations && organizations.length) {
+      const organizationToSwitch = organizations[0];
 
       const userActiveProjects =
         await this.environmentRepository.findOrganizationEnvironments(
@@ -284,7 +312,7 @@ export class AuthService {
       });
     }
 
-    return this.getSignedToken(user);
+    return null;
   }
 
   private async switchOrg({
@@ -321,8 +349,8 @@ export class AuthService {
     return await this.getSignedToken(
       user,
       newOrganizationId,
-      member,
       environment?._id,
+      member,
     );
   }
 
@@ -335,6 +363,7 @@ export class AuthService {
       userId,
     ));
   }
+
   async switchEnvironment({
     newEnvironmentId,
     organizationId,
@@ -364,16 +393,16 @@ export class AuthService {
     return await this.getSignedToken(
       user,
       organizationId,
-      member,
       newEnvironmentId,
+      member,
     );
   }
 
   public async getSignedToken(
     user: UserEntity,
-    organizationId?: string,
+    organizationId: string,
+    environmentId: string,
     member?: MemberEntity,
-    environmentId?: string,
   ): Promise<string> {
     const roles: MemberRoleEnum[] = [];
     if (member && member.roles) {
@@ -450,8 +479,8 @@ export class AuthService {
       token: await this.getSignedToken(
         user,
         wrapOrg.organization._id,
-        null,
         wrapOrg.environmentId,
+        null,
       ),
     };
   }
@@ -544,10 +573,37 @@ export class AuthService {
         },
       },
     );
+    const { organizations, members } =
+      await this.organizationRepository.findUserActiveOrganizations(user._id);
+    // this.analyticsService.track('[Authentication] - Login', user._id, {
+    //   loginType: 'email',
+    //   _organization:
+    //     userActiveOrganizations && userActiveOrganizations[0]
+    //       ? userActiveOrganizations[0]?._id
+    //       : undefined,
+    // });
 
-    return {
-      token: await this.getSignedToken(user),
-    };
+    if (user?.failedLogin && user?.failedLogin?.times > 0) {
+      await this.resetFailedAttempts(user);
+    }
+
+    if (organizations.length > 0) {
+      const userActiveProjects =
+        await this.environmentRepository.findOrganizationEnvironments(
+          organizations[0]._id,
+        );
+
+      return {
+        token: await this.getSignedToken(
+          user,
+          organizations[0]._id,
+          userActiveProjects[0]._id,
+          members[0],
+        ),
+      };
+    } else {
+      throw new ApiException('User not Organization. Please contact support');
+    }
   }
 
   public async login(d: LoginBodyDto) {
@@ -623,10 +679,8 @@ export class AuthService {
 
     // this.analyticsService.upsertUser(user, user._id);
 
-    // const userActiveOrganizations =
-    //   (await this.organizationRepository.findUserActiveOrganizations(
-    //     user._id,
-    //   )) || [];
+    const { organizations, members } =
+      await this.organizationRepository.findUserActiveOrganizations(user._id);
     // this.analyticsService.track('[Authentication] - Login', user._id, {
     //   loginType: 'email',
     //   _organization:
@@ -639,9 +693,23 @@ export class AuthService {
       await this.resetFailedAttempts(user);
     }
 
-    return {
-      token: await this.getSignedToken(user),
-    };
+    if (organizations.length > 0) {
+      const userActiveProjects =
+        await this.environmentRepository.findOrganizationEnvironments(
+          organizations[0]._id,
+        );
+
+      return {
+        token: await this.getSignedToken(
+          user,
+          organizations[0]._id,
+          userActiveProjects[0]._id,
+          members[0],
+        ),
+      };
+    } else {
+      throw new ApiException('User not Organization. Please contact support');
+    }
   }
 
   private isAccountBlocked(user: UserEntity) {

@@ -376,8 +376,8 @@ export class OrganizationService {
     const token = uuidv1();
 
     if (
-      process.env.NOVU_API_KEY &&
-      (process.env.NODE_ENV === 'dev' || process.env.NODE_ENV === 'production')
+      process.env.NODE_ENV === 'dev' ||
+      process.env.NODE_ENV === 'production'
     ) {
       const content = designHtmlInvite
         .replace('{{token}}', token)

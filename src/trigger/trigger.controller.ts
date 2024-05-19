@@ -2,7 +2,9 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   Query,
   UseGuards,
@@ -60,7 +62,20 @@ export class TriggerController {
   })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  getTask(@Query() payload: GetTaskRequestDto): Promise<TaskResponseDto> {
-    return this.taskService.getTasks(payload);
+  getTask(
+    @UserSession() user: IJwtPayload,
+    @Query() payload: GetTaskRequestDto,
+  ): Promise<TaskResponseDto> {
+    return this.taskService.getTasks(user, payload);
+  }
+
+  @Delete('/task/:code')
+  @ApiResponse(null, 200)
+  @ApiOperation({
+    summary: 'API del log task of user',
+  })
+  @UseGuards(JwtAuthGuard)
+  delTask(@UserSession() user: IJwtPayload, @Param('code') code: string) {
+    return this.taskService.delTask(user, code);
   }
 }

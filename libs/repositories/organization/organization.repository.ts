@@ -1,7 +1,7 @@
 import { OrganizationDBModel, OrganizationEntity } from './organization.entity';
 import { Organization } from './organization.schema';
 import { BaseRepository } from '@libs/repositories/base-repository';
-import { MemberRepository } from "@libs/repositories/member";
+import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 
 export class OrganizationRepository extends BaseRepository<
   OrganizationDBModel,
@@ -54,17 +54,22 @@ export class OrganizationRepository extends BaseRepository<
     );
   }
 
-  async findUserActiveOrganizations(userId: string): Promise<OrganizationEntity[]> {
-    const organizationIds = await this.getUsersMembersOrganizationIds(userId);
+  async findUserActiveOrganizations(
+    userId: string,
+  ): Promise<{ organizations: OrganizationEntity[]; members: MemberEntity[] }> {
+    const members = await this.getUsersMembersOrganizationIds(userId);
 
-    return await this.find({
-      _id: { $in: organizationIds },
-    });
+    return {
+      organizations: await this.find({
+        _id: { $in: members.map((member) => member._organizationId) },
+      }),
+      members: members,
+    };
   }
 
-  private async getUsersMembersOrganizationIds(userId: string): Promise<string[]> {
-    const members = await this.memberRepository.findUserActiveMembers(userId);
-
-    return members.map((member) => member._organizationId);
+  private async getUsersMembersOrganizationIds(
+    userId: string,
+  ): Promise<MemberEntity[]> {
+    return await this.memberRepository.findUserActiveMembers(userId);
   }
 }

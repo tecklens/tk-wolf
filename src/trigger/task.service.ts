@@ -40,6 +40,7 @@ import {
   decryptApiKey,
   decryptCredentials,
 } from '@libs/shared/encryptions/encrypt-provider';
+import { IJwtPayload } from '@libs/shared/types';
 
 @Injectable()
 export class TaskService {
@@ -194,6 +195,7 @@ export class TaskService {
   private async executeWebhook(node: NodeEntity, inp: INextJob) {
     if (node.data?.webhookUrl && node.data?.method) {
       const task = await this.taskRepository.create({
+        _userId: inp.userId,
         _workflowId: node._workflowId,
         workflowName: inp.workflowName,
         _nodeId: node._id,
@@ -278,6 +280,7 @@ export class TaskService {
     });
 
     const task = await this.taskRepository.create({
+      _userId: inp.userId,
       _workflowId: node._workflowId,
       workflowName: inp.workflowName,
       _nodeId: node._id,
@@ -367,6 +370,7 @@ export class TaskService {
 
       try {
         const task = await this.taskRepository.create({
+          _userId: inp.userId,
           _workflowId: node._workflowId,
           workflowName: inp.workflowName,
           _nodeId: node._id,
@@ -409,7 +413,7 @@ export class TaskService {
           await this.taskRepository.updateStatus(
             task._id,
             TaskStatus.cancel,
-            e,
+            e.toString(),
             undefined,
           );
         }
@@ -430,6 +434,7 @@ export class TaskService {
         // * send websocket error
         // TODO save log error
         // TODO update task status
+        console.log(error);
 
         return;
       }
@@ -457,16 +462,26 @@ export class TaskService {
     }
   }
 
-  async getTasks(payload: GetTaskRequestDto): Promise<TaskResponseDto> {
+  async getTasks(
+    u: IJwtPayload,
+    payload: GetTaskRequestDto,
+  ): Promise<TaskResponseDto> {
     return {
       page: payload.page,
       pageSize: payload.limit,
-      totalCount: await this.taskRepository.count({}),
-      data: await this.taskRepository.find({}, '', {
+      totalCount: await this.taskRepository.count({ _userId: u._id }),
+      data: await this.taskRepository.find({ _userId: u._id }, '', {
         skip: payload.page * payload.limit,
         limit: payload.limit,
         sort: { createdAt: -1 },
       }),
     };
+  }
+
+  async delTask(u: IJwtPayload, code: string) {
+    await this.taskRepository.delete({
+      code: code,
+      _userId: u._id,
+    });
   }
 }

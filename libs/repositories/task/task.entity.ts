@@ -4,11 +4,13 @@ import { ITaskEntity } from '@libs/shared/entities/workflow/task.interface';
 import { TaskId } from '@libs/repositories/task/types';
 import { ProviderId } from '@libs/repositories/provider/types';
 import { TaskStatus } from '@tps/task.interface';
+import { UserId } from '@libs/repositories/user';
 
 export class TaskEntity implements ITaskEntity {
   id?: string;
   _id?: TaskId;
   _workflowId: WorkflowId;
+  _userId: UserId;
   workflowName: string;
   _providerId: ProviderId;
   providerName: string;
