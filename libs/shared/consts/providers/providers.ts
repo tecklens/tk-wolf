@@ -30,12 +30,12 @@ export const providers: IProviderConfig[] = [
 ];
 
 export const WOLF_PROVIDERS: ProvidersIdEnum[] = [
-  InAppProviderIdEnum.wolf,
-  SmsProviderIdEnum.wolf,
-  EmailProviderIdEnum.wolf,
+  InAppProviderIdEnum.Novu,
+  SmsProviderIdEnum.Novu,
+  EmailProviderIdEnum.Novu,
 ];
 
-export const wolf_SMS_EMAIL_PROVIDERS: ProvidersIdEnum[] = [
-  SmsProviderIdEnum.wolf,
-  EmailProviderIdEnum.wolf,
+export const WOLF_SMS_EMAIL_PROVIDERS: ProvidersIdEnum[] = [
+  SmsProviderIdEnum.Novu,
+  EmailProviderIdEnum.Novu,
 ];

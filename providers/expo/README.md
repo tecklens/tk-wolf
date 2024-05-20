@@ -9,7 +9,7 @@ The payload field supports all [Message Request](https://docs.expo.dev/push-noti
 ```ts
 import { wolf } from '@novu/node';
 
-const wolf = new wolf(process.env.wolf_API_KEY);
+const wolf = new wolf(process.env.NOVU_API_KEY);
 
 wolf.trigger('event-name', {
   to: {

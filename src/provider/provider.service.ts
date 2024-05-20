@@ -264,7 +264,7 @@ export class ProviderService {
 
     if (
       existingIntegration &&
-      providerId === InAppProviderIdEnum.novu &&
+      providerId === InAppProviderIdEnum.Novu &&
       channel === ChannelTypeEnum.IN_APP
     ) {
       throw new BadRequestException(

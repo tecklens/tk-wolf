@@ -53,7 +53,7 @@ import {
 } from 'date-fns';
 import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
 import { LoginBodyDto } from '@app/auth/dtos/login.dto';
-import { wolf } from '@novu/node';
+import { Novu } from '@novu/node';
 import { EnvironmentService } from '@app/environment/environment.service';
 import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
@@ -515,11 +515,11 @@ export class AuthService {
       if (
         (process.env.NODE_ENV === 'dev' ||
           process.env.NODE_ENV === 'production') &&
-        process.env.wolf_API_KEY
+        process.env.NOVU_API_KEY
       ) {
-        const wolf = new wolf(process.env.wolf_API_KEY);
+        const wolf = new Novu(process.env.NOVU_API_KEY);
 
-        wolf.trigger(process.env.wolf_RESET_WOLF_IDENTIFIER || 'wolf', {
+        wolf.trigger(process.env.NOVU_RESET_WOLF_IDENTIFIER || 'wolf', {
           to: {
             subscriberId:
               'mlsn.ce2b5e0c809f21b59b9a6abcffb8e90cacf296777e518e105cc8233dd63a2bab',
