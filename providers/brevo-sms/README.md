@@ -1,11 +1,11 @@
-# Novu BrevoSms Provider
+# wolf BrevoSms Provider
 
-A BrevoSms sms provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A BrevoSms sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { BrevoSmsProvider } from '@novu/brevo-sms';
+import { BrevoSmsProvider } from '@wolf/brevo-sms';
 
 const provider = new BrevoSmsProvider({
   apiKey: process.env.BREVO_API_KEY,

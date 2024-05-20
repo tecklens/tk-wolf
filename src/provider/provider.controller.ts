@@ -2,12 +2,13 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
-  Get,
+  Get, Param,
   Post,
+  Put,
   Query,
   UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiExcludeController,
@@ -42,11 +43,27 @@ export class ProviderController {
   })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  async createIntegration(
+  async createProvider(
     @UserSession() user: IJwtPayload,
     @Body() body: CreateProviderRequestDto,
   ): Promise<ProviderEntity> {
     return await this.providerService.createProvider(user, body);
+  }
+
+  @Put('/:id')
+  @ApiResponse(ProviderResponseDto, 201)
+  @ApiOperation({
+    summary: 'Create integration',
+    description: 'Update an integration for the current environment',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  async updateProvider(
+    @UserSession() user: IJwtPayload,
+    @Param('id') id: string,
+    @Body() body: CreateProviderRequestDto,
+  ): Promise<void> {
+    return await this.providerService.updateProvider(user, id, body);
   }
 
   @Get('/')

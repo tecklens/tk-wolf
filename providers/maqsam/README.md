@@ -1,11 +1,11 @@
 # Nodejs Maqsam Provider
 
-A Maqsam SMS provider library for [@novu/node](https://github.com/novuhq/novu).
+A Maqsam SMS provider library for [@novu/node](https://github.com/wolfhq/wolf).
 
 ## Usage
 
 ```javascript
-import { MaqsamSmsProvider } from '@novu/maqsam';
+import { MaqsamSmsProvider } from '@wolf/maqsam';
 
 const provider = new MaqsamSmsProvider({
   accessKeyId: process.env.MAQSAM_ACCESS_KEY_ID,

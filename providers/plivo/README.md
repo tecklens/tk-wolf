@@ -1,11 +1,11 @@
 # Nodejs Plivo Provider
 
-A plivo sms provider library for [@novu/stateless](https://github.com/novuhq/novu).
+A plivo sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf).
 
 ## Usage
 
 ```javascript
-import { PlivoSmsProvider } from '@novu/plivo';
+import { PlivoSmsProvider } from '@wolf/plivo';
 
 const provider = new PlivoSmsProvider({
   accountSid: process.env.PLIVO_ACCOUNT_ID,

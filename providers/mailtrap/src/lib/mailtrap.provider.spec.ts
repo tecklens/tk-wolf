@@ -7,7 +7,7 @@ const mockConfig = {
   from: 'test@test.com',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   from: 'test@test.com',
   to: ['test@test.com'],
   html: '<div> Mail Content </div>',
@@ -35,15 +35,15 @@ test('should trigger mailtrap library correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toBeCalled();
   expect(spy).toBeCalledWith({
-    from: mockNovuMessage.from,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
-    attachments: mockNovuMessage.attachments,
+    from: mockwolfMessage.from,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
+    attachments: mockwolfMessage.attachments,
   });
 });
 
@@ -53,7 +53,7 @@ test('should check integration successfully', async () => {
     .spyOn(MailtrapClient.prototype, 'send')
     .mockImplementation(async () => mockMailtrapResponse);
 
-  const messageResponse = await provider.checkIntegration(mockNovuMessage);
+  const messageResponse = await provider.checkIntegration(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(messageResponse).toStrictEqual({

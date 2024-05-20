@@ -4,11 +4,11 @@ import { EmailEventStatusEnum } from '@novu/stateless';
 const mockConfig = {
   apiKey:
     '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',
-  from: 'test@novu.co',
+  from: 'test@wolf.co',
   senderName: 'test',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   from: 'test@test.com',
   to: ['test@test.com'],
   html: '<div> Mail Content </div>',
@@ -42,19 +42,19 @@ test('should send message', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toBeCalled();
   expect(spy).toBeCalledWith({
-    from: mockNovuMessage.from,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
+    from: mockwolfMessage.from,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
     attachments: [
       {
-        mime: mockNovuMessage.attachments[0].mime,
-        file: mockNovuMessage.attachments[0].file,
-        name: mockNovuMessage.attachments[0].name,
+        mime: mockwolfMessage.attachments[0].mime,
+        file: mockwolfMessage.attachments[0].file,
+        name: mockwolfMessage.attachments[0].name,
       },
     ],
   });
@@ -70,14 +70,14 @@ test('should correctly use sender email and name from the config', async () => {
         date: new Date().toISOString(),
       };
     });
-  const { from, ...mockNovuMessageWithoutFrom } = mockNovuMessage;
+  const { from, ...mockwolfMessageWithoutFrom } = mockwolfMessage;
 
   // use config.from if message.from is not provided
-  await provider.sendMessage(mockNovuMessageWithoutFrom);
+  await provider.sendMessage(mockwolfMessageWithoutFrom);
   expect(spy).toHaveBeenCalled();
 
   // Use the message.from instead of config.from if available
-  const res = await provider.sendMessage(mockNovuMessage);
+  const res = await provider.sendMessage(mockwolfMessage);
   expect(spy).toHaveBeenCalled();
   expect(res.id).toBe('id');
 });

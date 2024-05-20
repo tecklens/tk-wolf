@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@novu/shared';
 import { PreferenceOverrideSourceEnum } from '@libs/shared/types';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export interface IPreferenceChannels {
   email?: boolean;

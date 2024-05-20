@@ -1,11 +1,11 @@
-# Novu Sns Provider
+# wolf Sns Provider
 
-A SNS SMS provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A SNS SMS provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { SNSSmsProvider } from "@novu/sns"
+import { SNSSmsProvider } from "@wolf/sns"
 
 const provider = new SNSSmsProvider({
     region: "eu-west-1",

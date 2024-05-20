@@ -1,6 +1,8 @@
 import { InfobipSmsProvider } from '@wolf/infobip';
-import { ChannelTypeEnum, SmsProviderIdEnum, ICredentials } from '@novu/shared';
 import { BaseSmsHandler } from './base.handler';
+import { SmsProviderIdEnum } from '@libs/shared/consts/providers';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { ICredentials } from '@libs/shared/entities/integration';
 export class InfobipSmsHandler extends BaseSmsHandler {
   constructor() {
     super(SmsProviderIdEnum.Infobip, ChannelTypeEnum.SMS);

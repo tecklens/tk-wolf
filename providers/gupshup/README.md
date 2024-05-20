@@ -1,11 +1,11 @@
-# Novu Gupshup Provider
+# wolf Gupshup Provider
 
-A Gupshup sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A Gupshup sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { GupshupSmsProvider } from '@novu/gupshup';
+import { GupshupSmsProvider } from '@wolf/gupshup';
 
 const provider = new GupshupSmsProvider({
     userId: process.env.GUPSHUP_USER_ID,

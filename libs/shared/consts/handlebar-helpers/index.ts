@@ -1,8 +1,8 @@
 export * from './handlebarHelpers';
 export * from './getTemplateVariables';
 
-export const novuReservedVariableNames = ['body'];
+export const wolfReservedVariableNames = ['body'];
 
 export function isReservedVariableName(variableName: string) {
-  return novuReservedVariableNames.includes(variableName);
+  return wolfReservedVariableNames.includes(variableName);
 }

@@ -1,11 +1,11 @@
-# Novu SparkPost Provider
+# wolf SparkPost Provider
 
-A SparkPost email provider library for [@novu/node](https://github.com/novuhq/novu)
+A SparkPost email provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { SparkPostEmailProvider } from '@novu/sparkpost';
+import { SparkPostEmailProvider } from '@wolf/sparkpost';
 
 const provider = new SparkPostEmailProvider({
   apiKey: process.env.SPARKPOST_API_KEY

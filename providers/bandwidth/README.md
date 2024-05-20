@@ -1,11 +1,11 @@
-# Novu Bandwidth Provider
+# wolf Bandwidth Provider
 
-A Bandwidth sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A Bandwidth sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-    import { BandwidthSmsProvider } from '@novu/bandwidth'
+    import { BandwidthSmsProvider } from '@wolf/bandwidth'
 
     const provider = new TwilioSmsProvider({
         username: process.env.BANDWIDTH_USERNAME,

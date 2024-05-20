@@ -1,11 +1,11 @@
-# Novu PushWebhook Provider
+# wolf PushWebhook Provider
 
-This is a library that triggers a custom webhook and shows itself as a push library for [@novu/node](https://github.com/novuhq/novu)
+This is a library that triggers a custom webhook and shows itself as a push library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { PushWebhookPushProvider } from '@novu/push-webhook';
+import { PushWebhookPushProvider } from '@wolf/push-webhook';
 
 const provider = new PushWebhookPushProvider({
   webhookUrl: credentials.webhookUrl,

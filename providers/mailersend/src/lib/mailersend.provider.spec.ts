@@ -4,10 +4,10 @@ import { CheckIntegrationResponseEnum } from '@novu/stateless';
 
 const mockConfig = {
   apiKey: 'SG.1234',
-  senderName: 'Novu Team',
+  senderName: 'wolf Team',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test1.com', 'test@test2.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -31,15 +31,15 @@ test('should trigger mailerSend with expected parameters', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toBeCalledWith({
-    to: mockNovuMessage.to,
-    subject: mockNovuMessage.subject,
-    html: mockNovuMessage.html,
-    text: mockNovuMessage.text,
-    from: mockNovuMessage.from,
+    to: mockwolfMessage.to,
+    subject: mockwolfMessage.subject,
+    html: mockwolfMessage.html,
+    text: mockwolfMessage.text,
+    from: mockwolfMessage.from,
     attachments: [
       {
         mime: 'text/plain',
@@ -47,7 +47,7 @@ test('should trigger mailerSend with expected parameters', async () => {
         name: 'test.txt',
       },
     ],
-    customData: mockNovuMessage.customData,
+    customData: mockwolfMessage.customData,
   });
 });
 
@@ -67,13 +67,13 @@ test('should trigger mailerSend correctly', async () => {
   const recipient1 = new Recipient('test@test1.com', undefined);
   const recipient2 = new Recipient('test@test2.com', undefined);
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toBeCalledWith('/email', {
     method: 'POST',
     body: {
-      from: { email: mockNovuMessage.from, name: mockConfig.senderName },
+      from: { email: mockwolfMessage.from, name: mockConfig.senderName },
       to: [recipient1, recipient2],
       cc: undefined,
       bcc: undefined,
@@ -83,12 +83,12 @@ test('should trigger mailerSend correctly', async () => {
       },
       sendAt: undefined,
       attachments: [attachment],
-      subject: mockNovuMessage.subject,
-      text: mockNovuMessage.text,
-      html: mockNovuMessage.html,
-      template_id: mockNovuMessage.customData.templateId,
+      subject: mockwolfMessage.subject,
+      text: mockwolfMessage.text,
+      html: mockwolfMessage.html,
+      template_id: mockwolfMessage.customData.templateId,
       variables: undefined,
-      personalization: mockNovuMessage.customData.personalization,
+      personalization: mockwolfMessage.customData.personalization,
       tags: undefined,
     },
   });
@@ -103,7 +103,7 @@ test('should check provider integration when success', async () => {
       status: 200,
     }));
 
-  const messageResponse = await provider.checkIntegration(mockNovuMessage);
+  const messageResponse = await provider.checkIntegration(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(messageResponse).toStrictEqual({
@@ -127,7 +127,7 @@ test('should check provider integration when bad credentials', async () => {
       status: 401,
     }));
 
-  const messageResponse = await provider.checkIntegration(mockNovuMessage);
+  const messageResponse = await provider.checkIntegration(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(messageResponse).toStrictEqual({
@@ -151,7 +151,7 @@ test('should check provider integration when failed', async () => {
       status: 500,
     }));
 
-  const messageResponse = await provider.checkIntegration(mockNovuMessage);
+  const messageResponse = await provider.checkIntegration(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(messageResponse).toStrictEqual({

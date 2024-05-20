@@ -41,7 +41,7 @@ export class ExpoPushProvider implements IPushProvider {
       ]);
 
     /*
-     * TODO: We now just send one device token from Novu.
+     * TODO: We now just send one device token from wolf.
      * We need a different method to handle multiple ones.
      */
     const [ticket] = tickets;

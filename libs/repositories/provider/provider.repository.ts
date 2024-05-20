@@ -1,12 +1,12 @@
 import { FilterQuery } from 'mongoose';
 import { SoftDeleteModel } from 'mongoose-delete';
-import { NOVU_PROVIDERS } from '@novu/shared';
 
 import { ProviderDBModel, ProviderEntity } from './provider.entity';
 import { Provider } from './provider.schema';
 import type { EnforceEnvOrOrgIds } from '@tps/enforce';
 
 import { BaseRepository } from '../base-repository';
+import { WOLF_PROVIDERS } from '@libs/shared/consts';
 
 export type IntegrationQuery = FilterQuery<ProviderDBModel> &
   EnforceEnvOrOrgIds;
@@ -60,22 +60,6 @@ export class ProviderRepository extends BaseRepository<
       undefined,
       { query: { sort: { priority: -1 } } },
     );
-  }
-
-  async countActiveExcludingNovu({
-    _organizationId,
-    _environmentId,
-    channel,
-  }: Pick<ProviderEntity, '_environmentId' | '_organizationId' | 'channel'>) {
-    return await this.count({
-      _organizationId,
-      _environmentId,
-      channel,
-      active: true,
-      providerId: {
-        $nin: NOVU_PROVIDERS,
-      },
-    });
   }
 
   async create(data: IntegrationQuery): Promise<ProviderEntity> {

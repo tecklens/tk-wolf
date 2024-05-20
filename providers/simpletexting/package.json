@@ -1,12 +1,12 @@
 {
   "name": "@wolf/simpletexting",
   "version": "0.0.1",
-  "description": "A simpletexting wrapper for novu",
+  "description": "A simpletexting wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/novuhq/novu",
+  "repository": "https://github.com/wolfhq/wolf",
   "license": "MIT",
   "keywords": [],
   "scripts": {

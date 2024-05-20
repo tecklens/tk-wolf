@@ -1,12 +1,12 @@
 {
   "name": "@wolf/twilio",
   "version": "0.0.1",
-  "description": "A twilio wrapper for novu",
+  "description": "A twilio wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/novuhq/twilio",
+  "repository": "https://github.com/wolfhq/twilio",
   "license": "MIT",
   "keywords": [],
   "scripts": {

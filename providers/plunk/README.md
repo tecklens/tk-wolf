@@ -1,11 +1,11 @@
-# Novu Plunk Provider
+# wolf Plunk Provider
 
-A Plunk email provider library for [@novu/node](https://github.com/novuhq/novu)
+A Plunk email provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-    import { PlunkEmailProvider } from '@novu/plunk';
+    import { PlunkEmailProvider } from '@wolf/plunk';
 
     const provider = new PlunkEmailProvider({
         apiKey: process.env.PLUNK_API_KEY

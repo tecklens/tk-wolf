@@ -1,12 +1,12 @@
 {
   "name": "@wolf/mailgun",
   "version": "0.0.1",
-  "description": "A mailgun wrapper for novu",
+  "description": "A mailgun wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/novuhq/mailgun",
+  "repository": "https://github.com/wolfhq/mailgun",
   "license": "MIT",
   "keywords": [],
   "scripts": {

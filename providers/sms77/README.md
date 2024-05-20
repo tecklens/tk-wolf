@@ -1,11 +1,11 @@
-# Novu sms77 Provider
+# wolf sms77 Provider
 
-A sms77 sms provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A sms77 sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { Sms77SmsProvider } from '@novu/sms77';
+import { Sms77SmsProvider } from '@wolf/sms77';
 
 const provider = new Sms77SmsProvider({
     apiKey: process.env.SMS77_API_KEY,

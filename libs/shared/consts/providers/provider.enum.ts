@@ -125,7 +125,7 @@ export enum PushProviderIdEnum {
 }
 
 export enum InAppProviderIdEnum {
-  Novu = 'novu',
+  novu = 'novu',
 }
 
 export type ProvidersIdEnum =

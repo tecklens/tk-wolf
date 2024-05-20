@@ -10,7 +10,7 @@ const mockConfig = {
   secretAccessKey: 'TEST',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test2.com'],
   replyTo: 'test@test1.com',
   subject: 'test subject',
@@ -91,7 +91,7 @@ test('should trigger ses library correctly', async () => {
     });
 
   const provider = new SESEmailProvider(mockConfig);
-  const response = await provider.sendMessage(mockNovuMessage);
+  const response = await provider.sendMessage(mockwolfMessage);
 
   // eslint-disable-next-line
   const bufferArray = spy.mock.calls[0][0].input['RawMessage']['Data'];

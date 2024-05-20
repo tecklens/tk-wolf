@@ -1,11 +1,11 @@
-# Novu Slack Provider
+# wolf Slack Provider
 
-A Slack chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A Slack chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ````javascript
-import { SlackProvider } from '@novu/slack';
+import { SlackProvider } from '@wolf/slack';
 
 const provider = new SlackProvider({
   applicationId: process.env.APPLICATION_ID,

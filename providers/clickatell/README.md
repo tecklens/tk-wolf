@@ -1,11 +1,11 @@
-# Novu ClickatellSmsProvider Provider
+# wolf ClickatellSmsProvider Provider
 
-A ClickatellSmsProvider sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A ClickatellSmsProvider sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { ClickatellSmsProvider } from '@novu/clickatell';
+import { ClickatellSmsProvider } from '@wolf/clickatell';
 
 // one way sms integration
 const provider = new ClickatellSmsProvider({

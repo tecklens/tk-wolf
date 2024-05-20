@@ -1,12 +1,12 @@
 {
   "name": "@wolf/getstream",
   "version": "0.0.1",
-  "description": "A getstream wrapper for novu",
+  "description": "A getstream wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/novuhq/novu",
+  "repository": "https://github.com/wolfhq/wolf",
   "license": "MIT",
   "keywords": [],
   "scripts": {

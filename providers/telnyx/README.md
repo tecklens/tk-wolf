@@ -1,11 +1,11 @@
-# Novu Telnyx Provider
+# wolf Telnyx Provider
 
-A Telnyx sms provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A Telnyx sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { TelnyxSmsProvider } from '@novu/telnyx';
+import { TelnyxSmsProvider } from '@wolf/telnyx';
 
 const provider = new TelnyxSmsProvider({
   apiKey: process.env.TELNYX_API_KEY,

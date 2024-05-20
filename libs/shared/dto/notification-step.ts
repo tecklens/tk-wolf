@@ -4,27 +4,27 @@ import {
   ApiPropertyOptional,
   getSchemaPath,
 } from '@nestjs/swagger';
-import {
-  DigestUnitEnum,
-  DigestTypeEnum,
-  DelayTypeEnum,
-  IWorkflowStepMetadata,
-  IDigestBaseMetadata,
-  IDigestRegularMetadata,
-  IDigestTimedMetadata,
-  IDelayRegularMetadata,
-  IDelayScheduledMetadata,
-  ITimedConfig,
-  DaysEnum,
-  MonthlyTypeEnum,
-  OrdinalEnum,
-  OrdinalValueEnum,
-  StepVariantDto,
-} from '@novu/shared';
 import { IsBoolean, ValidateNested } from 'class-validator';
 
 import { StepFilter } from './step-filter';
 import { MessageTemplate } from '@libs/shared/dto/message-template';
+import {
+  DaysEnum,
+  DelayTypeEnum,
+  DigestTypeEnum,
+  DigestUnitEnum,
+  IDelayRegularMetadata,
+  IDelayScheduledMetadata,
+  IDigestBaseMetadata,
+  IDigestRegularMetadata,
+  IDigestTimedMetadata,
+  ITimedConfig,
+  IWorkflowStepMetadata,
+  MonthlyTypeEnum,
+  OrdinalEnum,
+  OrdinalValueEnum,
+} from '../entities/step';
+import { StepVariantDto } from '@libs/shared/dto/workflows';
 
 class TimedConfig implements ITimedConfig {
   @ApiPropertyOptional()

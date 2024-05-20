@@ -6,7 +6,7 @@ const mockConfig = {
   from: 'sendchamp',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: '2348055372961',
   content: 'sms content',
 };
@@ -24,7 +24,7 @@ test('should trigger sendchamp library correctly', async () => {
       } as any;
     });
 
-  await smsProvider.sendMessage(mockNovuMessage);
+  await smsProvider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
 

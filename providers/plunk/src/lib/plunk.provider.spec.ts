@@ -2,10 +2,10 @@ import { PlunkEmailProvider } from './plunk.provider';
 
 const mockConfig = {
   apiKey: 'sample-api-key',
-  senderName: "Novu's Team",
+  senderName: "wolf's Team",
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   from: 'test@nomail.com',
   to: ['test@nomail.com'],
   html: '<div> Mail Content </div>',
@@ -21,13 +21,13 @@ test('should trigger plunk library correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toBeCalled();
   expect(spy).toBeCalledWith({
-    from: mockNovuMessage.from,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
+    from: mockwolfMessage.from,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
   });
 });

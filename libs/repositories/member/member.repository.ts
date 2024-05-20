@@ -1,10 +1,14 @@
 import { FilterQuery } from 'mongoose';
-import { IMemberInvite, MemberRoleEnum, MemberStatusEnum } from '@novu/shared';
 
 import { MemberEntity, MemberDBModel } from './member.entity';
 import { BaseRepository } from '../base-repository';
 import { Member } from './member.schema';
 import type { EnforceOrgId } from '@tps/enforce';
+import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
+import {
+  IMemberInvite,
+  MemberStatusEnum,
+} from '@libs/shared/entities/user/member.interface';
 
 export interface IAddMemberData {
   _userId?: string;

@@ -95,7 +95,7 @@ export class SparkPostEmailProvider implements IEmailProvider {
   ): Promise<ICheckIntegrationResponse> {
     try {
       await this.sendMessage({
-        to: ['no-reply@novu.co'],
+        to: ['no-reply@wolf.co'],
         from: this.config.from || options.from,
         subject: options.subject,
         text: options.text,

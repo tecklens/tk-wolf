@@ -1,17 +1,17 @@
-# Novu Expo Provider
+# wolf Expo Provider
 
-A Expo push provider library for [@novu/node](https://github.com/novuhq/novu)
+A Expo push provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 The payload field supports all [Message Request](https://docs.expo.dev/push-notifications/sending-notifications/#message-request-format) values, example below.
 
 ```ts
-import { Novu } from '@novu/node';
+import { wolf } from '@novu/node';
 
-const novu = new Novu(process.env.NOVU_API_KEY);
+const wolf = new wolf(process.env.wolf_API_KEY);
 
-novu.trigger('event-name', {
+wolf.trigger('event-name', {
   to: {
     subscriberId: '...',
   },

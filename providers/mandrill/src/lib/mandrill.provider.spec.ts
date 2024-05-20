@@ -15,7 +15,7 @@ test('should trigger mandrill correctly', async () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return [{}] as any;
     });
-  const mockNovuMessage = {
+  const mockwolfMessage = {
     to: ['test2@test.com'],
     subject: 'test subject',
     html: '<div> Mail Content </div>',
@@ -28,18 +28,18 @@ test('should trigger mandrill correctly', async () => {
     ],
   };
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toHaveBeenCalledWith({
     message: {
       from_email: mockConfig.from,
       from_name: mockConfig.senderName,
-      subject: mockNovuMessage.subject,
-      html: mockNovuMessage.html,
+      subject: mockwolfMessage.subject,
+      html: mockwolfMessage.html,
       to: [
         {
-          email: mockNovuMessage.to[0],
+          email: mockwolfMessage.to[0],
           type: 'to',
         },
       ],

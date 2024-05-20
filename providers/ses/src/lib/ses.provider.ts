@@ -158,14 +158,14 @@ export class SESEmailProvider implements IEmailProvider {
       await this.sendMail({
         html: '',
         text: 'This is a Test mail to test your Amazon SES integration',
-        to: 'no-reply@novu.co',
+        to: 'no-reply@wolf.co',
         from: this.config.from,
         subject: 'Test SES integration',
         attachments: {},
         bcc: [],
         cc: [],
-        replyTo: 'support@novu.co',
-        senderName: 'Novu Support',
+        replyTo: 'support@wolf.co',
+        senderName: 'wolf Support',
       });
 
       return {

@@ -1,11 +1,11 @@
-# Novu Eazy SMS Provider
+# wolf Eazy SMS Provider
 
-A EazySms sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A EazySms sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { EazySmsProvider } from '@novu/eazy-sms';
+import { EazySmsProvider } from '@wolf/eazy-sms';
 
 const provider = new EazySmsProvider({
     apiKey: process.env.API_KEY,

@@ -1,11 +1,11 @@
-# Novu Africa's Talking Provider
+# wolf Africa's Talking Provider
 
-An Africa's Talking SMS provider library for [@novu/node](https://github.com/novuhq/novu)
+An Africa's Talking SMS provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { AfricasTalkingSmsProvider } from '@novu/africas-talking';
+import { AfricasTalkingSmsProvider } from '@wolf/africas-talking';
 
  const provider = new AfricasTalkingSmsProvider({
     apiKey: process.env.AFRICAS_TALKING_API_KEY,

@@ -16,7 +16,7 @@ expect.extend({
   dateIsValid,
 });
 
-const mockNovuMessage: ISmsOptions = {
+const mockwolfMessage: ISmsOptions = {
   from: 'My Company',
   to: '+33623456789',
   content: 'SMS content',
@@ -46,7 +46,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch).toBeCalled();
   });
@@ -58,7 +58,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][0]).toEqual(
       'https://api.brevo.com/v3/transactionalSMS/sms'
@@ -72,7 +72,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
       method: 'POST',
@@ -86,7 +86,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
       headers: {
@@ -102,9 +102,9 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    const { from, ...mockNovuMessageWithoutFrom } = mockNovuMessage;
+    const { from, ...mockwolfMessageWithoutFrom } = mockwolfMessage;
 
-    await provider.sendMessage(mockNovuMessageWithoutFrom);
+    await provider.sendMessage(mockwolfMessageWithoutFrom);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
       body: expect.objectToEqual('sender', mockConfig.from),
@@ -118,10 +118,10 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
-      body: expect.objectToEqual('sender', mockNovuMessage.from),
+      body: expect.objectToEqual('sender', mockwolfMessage.from),
     });
   });
   test('should send message with provided option to', async () => {
@@ -131,10 +131,10 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
-      body: expect.objectToEqual('recipient', mockNovuMessage.to),
+      body: expect.objectToEqual('recipient', mockwolfMessage.to),
     });
   });
   test('should send message with provided option content', async () => {
@@ -144,10 +144,10 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(fetch.mock.calls[0][1]).toMatchObject({
-      body: expect.objectToEqual('content', mockNovuMessage.content),
+      body: expect.objectToEqual('content', mockwolfMessage.content),
     });
   });
   test('should return id returned in request response', async () => {
@@ -157,7 +157,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    const result = await provider.sendMessage(mockNovuMessage);
+    const result = await provider.sendMessage(mockwolfMessage);
 
     expect(result).toMatchObject({
       id: mockBrevoResponse.messageId,
@@ -170,7 +170,7 @@ describe('sendMessage method', () => {
       status: 201,
     });
 
-    const result = await provider.sendMessage(mockNovuMessage);
+    const result = await provider.sendMessage(mockwolfMessage);
 
     expect(result).toMatchObject({
       date: expect.dateIsValid(),

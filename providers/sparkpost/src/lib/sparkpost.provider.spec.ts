@@ -8,7 +8,7 @@ const mockConfig = {
   senderName: 'test',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   from: 'test@test.com',
   to: ['test@test.com'],
   html: '<div> Mail Content </div>',
@@ -27,19 +27,19 @@ test('should trigger sendinblue library correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toBeCalled();
   expect(spy).toBeCalledWith({
-    from: mockNovuMessage.from,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
+    from: mockwolfMessage.from,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
     attachments: [
       {
-        mime: mockNovuMessage.attachments[0].mime,
-        file: mockNovuMessage.attachments[0].file,
-        name: mockNovuMessage.attachments[0].name,
+        mime: mockwolfMessage.attachments[0].mime,
+        file: mockwolfMessage.attachments[0].file,
+        name: mockwolfMessage.attachments[0].name,
       },
     ],
   });

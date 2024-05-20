@@ -1,9 +1,13 @@
 import { Types } from 'mongoose';
-import { IMemberInvite, MemberRoleEnum, MemberStatusEnum } from '@novu/shared';
 
 import { UserEntity } from '../user';
 import type { OrganizationId } from '../organization';
 import { ChangePropsValueType } from '@tps/helpers';
+import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
+import {
+  IMemberInvite,
+  MemberStatusEnum,
+} from '@libs/shared/entities/user/member.interface';
 
 export class MemberEntity {
   _id: string;

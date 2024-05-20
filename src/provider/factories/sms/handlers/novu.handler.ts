@@ -1,8 +1,10 @@
 import { TwilioSmsProvider } from '@wolf/twilio';
-import { ChannelTypeEnum, ICredentials, SmsProviderIdEnum } from '@novu/shared';
 import { BaseSmsHandler } from './base.handler';
+import { SmsProviderIdEnum } from '@libs/shared/consts/providers';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { ICredentials } from '@libs/shared/entities/integration';
 
-export class NovuSmsHandler extends BaseSmsHandler {
+export class WolfSmsHandler extends BaseSmsHandler {
   constructor() {
     super(SmsProviderIdEnum.Novu, ChannelTypeEnum.SMS);
   }

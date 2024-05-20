@@ -1,7 +1,7 @@
-import { ChannelTypeEnum } from '@novu/shared';
 import { SendgridEmailProvider } from '@wolf/sendgrid';
 
 import { BaseHandler } from './base.handler';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export class SendgridHandler extends BaseHandler {
   constructor() {

@@ -1,11 +1,11 @@
-# Novu OneSignal Provider
+# wolf OneSignal Provider
 
-A OneSignal push provider library for [@novu/node](https://github.com/novuhq/novu)
+A OneSignal push provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { OneSignalPushProvider } from '@novu/one-signal';
+import { OneSignalPushProvider } from '@wolf/one-signal';
 
 const provider = new OneSignalPushProvider({
   appId: process.env.ONE_SIGNAL_APP_ID,

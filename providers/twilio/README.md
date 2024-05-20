@@ -1,11 +1,11 @@
 # Nodejs Twilio Provider
 
-A twilio sms provider library for [@novu/stateless](https://github.com/novuhq/novu).
+A twilio sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf).
 
 ## Usage
 
 ```javascript
-import { TwilioSmsProvider } from '@novu/twilio';
+import { TwilioSmsProvider } from '@wolf/twilio';
 
 const provider = new TwilioSmsProvider({
   accountSid: process.env.TWILIO_ACCOUNT_SID,

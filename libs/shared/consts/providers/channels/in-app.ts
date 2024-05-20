@@ -1,4 +1,4 @@
-import { novuInAppConfig } from '../credentials';
+import { wolfInAppConfig } from '../credentials';
 
 import { InAppProviderIdEnum } from '../provider.enum';
 import { IProviderConfig } from '../provider.interface';
@@ -8,11 +8,11 @@ import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const inAppProviders: IProviderConfig[] = [
   {
-    id: InAppProviderIdEnum.Novu,
-    displayName: 'Novu In-App',
+    id: InAppProviderIdEnum.wolf,
+    displayName: 'wolf In-App',
     channel: ChannelTypeEnum.IN_APP,
-    credentials: novuInAppConfig,
-    docReference: `https://docs.novu.co/notification-center/introduction${UTM_CAMPAIGN_QUERY_PARAM}`,
-    logoFileName: { light: 'novu.png', dark: 'novu.png' },
+    credentials: wolfInAppConfig,
+    docReference: `https://docs.wolf.co/notification-center/introduction${UTM_CAMPAIGN_QUERY_PARAM}`,
+    logoFileName: { light: 'wolf.png', dark: 'wolf.png' },
   },
 ];

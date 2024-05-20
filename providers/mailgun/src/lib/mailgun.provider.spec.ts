@@ -8,7 +8,7 @@ const mockConfig = {
   from: 'test@test.com',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test2.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -27,7 +27,7 @@ test('should trigger mailgun correctly', async () => {
     id: '<20111114174239.25659.5817@samples.mailgun.org>',
   });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(api.isDone()).toBeTruthy();
   api.done();
@@ -46,7 +46,7 @@ test('should trigger mailgun correctly with custom baseUrl', async () => {
     id: '<20111114174239.25659.5817@samples.mailgun.org>',
   });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(api.isDone()).toBeTruthy();
   api.done();

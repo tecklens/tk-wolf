@@ -1,11 +1,11 @@
 # Nodejs Mandrill Provider
 
-A mandrill email provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A mandrill email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { MandrillProvider } from '@novu/mandrill';
+import { MandrillProvider } from '@wolf/mandrill';
 
 const provider = new MandrillProvider({
   apiKey: process.env.API_KEY,

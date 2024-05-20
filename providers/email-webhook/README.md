@@ -1,6 +1,6 @@
-# Novu Email Webhook Provider
+# wolf Email Webhook Provider
 
-This is a library that triggers a custom webhook and shows itself as an email library for [@novu/node](https://github.com/novuhq/novu)
+This is a library that triggers a custom webhook and shows itself as an email library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 

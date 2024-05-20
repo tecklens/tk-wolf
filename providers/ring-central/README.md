@@ -1,11 +1,11 @@
-# Novu RingCentral Provider
+# wolf RingCentral Provider
 
-A RingCentral sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A RingCentral sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { RingCentralSmsProvider } from '@novu/ringcentral';
+import { RingCentralSmsProvider } from '@wolf/ringcentral';
 
 const provider = new RingCentralSmsProvider({
   clientId: process.env.RINGCENTRAL_CLIENT_ID,

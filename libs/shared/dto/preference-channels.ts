@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IPreferenceChannels } from '@novu/shared';
 import { IsBoolean, IsOptional } from 'class-validator';
+import { IPreferenceChannels } from '@tps/subscriber-preference.interface';
 
 export class PreferenceChannels implements IPreferenceChannels {
   @ApiPropertyOptional()

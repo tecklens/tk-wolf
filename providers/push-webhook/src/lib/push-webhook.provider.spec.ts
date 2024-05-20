@@ -47,7 +47,7 @@ test('should trigger push-webhook library correctly', async () => {
     {
       headers: {
         'content-type': 'application/json',
-        'X-Novu-Signature':
+        'X-wolf-Signature':
           'ebb2ff6420df59a863a6ddfa64ca8721cbbce038d5432c441cde83dee43b70d9',
       },
     }

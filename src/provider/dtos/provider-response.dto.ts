@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ChannelTypeEnum } from '@novu/shared';
 import { CredentialsDto } from './credentials.dto';
 import { StepFilter } from '@libs/shared/dto/step-filter';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export class ProviderResponseDto {
   @ApiPropertyOptional()

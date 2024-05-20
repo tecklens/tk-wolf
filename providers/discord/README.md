@@ -1,11 +1,11 @@
-# Novu Discord Provider
+# wolf Discord Provider
 
-A Discord chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A Discord chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { DiscordProvider } from '@novu/discord';
+import { DiscordProvider } from '@wolf/discord';
 
 const provider = new DiscordProvider({});
 ```

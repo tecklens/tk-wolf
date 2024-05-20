@@ -1,11 +1,11 @@
-# Novu Burst SMS Provider
+# wolf Burst SMS Provider
 
-A Burst SMS sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A Burst SMS sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { BurstSmsProvider } from '@novu/burst-sms';
+import { BurstSmsProvider } from '@wolf/burst-sms';
 
 const provider = new BurstSmsProvider({ 
   apiKey: process.env.BURST_SMS_API_KEY,        // Your Burst SMS API Key

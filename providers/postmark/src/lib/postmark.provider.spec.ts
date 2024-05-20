@@ -5,7 +5,7 @@ const mockConfig = {
   from: 'test@test.com',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test2@test.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -47,15 +47,15 @@ test('should trigger postmark correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toHaveBeenCalledWith({
     From: mockConfig.from,
-    To: mockNovuMessage.to[0],
-    HtmlBody: mockNovuMessage.html,
-    TextBody: mockNovuMessage.html,
-    Subject: mockNovuMessage.subject,
+    To: mockwolfMessage.to[0],
+    HtmlBody: mockwolfMessage.html,
+    TextBody: mockwolfMessage.html,
+    Subject: mockwolfMessage.subject,
     Attachments: [
       {
         Name: 'test.txt',
@@ -107,7 +107,7 @@ test('should check provider integration correctly', async () => {
       return {} as any;
     });
 
-  const response = await provider.checkIntegration(mockNovuMessage);
+  const response = await provider.checkIntegration(mockwolfMessage);
   expect(spy).toHaveBeenCalled();
   expect(response.success).toBe(true);
 });

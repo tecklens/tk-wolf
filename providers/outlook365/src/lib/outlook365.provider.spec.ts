@@ -13,7 +13,7 @@ const mockConfig = {
 
 const buffer = Buffer.from('test');
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test2.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -31,10 +31,10 @@ test('should trigger outlook365 library correctly', async () => {
       } as ISendMessageSuccessResponse;
     });
 
-  const response = await provider.sendMessage(mockNovuMessage);
+  const response = await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
-  expect(spy).toHaveBeenCalledWith(mockNovuMessage);
+  expect(spy).toHaveBeenCalledWith(mockwolfMessage);
 
   expect(response).not.toBeNull();
   expect(response.date).toBe('11/28/2022');
@@ -54,10 +54,10 @@ test('should check provider integration correctly', async () => {
       } as ICheckIntegrationResponse;
     });
 
-  const response = await provider.checkIntegration(mockNovuMessage);
+  const response = await provider.checkIntegration(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
-  expect(spy).toHaveBeenCalledWith(mockNovuMessage);
+  expect(spy).toHaveBeenCalledWith(mockwolfMessage);
   expect(response).not.toBeNull();
   expect(response.success).toBeTruthy();
   expect(response.message).toBe('test');

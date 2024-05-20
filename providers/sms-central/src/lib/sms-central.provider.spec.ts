@@ -8,7 +8,7 @@ const mockConfig = {
   baseUrl: 'http://foo.bar',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: '987654321',
   content: 'sms content',
 };
@@ -22,15 +22,15 @@ test('should trigger sms-central library correctly', async () => {
 
   const provider = new SmsCentralSmsProvider(mockConfig);
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   const data = {
     ACTION: 'send',
     ORIGINATOR: mockConfig.from,
     USERNAME: mockConfig.username,
     PASSWORD: mockConfig.password,
-    RECIPIENT: mockNovuMessage.to,
-    MESSAGE_TEXT: mockNovuMessage.content,
+    RECIPIENT: mockwolfMessage.to,
+    MESSAGE_TEXT: mockwolfMessage.content,
   };
 
   expect(fakePost).toBeCalled();

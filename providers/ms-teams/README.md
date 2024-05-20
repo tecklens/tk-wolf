@@ -1,11 +1,11 @@
-# Novu MsTeams Provider
+# wolf MsTeams Provider
 
-A MsTeams chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A MsTeams chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { MsTeamsProvider } from '@novu/ms-teams';
+import { MsTeamsProvider } from '@wolf/ms-teams';
 
 const provider = new MsTeamsProvider({});
 ```

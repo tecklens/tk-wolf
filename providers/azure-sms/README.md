@@ -1,11 +1,11 @@
-# Novu AzureSms Provider
+# wolf AzureSms Provider
 
-A AzureSms sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A AzureSms sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-    import { AzureSmsProvider } from '@novu/azure-sms'
+    import { AzureSmsProvider } from '@wolf/azure-sms'
 
     const provider = new AzureSmsProvider({
         connectionString: process.env.AZURE_CONNECTION_STRING

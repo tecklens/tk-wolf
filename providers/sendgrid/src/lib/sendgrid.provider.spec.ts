@@ -7,7 +7,7 @@ const mockConfig = {
   senderName: 'test',
 };
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test2.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -27,22 +27,22 @@ test('should trigger sendgrid correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toHaveBeenCalledWith({
     to: [
       {
-        email: mockNovuMessage.to[0],
+        email: mockwolfMessage.to[0],
       },
     ],
     bcc: undefined,
     category: undefined,
     cc: undefined,
-    subject: mockNovuMessage.subject,
-    html: mockNovuMessage.html,
+    subject: mockwolfMessage.subject,
+    html: mockwolfMessage.html,
     ipPoolName: undefined,
-    from: { email: mockNovuMessage.from, name: mockConfig.senderName },
+    from: { email: mockwolfMessage.from, name: mockConfig.senderName },
     substitutions: {},
     attachments: [
       {
@@ -53,16 +53,16 @@ test('should trigger sendgrid correctly', async () => {
     ],
     customArgs: {
       id: 'message_id',
-      novuMessageId: 'message_id',
-      novuSubscriberId: undefined,
-      novuTransactionId: undefined,
-      novuWorkflowIdentifier: undefined,
+      wolfMessageId: 'message_id',
+      wolfSubscriberId: undefined,
+      wolfTransactionId: undefined,
+      wolfWorkflowIdentifier: undefined,
     },
     personalizations: [
       {
         to: [
           {
-            email: mockNovuMessage.to[0],
+            email: mockwolfMessage.to[0],
           },
         ],
         cc: undefined,
@@ -83,7 +83,7 @@ test('should check provider integration correctly', async () => {
       return [{ statusCode: 202 }] as any;
     });
 
-  const response = await provider.checkIntegration(mockNovuMessage);
+  const response = await provider.checkIntegration(mockwolfMessage);
   expect(spy).toHaveBeenCalled();
   expect(response.success).toBe(true);
 });
@@ -97,7 +97,7 @@ test('should get ip pool name from credentials', async () => {
   jest.spyOn(MailService.prototype, 'send').mockImplementation(sendMock);
 
   await provider.sendMessage({
-    ...mockNovuMessage,
+    ...mockwolfMessage,
   });
   expect(sendMock).toHaveBeenCalledWith(
     expect.objectContaining({ ipPoolName: 'config_ip' })
@@ -113,7 +113,7 @@ test('should override credentials with mail data', async () => {
   jest.spyOn(MailService.prototype, 'send').mockImplementation(sendMock);
 
   await provider.sendMessage({
-    ...mockNovuMessage,
+    ...mockwolfMessage,
     ...{ ipPoolName: 'ip_from_mail_data' },
   });
   expect(sendMock).toHaveBeenCalledWith(

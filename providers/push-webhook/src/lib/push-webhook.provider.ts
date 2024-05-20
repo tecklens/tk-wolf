@@ -35,7 +35,7 @@ export class PushWebhookPushProvider implements IPushProvider {
     const response = await axios.post(this.config.webhookUrl, bodyData, {
       headers: {
         'content-type': 'application/json',
-        'X-Novu-Signature': hmacValue,
+        'X-wolf-Signature': hmacValue,
       },
     });
 

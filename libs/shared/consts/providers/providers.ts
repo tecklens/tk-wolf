@@ -29,13 +29,13 @@ export const providers: IProviderConfig[] = [
   ...inAppProviders,
 ];
 
-export const NOVU_PROVIDERS: ProvidersIdEnum[] = [
-  InAppProviderIdEnum.Novu,
-  SmsProviderIdEnum.Novu,
-  EmailProviderIdEnum.Novu,
+export const WOLF_PROVIDERS: ProvidersIdEnum[] = [
+  InAppProviderIdEnum.wolf,
+  SmsProviderIdEnum.wolf,
+  EmailProviderIdEnum.wolf,
 ];
 
-export const NOVU_SMS_EMAIL_PROVIDERS: ProvidersIdEnum[] = [
-  SmsProviderIdEnum.Novu,
-  EmailProviderIdEnum.Novu,
+export const wolf_SMS_EMAIL_PROVIDERS: ProvidersIdEnum[] = [
+  SmsProviderIdEnum.wolf,
+  EmailProviderIdEnum.wolf,
 ];

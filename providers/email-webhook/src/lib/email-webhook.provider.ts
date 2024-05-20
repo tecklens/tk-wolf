@@ -53,7 +53,7 @@ export class EmailWebhookProvider implements IEmailProvider {
         await axios.post(this.config.webhookUrl, bodyData, {
           headers: {
             'content-type': 'application/json',
-            'X-Novu-Signature': hmacValue,
+            'X-wolf-Signature': hmacValue,
           },
         });
         sent = true;

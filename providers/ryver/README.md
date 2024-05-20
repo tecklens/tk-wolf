@@ -1,11 +1,11 @@
-# Novu Ryver Provider
+# wolf Ryver Provider
 
-A Ryver chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A Ryver chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ````javascript
-import { RyverProvider } from '@novu/ryver';
+import { RyverProvider } from '@wolf/ryver';
 
 const provider = new RyverProvider();
 ````

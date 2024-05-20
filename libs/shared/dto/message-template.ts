@@ -6,13 +6,13 @@ import {
   ValidateNested,
 } from 'class-validator';
 import {
-  StepTypeEnum,
+  ActorTypeEnum,
   IEmailBlock,
   ITemplateVariable,
-  IMessageCTA,
-  ActorTypeEnum,
-  MessageTemplateContentType,
-} from '@novu/shared';
+  StepTypeEnum,
+} from '@libs/shared/types';
+import { MessageTemplateContentType } from '@libs/shared/entities/message-template';
+import { IMessageCTA } from '@libs/shared/entities/messages';
 
 export class MessageTemplate {
   @IsOptional()

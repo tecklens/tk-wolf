@@ -1,11 +1,11 @@
-# Novu Ses Provider
+# wolf Ses Provider
 
-A SES email provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A SES email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { SESEmailProvider } from "@novu/ses"
+import { SESEmailProvider } from "@wolf/ses"
 
 const provider = new SESEmailProvider({
     region: "eu-west-1",

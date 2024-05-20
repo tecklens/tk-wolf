@@ -1,11 +1,11 @@
-# Novu FortySixElks Provider
+# wolf FortySixElks Provider
 
-A 46Elks sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A 46Elks sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { FortySixElksSmsProvider } from '@novu/fort-six-elks';
+import { FortySixElksSmsProvider } from '@wolf/fort-six-elks';
 
 const provider = new FortySixElksSmsProvider({ 
   user: process.env.FORTY_SIX_ELKS_USERNAME,        // Your Elk46 Username

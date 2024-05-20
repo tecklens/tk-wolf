@@ -1,11 +1,11 @@
-# Novu Zulip Provider
+# wolf Zulip Provider
 
-A Zulip chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A Zulip chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { ZulipProvider } from '@novu/zulip';
+import { ZulipProvider } from '@wolf/zulip';
 
 const provider = new ZulipProvider({});
 ```

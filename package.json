@@ -149,7 +149,7 @@
     "@wolf/ms-teams": "^0.0.1",
     "@wolf/netcore": "^0.0.1",
     "@wolf/nexmo": "^0.0.1",
-    "@wolf/nodemailer": "^0.0.1",
+    "@novu/nodemailer": "^0.0.1",
     "@wolf/one-signal": "^0.0.1",
     "@wolf/outlook365": "^0.0.1",
     "@wolf/plivo": "^0.0.1",

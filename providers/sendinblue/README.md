@@ -1,6 +1,6 @@
-# Novu Sendinblue Provider
+# wolf Sendinblue Provider
 
-A Sendinblue email provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A Sendinblue email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 

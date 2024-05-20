@@ -1,11 +1,11 @@
-# Novu Firetext Provider
+# wolf Firetext Provider
 
-A Firetext sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A Firetext sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { FiretextSmsProvider } from '@novu/firetext';
+import { FiretextSmsProvider } from '@wolf/firetext';
 
 const provider = new FiretextSmsProvider({
   apiKey: process.env.FIRETEXT_API_KEY,

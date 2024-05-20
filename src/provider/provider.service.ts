@@ -133,6 +133,77 @@ export class ProviderService {
     }
   }
 
+  async updateProvider(
+    u: IJwtPayload,
+    id: string,
+    payload: CreateProviderRequestDto,
+  ) {
+    // this.analyticsService.track('Create Integration - [Integrations]', u._id, {
+    //   providerId: payload.providerId,
+    //   channel: payload.channel,
+    //   _organization: u.organizationId,
+    // });
+
+    try {
+      if (payload.check) {
+        await this.checkProvider(
+          payload.channel,
+          payload.credentials,
+          payload.providerId,
+        );
+      }
+
+      // await this.invalidateCache.invalidateQuery({
+      //   key: buildIntegrationKey().invalidate({
+      //     _organizationId: u.organizationId,
+      //   }),
+      // });
+      const providerIdCapitalized = `${payload.providerId.charAt(0).toUpperCase()}${payload.providerId.slice(1)}`;
+      const defaultName =
+        providers.find((provider) => provider.id === payload.providerId)
+          ?.displayName ?? providerIdCapitalized;
+      const name = payload.name ?? defaultName;
+      const query: IntegrationQuery = {
+        name,
+        _environmentId: payload._environmentId ?? u.environmentId,
+        _organizationId: u.organizationId,
+        providerId: payload.providerId,
+        channel: payload.channel,
+        credentials: encryptCredentials(payload.credentials ?? {}),
+        active: payload.active,
+        conditions: payload.conditions,
+      };
+
+      const isActiveAndChannelSupportsPrimary =
+        payload.active && CHANNELS_WITH_PRIMARY.includes(payload.channel);
+
+      if (isActiveAndChannelSupportsPrimary) {
+        const { primary, priority } = await this.calculatePriorityAndPrimary(
+          u.environmentId,
+          u.organizationId,
+          payload.channel,
+        );
+
+        query.primary = primary;
+        query.priority = priority;
+      }
+
+      await this.providerRepository.updateOne(
+        {
+          _environmentId: u.environmentId,
+          _organizationId: u.organizationId,
+          _id: id,
+        },
+        query,
+      );
+    } catch (e) {
+      if (e instanceof DbException) {
+        throw new ApiException(e.message);
+      }
+      throw e;
+    }
+  }
+
   private getDecryptedCredentials(integration: ProviderEntity) {
     integration.credentials = decryptCredentials(integration.credentials);
 
@@ -193,7 +264,7 @@ export class ProviderService {
 
     if (
       existingIntegration &&
-      providerId === InAppProviderIdEnum.Novu &&
+      providerId === InAppProviderIdEnum.novu &&
       channel === ChannelTypeEnum.IN_APP
     ) {
       throw new BadRequestException(
@@ -213,7 +284,7 @@ export class ProviderService {
 
       if (count > 0) {
         throw new ConflictException(
-          `Integration with novu provider for ${channel.toLowerCase()} channel already exists`,
+          `Integration with wolf provider for ${channel.toLowerCase()} channel already exists`,
         );
       }
     }

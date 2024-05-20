@@ -17,7 +17,7 @@ import { ConnectionOptions } from 'tls';
 import { fail } from 'assert';
 
 const buffer = Buffer.from('test');
-const mockNovuMessage = {
+const mockwolfMessage = {
   to: ['test@test2.com'],
   subject: 'test subject',
   html: '<div> Mail Content </div>',
@@ -40,7 +40,7 @@ describe('Config is set to secure=false but not user and password set', () => {
       password: undefined,
     };
     const provider = new NodemailerProvider(config);
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(nodemailer.createTransport).toHaveBeenCalled();
     expect(nodemailer.createTransport).toHaveBeenCalledWith({
@@ -69,14 +69,14 @@ describe('Config is set to secure=false (default; TLS used if server supports ST
 
   test('should trigger nodemailer correctly', async () => {
     const provider = new NodemailerProvider(mockConfig);
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(sendMailMock).toHaveBeenCalled();
     expect(sendMailMock).toHaveBeenCalledWith({
-      from: { address: mockNovuMessage.from, name: mockConfig.senderName },
-      html: mockNovuMessage.html,
-      subject: mockNovuMessage.subject,
-      to: mockNovuMessage.to,
+      from: { address: mockwolfMessage.from, name: mockConfig.senderName },
+      html: mockwolfMessage.html,
+      subject: mockwolfMessage.subject,
+      to: mockwolfMessage.to,
       attachments: [
         {
           contentType: 'text/plain',
@@ -89,7 +89,7 @@ describe('Config is set to secure=false (default; TLS used if server supports ST
 
   test('should check provider integration correctly', async () => {
     const provider = new NodemailerProvider(mockConfig);
-    const response = await provider.checkIntegration(mockNovuMessage);
+    const response = await provider.checkIntegration(mockwolfMessage);
 
     expect(sendMailMock).toHaveBeenCalled();
     expect(response.success).toBe(true);
@@ -126,14 +126,14 @@ describe('Config is set to secure=true and TLS options are provided', () => {
 
   test('should trigger nodemailer correctly', async () => {
     const provider = new NodemailerProvider(mockConfig);
-    await provider.sendMessage(mockNovuMessage);
+    await provider.sendMessage(mockwolfMessage);
 
     expect(sendMailMock).toHaveBeenCalled();
     expect(sendMailMock).toHaveBeenCalledWith({
-      from: { address: mockNovuMessage.from, name: mockConfig.senderName },
-      html: mockNovuMessage.html,
-      subject: mockNovuMessage.subject,
-      to: mockNovuMessage.to,
+      from: { address: mockwolfMessage.from, name: mockConfig.senderName },
+      html: mockwolfMessage.html,
+      subject: mockwolfMessage.subject,
+      to: mockwolfMessage.to,
       attachments: [
         {
           contentType: 'text/plain',
@@ -146,7 +146,7 @@ describe('Config is set to secure=true and TLS options are provided', () => {
 
   test('should check provider integration correctly', async () => {
     const provider = new NodemailerProvider(mockConfig);
-    const response = await provider.checkIntegration(mockNovuMessage);
+    const response = await provider.checkIntegration(mockwolfMessage);
 
     expect(sendMailMock).toHaveBeenCalled();
     expect(response.success).toBe(true);

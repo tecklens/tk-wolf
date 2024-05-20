@@ -23,7 +23,7 @@ export class Sms77SmsProvider implements ISmsProvider {
       from?: string;
     },
   ) {
-    this.sms77Client = new Sms77Client(config.apiKey, 'Novu');
+    this.sms77Client = new Sms77Client(config.apiKey, 'wolf');
   }
 
   async sendMessage(

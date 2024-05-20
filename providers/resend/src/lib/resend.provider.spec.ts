@@ -8,12 +8,12 @@ const mockConfig = {
 
 (global as any).Headers = () => {};
 
-const mockNovuMessage = {
+const mockwolfMessage = {
   from: 'test@test.com',
   to: ['test@test.com'],
   html: '<div> Mail Content </div>',
   subject: 'Test subject',
-  reply_to: 'no-reply@novu.co',
+  reply_to: 'no-reply@wolf.co',
   attachments: [
     {
       mime: 'text/plain',
@@ -32,16 +32,16 @@ test('should trigger resend library correctly', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toBeCalled();
   expect(spy).toBeCalledWith({
-    from: mockNovuMessage.from,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
-    attachments: mockNovuMessage.attachments,
-    reply_to: mockNovuMessage.reply_to,
+    from: mockwolfMessage.from,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
+    attachments: mockwolfMessage.attachments,
+    reply_to: mockwolfMessage.reply_to,
   });
 });
 
@@ -59,15 +59,15 @@ test('should trigger resend email with From Name', async () => {
       return {} as any;
     });
 
-  await provider.sendMessage(mockNovuMessage);
+  await provider.sendMessage(mockwolfMessage);
 
   expect(spy).toHaveBeenCalled();
   expect(spy).toHaveBeenCalledWith({
-    from: `${mockConfigWithSenderName.senderName} <${mockNovuMessage.from}>`,
-    to: mockNovuMessage.to,
-    html: mockNovuMessage.html,
-    subject: mockNovuMessage.subject,
-    attachments: mockNovuMessage.attachments.map((attachment) => ({
+    from: `${mockConfigWithSenderName.senderName} <${mockwolfMessage.from}>`,
+    to: mockwolfMessage.to,
+    html: mockwolfMessage.html,
+    subject: mockwolfMessage.subject,
+    attachments: mockwolfMessage.attachments.map((attachment) => ({
       filename: attachment?.name,
       content: attachment.file,
     })),

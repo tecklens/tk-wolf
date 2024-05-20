@@ -1,11 +1,11 @@
-# Novu Outlook365 Provider
+# wolf Outlook365 Provider
 
-A Outlook365 email provider library for [@novu/node](https://github.com/novuhq/novu)
+A Outlook365 email provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { Outlook365Provider } from '@novu/outlook365';
+import { Outlook365Provider } from '@wolf/outlook365';
 
 const provider = new Outlook365Provider({
   from: process.env.OUTLOOK365_FROM_EMAIL,

@@ -1,11 +1,11 @@
-# Novu Getstream Provider
+# wolf Getstream Provider
 
-A Getstream chat provider library for [@novu/node](https://github.com/novuhq/novu)
+A Getstream chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { GetstreamChatProvider } from '@novu/getstream';
+import { GetstreamChatProvider } from '@wolf/getstream';
 
 const provider = new GetstreamChatProvider({
   apiKey: process.env.API_KEY,

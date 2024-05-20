@@ -35,7 +35,7 @@ test('should trigger email-webhook-provider library correctly', async () => {
     {
       headers: {
         'content-type': 'application/json',
-        'X-Novu-Signature':
+        'X-wolf-Signature':
           'd1e94cd19eeceec2e0717e36f7edacaa93612b311bde8756ee35b89d4a994767',
       },
     }

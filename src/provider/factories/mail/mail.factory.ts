@@ -15,7 +15,7 @@ import {
   ResendHandler,
   SparkPostHandler,
   EmailWebhookHandler,
-  NovuEmailHandler,
+  WolfEmailHandler,
   PlunkHandler,
   BrazeEmailHandler,
 } from './handlers';
@@ -41,7 +41,7 @@ export class MailFactory {
     new PlunkHandler(),
     new SparkPostHandler(),
     new EmailWebhookHandler(),
-    new NovuEmailHandler(),
+    new WolfEmailHandler(),
     new BrazeEmailHandler(),
   ];
 

@@ -1,11 +1,11 @@
-# Novu Mailjet Provider
+# wolf Mailjet Provider
 
-A Mailjet email provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A Mailjet email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-    import { MailjetEmailProvider } from "@novu/mailjet";
+    import { MailjetEmailProvider } from "@wolf/mailjet";
     const provider = new MailjetEmailProvider({
       apiKey: process.env.MAILJET_APIKEY,
       apiSecret: process.env.MAILJET_API_SECRET,

@@ -1,11 +1,11 @@
-# Novu Nexmo Provider
+# wolf Nexmo Provider
 
-A Nexmo SMS provider library for [@novu/stateless](https://github.com/novuhq/novu)
+A Nexmo SMS provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { NexmoSmsProvider } from '@novu/nexmo';
+import { NexmoSmsProvider } from '@wolf/nexmo';
 
 const provider = new NexmoSmsProvider({
   apiKey: process.env.VONAGE_API_KEY,

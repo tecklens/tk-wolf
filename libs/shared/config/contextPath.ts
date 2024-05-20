@@ -1,11 +1,11 @@
-export enum NovuComponentEnum {
+export enum wolfComponentEnum {
   WEB,
   API,
   WIDGET,
   WS,
 }
 
-export function getContextPath(component: NovuComponentEnum) {
+export function getContextPath(component: wolfComponentEnum) {
   let contextPath = '';
 
   /**
@@ -30,22 +30,22 @@ export function getContextPath(component: NovuComponentEnum) {
   }
 
   switch (component) {
-    case NovuComponentEnum.API:
+    case wolfComponentEnum.API:
       if (env.API_CONTEXT_PATH) {
         contextPath += env.API_CONTEXT_PATH + '/';
       }
       break;
-    case NovuComponentEnum.WEB:
+    case wolfComponentEnum.WEB:
       if (env.FRONT_BASE_CONTEXT_PATH) {
         contextPath += env.FRONT_BASE_CONTEXT_PATH + '/';
       }
       break;
-    case NovuComponentEnum.WIDGET:
+    case wolfComponentEnum.WIDGET:
       if (env.WIDGET_CONTEXT_PATH) {
         contextPath += env.WIDGET_CONTEXT_PATH + '/';
       }
       break;
-    case NovuComponentEnum.WS:
+    case wolfComponentEnum.WS:
       if (env.WS_CONTEXT_PATH) {
         contextPath += env.WS_CONTEXT_PATH + '/';
       }

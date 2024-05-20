@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ICredentials } from '@novu/shared';
 import { IsBoolean, IsObject, IsOptional, IsString } from 'class-validator';
+import { ICredentials } from '@libs/shared/entities/integration';
 
 export class CredentialsDto implements ICredentials {
   @ApiPropertyOptional()

@@ -1,11 +1,11 @@
-# Novu iSend SMS Provider
+# wolf iSend SMS Provider
 
-iSend sms provider library for [@novu/node](https://github.com/novuhq/novu)
+iSend sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 ```javascript
-import { ISendSmsProvider } from '@novu/isend-sms';
+import { ISendSmsProvider } from '@wolf/isend-sms';
 
 const provider = new ISendSmsProvider({
   // (Required) Get an API token from https://send.com.ly/

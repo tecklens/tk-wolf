@@ -1,8 +1,7 @@
-import { ISubscribersDefine, StepTypeEnum } from '@novu/shared';
-
 import type { OrganizationId } from '../organization';
 import type { EnvironmentId } from '../environment';
 import { ChangePropsValueType } from '@tps/helpers';
+import { ISubscribersDefine, StepTypeEnum } from '@libs/shared/types';
 
 export class NotificationEntity {
   _id: string;

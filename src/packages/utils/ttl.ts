@@ -1,7 +1,7 @@
 export const TTL_EXPIRE_AFTER_AMOUNT = '48h';
 
 export const TTL_INDEX_ENABLED = !(
-  process.env.NOVU_MANAGED_SERVICE === 'true' ||
+  process.env.wolf_MANAGED_SERVICE === 'true' ||
   process.env.DISABLE_TTL === 'true'
 );
 

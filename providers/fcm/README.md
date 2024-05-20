@@ -1,17 +1,17 @@
-# Novu FCM Provider
+# wolf FCM Provider
 
-A FCM push provider library for [@novu/node](https://github.com/novuhq/novu)
+A FCM push provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
 The payload field supports all [NotificationMessagePayload](https://firebase.google.com/docs/reference/admin/node/firebase-admin.messaging.notificationmessagepayload.md#notificationmessagepayload_interface) values, example below.
 
 ```ts
-import { Novu } from '@novu/node';
+import { wolf } from '@novu/node';
 
-const novu = new Novu(process.env.NOVU_API_KEY);
+const wolf = new wolf(process.env.wolf_API_KEY);
 
-novu.trigger('event-name', {
+wolf.trigger('event-name', {
   to: {
     subscriberId: '...',
   },

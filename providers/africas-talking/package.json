@@ -1,12 +1,12 @@
 {
   "name": "@wolf/africas-talking",
   "version": "0.0.1",
-  "description": "An Africa's Talking wrapper for Novu",
+  "description": "An Africa's Talking wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/novuhq/novu",
+  "repository": "https://github.com/wolfhq/wolf",
   "license": "MIT",
   "keywords": [],
   "scripts": {

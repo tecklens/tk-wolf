@@ -1,6 +1,6 @@
-# Novu Termii Provider
+# wolf Termii Provider
 
-A Termii sms provider library for [@novu/node](https://github.com/novuhq/novu)
+A Termii sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
 
 ## Usage
 
