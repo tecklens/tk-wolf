@@ -18,14 +18,14 @@ import {
   emailWebhookConfig,
   brazeEmailConfig,
 } from '../credentials';
-import { IProviderConfig } from '../provider.interface';
+import { IProviderConfig } from '@libs/shared/consts';
 import { EmailProviderIdEnum } from '../provider.enum';
 import { UTM_CAMPAIGN_QUERY_PARAM } from '../../../ui';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const emailProviders: IProviderConfig[] = [
   {
-    id: EmailProviderIdEnum.wolf,
+    id: EmailProviderIdEnum.Novu,
     displayName: 'wolf Email',
     channel: ChannelTypeEnum.EMAIL,
     credentials: [],

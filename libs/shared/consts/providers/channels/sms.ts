@@ -1,4 +1,4 @@
-import { IProviderConfig } from '../provider.interface';
+import { IProviderConfig } from '@libs/shared/consts';
 import {
   gupshupConfig,
   nexmoConfig,
@@ -36,7 +36,7 @@ import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 
 export const smsProviders: IProviderConfig[] = [
   {
-    id: SmsProviderIdEnum.wolf,
+    id: SmsProviderIdEnum.Novu,
     displayName: 'wolf SMS',
     channel: ChannelTypeEnum.SMS,
     credentials: [],

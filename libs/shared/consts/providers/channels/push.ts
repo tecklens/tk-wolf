@@ -9,7 +9,7 @@ import {
 } from '../credentials';
 
 import { PushProviderIdEnum } from '../provider.enum';
-import { IProviderConfig } from '../provider.interface';
+import { IProviderConfig } from '@libs/shared/consts';
 
 import { UTM_CAMPAIGN_QUERY_PARAM } from '../../../ui';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';

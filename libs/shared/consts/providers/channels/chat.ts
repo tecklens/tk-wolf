@@ -1,4 +1,4 @@
-import { IConfigCredentials, IProviderConfig } from '../provider.interface';
+import { IConfigCredentials, IProviderConfig } from '@libs/shared/consts';
 import {
   grafanaOnCallConfig,
   slackConfig,
