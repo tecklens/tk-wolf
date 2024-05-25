@@ -9,8 +9,8 @@ const notificationSchema = new Schema<NotificationDBModel>(
   {
     _templateId: {
       type: Schema.Types.ObjectId,
-      ref: 'NotificationTemplate',
     },
+    _userId: Schema.Types.String,
     _environmentId: {
       type: Schema.Types.ObjectId,
       ref: 'Environment',
@@ -40,6 +40,7 @@ const notificationSchema = new Schema<NotificationDBModel>(
     payload: {
       type: Schema.Types.Mixed,
     },
+    marked: { type: Schema.Types.Boolean, default: false },
     expireAt: Schema.Types.Date,
   },
   schemaOptions,
@@ -57,13 +58,6 @@ notificationSchema.virtual('environment', {
 notificationSchema.virtual('organization', {
   ref: 'Organization',
   localField: '_organizationId',
-  foreignField: '_id',
-  justOne: true,
-});
-
-notificationSchema.virtual('template', {
-  ref: 'NotificationTemplate',
-  localField: '_templateId',
   foreignField: '_id',
   justOne: true,
 });

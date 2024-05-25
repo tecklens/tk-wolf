@@ -26,6 +26,7 @@ import { WorkflowId } from '@libs/repositories/workflow/types';
 import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { variableWorkflowDefault } from '@libs/repositories/variable/variable.entity';
+import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
 
 @Injectable()
 export class WorkflowService {
@@ -229,6 +230,46 @@ export class WorkflowService {
 
   async getEmailTemplates(skip = 0, limit = 10) {
     return await this.emailTemplateRepository.findByPage(skip, limit);
+  }
+
+  async createEmailTemplate(u: IJwtPayload, payload: CreateEmailTemplateDto) {
+    return await this.emailTemplateRepository.create({
+      design: payload.design,
+      name: payload.name,
+      preview: payload.preview,
+      identifier: uuidv4(),
+      _userId: u._id,
+    });
+  }
+
+  async updateEmailTemplate(
+    u: IJwtPayload,
+    payload: CreateEmailTemplateDto,
+    id: string,
+  ) {
+    return await this.emailTemplateRepository.updateOne(
+      {
+        _id: id,
+        _userId: u._id,
+      },
+      {
+        design: payload.design,
+        name: payload.name,
+        preview: payload.preview,
+      },
+    );
+  }
+
+  async makePublicEmailTemplate(u: IJwtPayload, id: string) {
+    return await this.emailTemplateRepository.updateOne(
+      {
+        _id: id,
+        _userId: u._id,
+      },
+      {
+        free: true,
+      },
+    );
   }
 
   async getVariables(u: IJwtPayload, workflowId: WorkflowId) {

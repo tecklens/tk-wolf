@@ -13,8 +13,10 @@ const emailTemplateSchema = new Schema<EmailTemplateDBModel>(
     updatedAt: Schema.Types.String,
 
     name: Schema.Types.String,
+    identifier: Schema.Types.String,
     preview: Schema.Types.String,
     design: Schema.Types.Mixed,
+    free: Schema.Types.Boolean,
   },
   schemaOptions,
 );

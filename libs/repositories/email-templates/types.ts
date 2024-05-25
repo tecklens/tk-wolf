@@ -5,8 +5,11 @@ export interface IEmailTemplate {
   _userId?: string;
 
   name: string;
+  identifier: string;
   preview: string;
   design?: any;
+  free: boolean;
+
   deletedAt?: string;
   deletedBy?: string;
   createdAt?: string;

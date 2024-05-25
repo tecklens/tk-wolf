@@ -44,8 +44,8 @@ export class WorkflowRepository extends BaseRepository<
       _userId: userId,
       name: name,
       _id: {
-        $ne: workflowId
-      }
+        $ne: workflowId,
+      },
     });
   }
 

@@ -21,6 +21,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ProviderModule } from './provider/provider.module';
 import { LogModule } from './log/log.module';
 import { PaymentModule } from './payment/payment.module';
+import { NotificationModule } from './notification/notification.module';
 
 const dbService = {
   provide: DbService,
@@ -93,6 +94,7 @@ const dbService = {
     ProviderModule,
     LogModule,
     PaymentModule,
+    NotificationModule,
   ],
   providers: [
     AppService,

@@ -10,7 +10,6 @@ import {
   ITargetTrigger,
 } from '@app/trigger/dtos/create-trigger.dto';
 import { ProducerService } from '@app/kafka/producer/producer.service';
-import { EventsGateway } from '@app/events/events.gateway';
 import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { WfNodeType } from '@libs/shared/entities/workflow/node.interface';
 import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
@@ -36,11 +35,9 @@ import { get } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { VariableEntity } from '@libs/repositories/variable/variable.entity';
-import {
-  decryptApiKey,
-  decryptCredentials,
-} from '@libs/shared/encryptions/encrypt-provider';
+import { decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
 import { IJwtPayload } from '@libs/shared/types';
+import { NotificationService } from '@app/notification/notification.service';
 
 @Injectable()
 export class TaskService {
@@ -48,7 +45,6 @@ export class TaskService {
 
   constructor(
     private readonly sender: ProducerService,
-    private readonly event: EventsGateway,
     private readonly nodeRepository: NodeRepository,
     private readonly edgeRepository: EdgeRepository,
     private readonly taskRepository: TaskRepository,
@@ -56,6 +52,7 @@ export class TaskService {
     private readonly memberRepository: MemberRepository,
     private readonly variableRepository: VariableRepository,
     private readonly httpService: HttpService,
+    private readonly notificationService: NotificationService,
   ) {}
 
   async nextJob(
@@ -216,6 +213,7 @@ export class TaskService {
         _workflowId: inp.workflowId,
         _userId: inp.userId,
         requestData: inp,
+        taskId: task._id,
       };
 
       // eslint-disable-next-line @typescript-eslint/no-this-alias
@@ -408,6 +406,14 @@ export class TaskService {
             null,
             undefined,
           );
+
+          await this.notificationService.create({
+            userId: inp.userId,
+            environmentId: provider._environmentId,
+            organizationId: inp.organizationId,
+            title: 'Trigger execute 2',
+            description: 'Trigger execute',
+          });
         } catch (e) {
           this.logger.error(e);
           await this.taskRepository.updateStatus(
@@ -454,12 +460,6 @@ export class TaskService {
       },
       providerId: integration.providerId,
     };
-  }
-
-  emitEventToMembers(members: MemberEntity[], data: any) {
-    for (const member of members) {
-      this.event.server.emit(`event_${member._userId}`, data);
-    }
   }
 
   async getTasks(

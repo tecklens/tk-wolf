@@ -47,4 +47,5 @@ export interface IWebhookData {
   _workflowId: string;
   _userId: string;
   requestData: any;
+  taskId: string;
 }

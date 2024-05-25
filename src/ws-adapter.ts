@@ -11,6 +11,7 @@ import { CLOSE_EVENT, CONNECTION_EVENT } from '@nestjs/websockets/constants';
 import * as url from 'url';
 import { jwtDecode } from 'jwt-decode';
 import { get } from 'lodash';
+import { IEvent } from '@tps/event.interface';
 
 export class WsAdapter implements WebSocketAdapter {
   constructor(private app: INestApplicationContext) {}
@@ -56,30 +57,27 @@ export class WsAdapter implements WebSocketAdapter {
   bindClientConnect(server: WebSocket, callback: Function) {
     server.on(CONNECTION_EVENT, (client: WebSocket, req: any) => {
       const queryData = url.parse(req.url, true).query;
-      if (get(queryData, 'type') === 'admin') {
-        if (
-          !get(queryData, 'token') ||
-          typeof get(queryData, 'token') == 'string'
-        )
-          return;
+      if (queryData?.type === 'admin') {
+        if (!queryData?.token || typeof queryData?.token !== 'string') return;
         let decoded: any = undefined;
         try {
-          decoded = jwtDecode(get(queryData, 'token') as string);
+          // @ts-ignore
+          decoded = jwtDecode(queryData.token);
         } catch (e) {
           this.logger.error(e);
         }
 
         if (!decoded?._id) return;
-        const listener = (event: WebSocket, data) =>
-          client.send(JSON.stringify({ event, data }));
+        const listener = (data: IEvent) =>
+          client.send(JSON.stringify(data));
         server.on('event', listener);
         server.on(`event_${decoded?._id}`, listener);
         this.clientData.set(client, { server, listener });
         callback(client);
-      } else if (get(queryData, 'type') === 'in-app') {
+      } else if (queryData?.type === 'in-app') {
         // * for in-app react notification
 
-        const apiKey = get(queryData, 'apiKey');
+        const apiKey = queryData?.apiKey;
         if (!apiKey || typeof apiKey !== 'string') return;
 
         const listener = (event: WebSocket, data) =>

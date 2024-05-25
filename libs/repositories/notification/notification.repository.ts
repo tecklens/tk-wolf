@@ -18,6 +18,22 @@ export class NotificationRepository extends BaseRepository<
     super(Notification, NotificationEntity);
   }
 
+  async findByUserId(
+    environmentId: string,
+    userId: string,
+    skip: number,
+    limit: number,
+  ) {
+    return await this.find(
+      {
+        _environmentId: environmentId,
+        _userId: userId,
+      },
+      undefined,
+      { skip, limit, sort: { createdAt: -1 } },
+    );
+  }
+
   async findBySubscriberId(environmentId: string, subscriberId: string) {
     return await this.find({
       _environmentId: environmentId,

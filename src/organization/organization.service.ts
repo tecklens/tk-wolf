@@ -383,6 +383,7 @@ export class OrganizationService {
         .replace('{{token}}', token)
         .replace('{{token}}', token)
         .replace('{{base_url}}', process.env.FRONT_END_URL)
+        .replace('{{base_url}}', process.env.FRONT_END_URL)
         .replace('{{team}}', 'WOLF')
         .replace('{{email}}', normalizeEmail(u.email));
       await this.sendEmail(
@@ -443,6 +444,7 @@ export class OrganizationService {
       const content = designHtmlInvite
         .replace('{{token}}', token)
         .replace('{{token}}', token)
+        .replace('{{base_url}}', process.env.FRONT_END_URL)
         .replace('{{base_url}}', process.env.FRONT_END_URL)
         .replace('{{team}}', 'WOLF')
         .replace('{{email}}', normalizeEmail(u.email));

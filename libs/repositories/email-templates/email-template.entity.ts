@@ -8,7 +8,9 @@ export class EmailTemplateEntity implements IEmailTemplate {
   _userId?: string;
   preview: string;
   name: string;
+  identifier: string;
   design?: any;
+  free: boolean;
 
   deletedAt?: string;
   deletedBy?: string;

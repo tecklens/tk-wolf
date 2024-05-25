@@ -7,6 +7,7 @@ export class NotificationEntity {
   _id: string;
 
   _templateId: string;
+  _userId: string;
 
   _environmentId: EnvironmentId;
 
@@ -29,6 +30,8 @@ export class NotificationEntity {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
+
+  marked: boolean;
 
   createdAt?: string;
   updatedAt?: string;

@@ -39,6 +39,7 @@ import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.req
 import { EmailTemplateEntity } from '@libs/repositories/email-templates/email-template.entity';
 import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
 import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
+import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -178,6 +179,34 @@ export class WorkflowController {
     @Query('limit') limit: number,
   ): Promise<EmailTemplateEntity[]> {
     return this.workflowService.getEmailTemplates(skip, limit);
+  }
+
+  @Post('/email/template')
+  @UseGuards(JwtAuthGuard)
+  createEmailTemplate(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: CreateEmailTemplateDto,
+  ) {
+    return this.workflowService.createEmailTemplate(user, payload);
+  }
+
+  @Put('/email/template/:id')
+  @UseGuards(JwtAuthGuard)
+  updateEmailTemplate(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: CreateEmailTemplateDto,
+    @Param('id') id: string,
+  ) {
+    return this.workflowService.updateEmailTemplate(user, payload, id);
+  }
+
+  @Put('/email/template/make-public/:id')
+  @UseGuards(JwtAuthGuard)
+  makePublicEmailTemplate(
+    @UserSession() user: IJwtPayload,
+    @Param('id') id: string,
+  ) {
+    return this.workflowService.makePublicEmailTemplate(user, id);
   }
 
   @Post('/variable')

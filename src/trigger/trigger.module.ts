@@ -15,11 +15,15 @@ import { TaskService } from '@app/trigger/task.service';
 import { HttpModule } from '@nestjs/axios';
 import { LogRepository } from '@libs/repositories/log/log.repository';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { NotificationModule } from '@app/notification/notification.module';
+import { NotificationService } from '@app/notification/notification.service';
+import { NotificationRepository } from '@libs/repositories/notification';
 
 @Module({
   imports: [
     KafkaModule,
     EventsModule,
+    NotificationModule,
     HttpModule.register({
       timeout: 10000,
       maxRedirects: 2,
@@ -38,6 +42,8 @@ import { VariableRepository } from '@libs/repositories/variable/variable.reposit
     MemberRepository,
     LogRepository,
     VariableRepository,
+    NotificationService,
+    NotificationRepository,
   ],
   controllers: [TriggerController],
 })
