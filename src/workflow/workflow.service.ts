@@ -27,6 +27,7 @@ import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-vari
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { variableWorkflowDefault } from '@libs/repositories/variable/variable.entity';
 import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
+import { UpdateViewPortWorkflowRequestDto } from '@app/workflow/dto/update-viewport-workflow.request.dto';
 
 @Injectable()
 export class WorkflowService {
@@ -54,6 +55,7 @@ export class WorkflowService {
       deletedBy: e.deletedBy,
       name: e.name,
       identifier: e.identifier,
+      viewport: e.viewport,
     }));
 
     return {
@@ -169,6 +171,7 @@ export class WorkflowService {
       nodes,
       edges,
       identifier: wf.identifier,
+      viewport: wf.viewport,
     };
   }
 
@@ -194,6 +197,7 @@ export class WorkflowService {
       nodes,
       edges,
       identifier: wf.identifier,
+      viewport: wf.viewport,
     };
   }
 
@@ -223,8 +227,26 @@ export class WorkflowService {
     return this.workflowRepository.updateOne(
       {
         _id: payload.workflowId,
+        _environmentId: u.environmentId,
+        _userId: u._id,
       },
       objForUpdate,
+    );
+  }
+
+  async updateViewportWorkflow(
+    u: IJwtPayload,
+    payload: UpdateViewPortWorkflowRequestDto,
+  ) {
+    return this.workflowRepository.updateOne(
+      {
+        _id: payload.workflowId,
+        _userId: u._id,
+        _environmentId: u.environmentId,
+      },
+      {
+        viewport: payload,
+      },
     );
   }
 

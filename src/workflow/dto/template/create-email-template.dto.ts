@@ -12,5 +12,8 @@ export class CreateEmailTemplateDto {
   @ApiProperty()
   @IsString()
   design: any;
+  @ApiProperty()
+  @IsString()
+  designHtml: any;
   free: boolean;
 }

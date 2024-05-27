@@ -44,4 +44,6 @@ export class WorkflowResponse implements IWfTemplate {
 
   @ApiProperty()
   identifier: string;
+
+  viewport: any;
 }

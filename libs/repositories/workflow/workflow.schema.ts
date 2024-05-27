@@ -19,6 +19,7 @@ const workflowSchema = new Schema<WorkflowDBModel>(
     identifier: { type: Schema.Types.String, index: { unique: true } },
     name: Schema.Types.String,
     tags: Schema.Types.Array,
+    viewport: Schema.Types.Mixed,
   },
   schemaOptions,
 );

@@ -25,6 +25,7 @@ export class WorkflowEntity implements IWorkflowEntity {
   identifier: string;
   name: string;
   tags: string[];
+  viewport: any;
 }
 
 export type WorkflowDBModel = WorkflowEntity;

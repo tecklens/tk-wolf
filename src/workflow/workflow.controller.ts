@@ -40,6 +40,7 @@ import { EmailTemplateEntity } from '@libs/repositories/email-templates/email-te
 import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
 import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
 import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
+import { UpdateViewPortWorkflowRequestDto } from '@app/workflow/dto/update-viewport-workflow.request.dto';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -88,6 +89,16 @@ export class WorkflowController {
     @Body() payload: UpdateWorkflowRequestDto,
   ) {
     return this.workflowService.updateWorkflow(user, payload);
+  }
+
+  @Put('/viewport')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  updateWorkflowViewPort(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: UpdateViewPortWorkflowRequestDto,
+  ) {
+    return this.workflowService.updateViewportWorkflow(user, payload);
   }
 
   @Get('/node/:id')

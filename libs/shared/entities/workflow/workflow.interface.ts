@@ -30,6 +30,7 @@ export interface IWorkflowEntity {
   createdAt: string;
 
   updatedAt?: string;
+  viewport: any;
 }
 
 export interface INextJob {
