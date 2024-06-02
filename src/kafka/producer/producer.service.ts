@@ -9,7 +9,7 @@ import { Kafka, Producer, ProducerRecord } from 'kafkajs';
 export class ProducerService implements OnModuleInit, OnApplicationShutdown {
   // Connect to Kafka Server
   private readonly kafka = new Kafka({
-    brokers: ['103.188.167.173:9092'],
+    brokers: [`${process.env.KAFKA_BROKER}`],
 
     // ssl: true,
     // sasl: {
