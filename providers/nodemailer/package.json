@@ -1,5 +1,5 @@
 {
-  "name": "@novu/nodemailer",
+  "name": "@wolf/nodemailer",
   "version": "0.0.1",
   "description": "A nodemailer wrapper for wolf",
   "main": "build/main/index.js",
