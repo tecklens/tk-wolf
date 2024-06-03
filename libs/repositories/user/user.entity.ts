@@ -75,6 +75,10 @@ export class UserEntity implements IUserEntity {
   urls?: string[] | null;
 
   plan: UserPlan;
+
+  workflowGuide?: boolean;
+  billingGuide?: boolean;
+  apiKeyGuide?: boolean;
 }
 
 export type UserDBModel = UserEntity;

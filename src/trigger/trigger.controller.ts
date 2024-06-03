@@ -29,6 +29,8 @@ import { TaskService } from '@app/trigger/task.service';
 import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
 import { UserSession } from '@libs/utils/user.session';
 import { IJwtPayload } from '@libs/shared/types';
+import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
+import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
 
 @ApiBearerAuth()
 @Controller('trigger')
@@ -77,5 +79,29 @@ export class TriggerController {
   @UseGuards(JwtAuthGuard)
   delTask(@UserSession() user: IJwtPayload, @Param('code') code: string) {
     return this.taskService.delTask(user, code);
+  }
+
+  @Get('/logs')
+  @ApiResponse(CreateTriggerResponse, 200)
+  @ApiOperation({
+    summary: 'API get log trigger',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  getLogTrigger(
+    @UserSession() user: IJwtPayload,
+    @Query() payload: GetLogTriggerRequestDto,
+  ): Promise<GetLogTriggerResponseDto> {
+    return this.triggerService.getLogTrigger(user, payload);
+  }
+
+  @Delete('/log/:id')
+  @ApiResponse(null, 200)
+  @ApiOperation({
+    summary: 'API del log task of user',
+  })
+  @UseGuards(JwtAuthGuard)
+  delLogTrigger(@UserSession() user: IJwtPayload, @Param('id') id: string) {
+    return this.triggerService.delLogTrigger(user, id);
   }
 }

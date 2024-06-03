@@ -20,6 +20,9 @@ import { VariableRepository } from '@libs/repositories/variable/variable.reposit
 import { get } from 'lodash';
 import { IJwtPayload } from '@libs/shared/types';
 import { getDateDataTimeout } from '@libs/utils';
+import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
+import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
+import { ILogTrigger } from '@libs/repositories/log/types';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {
@@ -43,39 +46,52 @@ export class TriggerService implements OnModuleInit {
     user: IJwtPayload,
     payload: CreateTriggerDto,
   ): Promise<CreateTriggerResponse> {
-    console.log(user);
     const wf: WorkflowEntity = await this.workflowRepository.findById(
       payload.workflowId,
-      '_id _organizationId _userId identifier name',
+      '_id _organizationId _environmentId _userId identifier name',
     );
 
     if (!wf) throw new NotFoundException('Workflow not found');
 
-    const variables: IVariable[] = await this.variableRepository.findByWfId(
-      wf._id,
-    );
-
-    await this.validateVariables(variables, payload);
-
-    await this.taskService.nextJob(
-      wf._id,
-      wf.name,
-      wf._organizationId,
-      payload.target,
-      payload.overrides,
-      wf._userId,
-      'starter',
-      undefined,
-    );
-
-    await this.logRepository.create({
+    const log: ILogTrigger = {
       _userId: wf._userId,
       _organizationId: wf._organizationId,
       _environmentId: wf._environmentId,
+
+      _workflowId: wf._id,
+      workflowName: wf.name,
+      recipient: payload.target.email ?? payload.target.phone,
+
       status: 1,
       event_type: 'create_trigger',
       deletedAt: getDateDataTimeout(user.plan),
-    });
+    };
+
+    try {
+      const variables: IVariable[] = await this.variableRepository.findByWfId(
+        wf._id,
+      );
+
+      await this.validateVariables(variables, payload);
+
+      await this.taskService.nextJob(
+        wf._id,
+        wf.name,
+        wf._organizationId,
+        payload.target,
+        payload.overrides,
+        wf._userId,
+        'starter',
+        undefined,
+      );
+
+      log.status = 1;
+    } catch (e) {
+      this.logger.error(e);
+      log.status = 2;
+    }
+
+    await this.logRepository.create(log);
     return null;
   }
 
@@ -141,5 +157,41 @@ export class TriggerService implements OnModuleInit {
     }
 
     return false;
+  }
+
+  async getLogTrigger(
+    u: IJwtPayload,
+    payload: GetLogTriggerRequestDto,
+  ): Promise<GetLogTriggerResponseDto> {
+    return {
+      page: payload.page,
+      pageSize: payload.limit,
+      totalCount: await this.logRepository.count({
+        _userId: u._id,
+        _environmentId: u.environmentId,
+        _organizationId: u.organizationId,
+      }),
+      data: await this.logRepository.find(
+        {
+          _userId: u._id,
+          _environmentId: u.environmentId,
+          _organizationId: u.organizationId,
+        },
+        undefined,
+        {
+          skip: payload.page * payload.limit,
+          limit: payload.limit,
+        },
+      ),
+    };
+  }
+
+  async delLogTrigger(u: IJwtPayload, id: string) {
+    this.logRepository.delete({
+      _userId: u._id,
+      _environmentId: u.environmentId,
+      _organizationId: u.organizationId,
+      _id: id,
+    });
   }
 }

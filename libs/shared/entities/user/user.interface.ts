@@ -21,4 +21,8 @@ export interface IUserEntity {
   urls?: string[] | null;
 
   plan: UserPlan;
+
+  workflowGuide?: boolean;
+  billingGuide?: boolean;
+  apiKeyGuide?: boolean;
 }

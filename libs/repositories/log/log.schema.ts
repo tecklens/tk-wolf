@@ -12,6 +12,10 @@ const logSchema = new Schema<LogDBModel>(
     _organizationId: { type: Schema.Types.String, index: true },
     status: Schema.Types.Number,
 
+    _workflowId: Schema.Types.String,
+    workflowName: Schema.Types.String,
+    recipient: Schema.Types.String,
+
     createdAt: Schema.Types.Date,
     updatedAt: Schema.Types.Date,
     deletedAt: {

@@ -47,6 +47,9 @@ const userSchema = new Schema<UserDBModel>(
     urls: Schema.Types.Array,
 
     plan: { type: Schema.Types.Number, default: 0 },
+    workflowGuide: { type: Schema.Types.Boolean, default: false },
+    billingGuide: { type: Schema.Types.Boolean, default: false },
+    apiKeyGuide: { type: Schema.Types.Boolean, default: false },
   },
   schemaOptions,
 );
