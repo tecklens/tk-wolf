@@ -214,4 +214,41 @@ export class UsersService {
 
     return updatedUser;
   }
+
+  async updateGuide(u: IJwtPayload, type: string) {
+    switch (type) {
+      case 'workflow':
+        await this.userRepository.updateOne(
+          {
+            _id: u._id,
+          },
+          {
+            workflowGuide: true,
+          },
+        );
+        break;
+      case 'billing':
+        await this.userRepository.updateOne(
+          {
+            _id: u._id,
+          },
+          {
+            billingGuide: true,
+          },
+        );
+        break;
+      case 'api-key':
+        await this.userRepository.updateOne(
+          {
+            _id: u._id,
+          },
+          {
+            apiKeyGuide: true,
+          },
+        );
+        break;
+      default:
+        break;
+    }
+  }
 }

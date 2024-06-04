@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Logger,
+  Param,
   Put,
   UseGuards,
   UseInterceptors,
@@ -83,5 +84,13 @@ export class UsersController {
     @Body() body: UserOnboardingTourRequestDto,
   ): Promise<UserResponseDto> {
     return await this.usersService.updateOnBoardingTour(user, body);
+  }
+
+  @Put('/guide/:type')
+  async updateGuide(
+    @UserSession() user: IJwtPayload,
+    @Param('type') type: string,
+  ) {
+    return this.usersService.updateGuide(user, type);
   }
 }
