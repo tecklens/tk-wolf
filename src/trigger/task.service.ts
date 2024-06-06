@@ -59,6 +59,7 @@ export class TaskService {
     workflowId: string,
     workflowName: string,
     orgId: string,
+    envId: string,
     target: ITargetTrigger,
     overrides: IOverridesDataTrigger,
     userId: string,
@@ -88,6 +89,7 @@ export class TaskService {
         const dataTransfer: INextJob = {
           currentNodeId: n._id,
           organizationId: orgId,
+          environmentId: envId,
           target: target,
           workflowId,
           workflowName,
@@ -173,7 +175,7 @@ export class TaskService {
 
   private async executeDelay(data: INodeData, strData: string, userId: string) {
     if (data.delayTime && data.period) {
-      this.sender.produce({
+      await this.sender.produce({
         topic: process.env.KAFKA_DELAY_JOB,
         messages: [
           {
@@ -193,6 +195,8 @@ export class TaskService {
     if (node.data?.webhookUrl && node.data?.method) {
       const task = await this.taskRepository.create({
         _userId: inp.userId,
+        _environmentId: inp.environmentId,
+        _organizationId: inp.organizationId,
         _workflowId: node._workflowId,
         workflowName: inp.workflowName,
         _nodeId: node._id,
@@ -279,6 +283,8 @@ export class TaskService {
 
     const task = await this.taskRepository.create({
       _userId: inp.userId,
+      _environmentId: inp.environmentId,
+      _organizationId: inp.organizationId,
       _workflowId: node._workflowId,
       workflowName: inp.workflowName,
       _nodeId: node._id,
@@ -369,6 +375,8 @@ export class TaskService {
       try {
         const task = await this.taskRepository.create({
           _userId: inp.userId,
+          _environmentId: inp.environmentId,
+          _organizationId: inp.organizationId,
           _workflowId: node._workflowId,
           workflowName: inp.workflowName,
           _nodeId: node._id,
@@ -430,6 +438,7 @@ export class TaskService {
           inp.workflowId,
           inp.workflowName,
           inp.organizationId,
+          inp.environmentId,
           inp.target,
           inp.overrides,
           inp.userId,
@@ -469,12 +478,24 @@ export class TaskService {
     return {
       page: payload.page,
       pageSize: payload.limit,
-      totalCount: await this.taskRepository.count({ _userId: u._id }),
-      data: await this.taskRepository.find({ _userId: u._id }, '', {
-        skip: payload.page * payload.limit,
-        limit: payload.limit,
-        sort: { createdAt: -1 },
+      totalCount: await this.taskRepository.count({
+        _userId: u._id,
+        _environmentId: u.environmentId,
+        _organizationId: u.organizationId,
       }),
+      data: await this.taskRepository.find(
+        {
+          _userId: u._id,
+          _environmentId: u.environmentId,
+          _organizationId: u.organizationId,
+        },
+        '',
+        {
+          skip: payload.page * payload.limit,
+          limit: payload.limit,
+          sort: { createdAt: -1 },
+        },
+      ),
     };
   }
 

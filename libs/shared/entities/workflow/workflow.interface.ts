@@ -38,6 +38,7 @@ export interface INextJob {
   workflowName: string;
   currentNodeId: NodeId;
   organizationId: string;
+  environmentId: string;
   userId: string;
 
   target: ITargetTrigger;

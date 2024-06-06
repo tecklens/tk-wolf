@@ -37,6 +37,7 @@ export class ProviderService {
   async getListProvider(u: IJwtPayload, payload: GetProviderRequestDto) {
     const query: Partial<ProviderEntity> & { _organizationId: string } = {
       _organizationId: u.organizationId,
+      _environmentId: u.environmentId,
     };
 
     if (payload.active) {

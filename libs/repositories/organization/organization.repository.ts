@@ -67,6 +67,14 @@ export class OrganizationRepository extends BaseRepository<
     };
   }
 
+  async findUserOrganizations(userId: string): Promise<OrganizationEntity[]> {
+    const members = await this.getUsersMembersOrganizationIds(userId);
+
+    return await this.find({
+      _id: { $in: members.map((member) => member._organizationId) },
+    });
+  }
+
   private async getUsersMembersOrganizationIds(
     userId: string,
   ): Promise<MemberEntity[]> {

@@ -2,13 +2,14 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
-  Get, Param,
+  Get,
+  Param,
   Post,
   Put,
   Query,
   UseGuards,
-  UseInterceptors
-} from "@nestjs/common";
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiExcludeController,

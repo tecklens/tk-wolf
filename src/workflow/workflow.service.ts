@@ -40,7 +40,11 @@ export class WorkflowService {
   ) {}
 
   async getWorkflows(u: IJwtPayload, d: WorkflowsRequestDto) {
-    const data = await this.workflowRepository.findByUserId(u._id);
+    const data = await this.workflowRepository.findByUserId(
+      u._id,
+      u.environmentId,
+      u.organizationId,
+    );
 
     const workflows: WorkflowResponse[] = data.workflows.map((e) => ({
       _id: e._id,
@@ -149,7 +153,11 @@ export class WorkflowService {
   }
 
   async getActive(u: IJwtPayload): Promise<WorkflowResponse> {
-    const wf = await this.workflowRepository.getActive(u._id);
+    const wf = await this.workflowRepository.getActive(
+      u._id,
+      u.environmentId,
+      u.organizationId,
+    );
 
     if (!wf) return null;
 

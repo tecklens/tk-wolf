@@ -39,7 +39,7 @@ export class OrganizationController {
   @UseGuards(JwtAuthGuard)
   @Roles(MemberRoleEnum.ADMIN)
   async getAllOrg(@UserSession() user: IJwtPayload) {
-    console.log('ping role');
+    return this.organizationService.getOrganizations(user)
   }
 
   @Get('/members')

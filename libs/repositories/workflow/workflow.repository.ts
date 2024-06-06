@@ -23,9 +23,17 @@ export class WorkflowRepository extends BaseRepository<
     return this.mapEntity(data.toObject());
   }
 
-  async findByUserId(userId: string, skip = 0, limit = 10): Promise<IWfPage> {
+  async findByUserId(
+    userId: string,
+    envId: string,
+    orgId: string,
+    skip = 0,
+    limit = 10,
+  ): Promise<IWfPage> {
     const query = {
       _userId: userId,
+      _environmentId: envId,
+      _organizationId: orgId,
     };
     const total = this.count(query);
 
@@ -65,9 +73,15 @@ export class WorkflowRepository extends BaseRepository<
     );
   }
 
-  async getActive(userId: string) {
+  async getActive(
+    userId: string,
+    environmentId: string,
+    organizationId: string,
+  ) {
     return await this.findOne({
       _userId: userId,
+      _environmentId: environmentId,
+      _organizationId: organizationId,
       active: true,
     });
   }

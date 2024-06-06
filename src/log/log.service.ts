@@ -25,6 +25,8 @@ export class LogService {
       {
         $match: {
           _userId: user._id,
+          _environmentId: user.environmentId,
+          _organizationId: user.organizationId,
         },
       },
       {

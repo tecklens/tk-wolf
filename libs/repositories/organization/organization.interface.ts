@@ -1,4 +1,4 @@
-import { ApiServiceLevelEnum } from "@libs/shared/types";
+import { ApiServiceLevelEnum } from '@libs/shared/types';
 
 export interface IOrganizationEntity {
   _id: string;

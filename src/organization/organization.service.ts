@@ -609,4 +609,8 @@ export class OrganizationService {
       providerId: integration.providerId,
     };
   }
+
+  async getOrganizations(u: IJwtPayload) {
+    return this.organizationRepository.findUserOrganizations(u._id);
+  }
 }

@@ -8,6 +8,8 @@ const taskSchema = new Schema<TaskDBModel>(
   {
     _workflowId: Schema.Types.String,
     _userId: Schema.Types.String,
+    _environmentId: Schema.Types.String,
+    _organizationId: Schema.Types.String,
     workflowName: Schema.Types.String,
     deletedAt: Schema.Types.String,
     deletedBy: Schema.Types.String,
