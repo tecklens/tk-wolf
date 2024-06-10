@@ -4,11 +4,11 @@ import {
   Controller,
   Get,
   Logger,
-  Param,
-  Put,
+  Param, Post,
+  Put, Query,
   UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import {
   ApiBearerAuth,
   ApiExcludeController,
@@ -25,6 +25,7 @@ import { UserSession } from '@libs/utils/user.session';
 import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
 import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
+import { SubmitBugRequestDto } from "@app/users/dtos/submit-bug-request.dto";
 
 @ApiBearerAuth()
 @Controller('user')
@@ -92,5 +93,13 @@ export class UsersController {
     @Param('type') type: string,
   ) {
     return this.usersService.updateGuide(user, type);
+  }
+
+  @Post('/bug/submit')
+  async submitBugReport(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: SubmitBugRequestDto,
+  ) {
+    return this.usersService.submitBugFromWeb(user, payload);
   }
 }

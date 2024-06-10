@@ -4,6 +4,7 @@ import { IJwtPayload } from '@libs/shared/types';
 import { FilterLogDto } from '@app/log/dtos/filter-log.dto';
 import { FilterLogResponse } from '@app/log/dtos/filter-log.response';
 import { CacheKey } from '@nestjs/cache-manager';
+import { DashboardInfoDto } from '@app/log/dtos/dashboard-info.dto';
 
 @Injectable()
 export class LogService {
@@ -62,6 +63,17 @@ export class LogService {
 
     return {
       data: totalPerPeriod,
+    };
+  }
+
+  @CacheKey('log:dashboard')
+  async getDashboardInfo(u: IJwtPayload): Promise<DashboardInfoDto> {
+    return {
+      total_call_api: await this.logRepository.count({
+        _userId: u._id,
+        _environmentId: u.environmentId,
+        _organizationId: u.organizationId,
+      }),
     };
   }
 }

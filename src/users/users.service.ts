@@ -20,6 +20,8 @@ import { decryptApiKey } from '@libs/shared/encryptions/encrypt-provider';
 import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
 import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
+import { BugReportRepository } from '@libs/repositories/bug-report/bug-report.repository';
+import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
@@ -30,6 +32,7 @@ export class UsersService {
     private readonly userRepository: UserRepository,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private environmentRepository: EnvironmentRepository,
+    private readonly bugReportRepository: BugReportRepository,
   ) {}
   private readonly users = [
     {
@@ -250,5 +253,13 @@ export class UsersService {
       default:
         break;
     }
+  }
+
+  async submitBugFromWeb(u: IJwtPayload, payload: SubmitBugRequestDto) {
+    return await this.bugReportRepository.create({
+      title: payload.title,
+      description: payload.description,
+      _userId: u._id,
+    });
   }
 }

@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EnvironmentModule } from '@app/environment/environment.module';
 import { MemberRepository } from '@libs/repositories/member';
 import { LimitService } from '@app/auth/limit.service';
+import { BugReportRepository } from '@libs/repositories/bug-report/bug-report.repository';
 
 @Module({
   imports: [EnvironmentModule],
@@ -23,6 +24,7 @@ import { LimitService } from '@app/auth/limit.service';
     OrganizationRepository,
     MemberRepository,
     JwtService,
+    BugReportRepository,
   ],
   exports: [UsersService],
   controllers: [UsersController],
