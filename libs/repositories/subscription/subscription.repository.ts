@@ -51,7 +51,72 @@ export class SubscriptionRepository extends BaseRepository<
       { $sort: { createdAt: -1 } },
       {
         $facet: {
-          data: [{ $skip: 0 }, { $limit: 10 }],
+          data: [{ $skip: skip }, { $limit: limit }],
+          total: [
+            {
+              $count: 'count',
+            },
+          ],
+        },
+      },
+    ];
+    const rsp = await this.aggregate(query, {
+      readPreference: 'secondaryPreferred',
+    });
+
+    if (rsp.length > 0) {
+      return {
+        data: rsp[0].data,
+        total: rsp[0].total[0]?.count,
+      };
+    } else {
+      return {
+        data: [],
+        total: 0,
+      };
+    }
+  }
+
+  async findSubscriptionsByChannel(
+    userId: string,
+    channelId: string,
+    skip: number,
+    limit: number,
+  ): Promise<GetSubscriptionsResponse> {
+    const query = [
+      {
+        $lookup: {
+          from: 'channels',
+          localField: 'channelId.str',
+          foreignField: '_id.str',
+          as: 'listChannel',
+        },
+      },
+      {
+        $set: {
+          channelName: { $arrayElemAt: ['$listChannel.channelName', 0] },
+        },
+      },
+      {
+        $unset: 'listChannel',
+      },
+      {
+        $match: {
+          _userId: userId,
+          channelId: channelId,
+        },
+      },
+      {
+        $set: {
+          _id: {
+            $toString: '$_id',
+          },
+        },
+      },
+      { $sort: { createdAt: -1 } },
+      {
+        $facet: {
+          data: [{ $skip: skip }, { $limit: limit }],
           total: [
             {
               $count: 'count',

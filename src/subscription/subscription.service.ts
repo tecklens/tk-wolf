@@ -31,7 +31,7 @@ export class SubscriptionService {
       getRateLimitThresh(user.plan).channel,
     );
     if (!valid) {
-      return new UnauthorizedException(
+      throw new UnauthorizedException(
         'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
       );
     }
@@ -57,7 +57,7 @@ export class SubscriptionService {
         getRateLimitThresh(user.plan).subscription_per_channel,
       );
       if (!valid) {
-        return new UnauthorizedException(
+        throw new UnauthorizedException(
           'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
         );
       }
@@ -94,7 +94,7 @@ export class SubscriptionService {
   ) {
     const channelId = payload.channel_id;
     if (!channelId) {
-      return new PreconditionFailedException('Channel Id is required');
+      throw new PreconditionFailedException('Channel Id is required');
     }
     const existChannel = await this.channelRepository.findOne({
       _userId: user._id,
@@ -103,7 +103,7 @@ export class SubscriptionService {
     });
 
     if (!existChannel) {
-      return new PreconditionFailedException('Channel does not exist');
+      throw new PreconditionFailedException('Channel does not exist');
     }
 
     const valid = await this.checkRateLimit(
@@ -113,7 +113,7 @@ export class SubscriptionService {
       getRateLimitThresh(user.plan).subscription_per_channel,
     );
     if (!valid) {
-      return new UnauthorizedException(
+      throw new UnauthorizedException(
         'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
       );
     }
@@ -148,7 +148,7 @@ export class SubscriptionService {
     user: IJwtPayload,
     channelId: string,
     payload: GetSubscriptionsRequest,
-  ) {
+  ): Promise<GetSubscriptionsResponse> {
     const channel = await this.channelRepository.findOne({
       _userId: user._id,
       _organizationId: user.organizationId,
@@ -156,12 +156,15 @@ export class SubscriptionService {
     });
 
     if (!channel) {
-      return new PreconditionFailedException('Channel does not exist');
+      throw new PreconditionFailedException('Channel does not exist');
     }
 
-    return await this.subscriptionRepository.find({
-      channelId: channelId,
-    });
+    return await this.subscriptionRepository.findSubscriptionsByChannel(
+      user._id,
+      channelId,
+      payload.page * payload.limit,
+      payload.limit,
+    );
   }
 
   async getAllSubscriptionOfUser(
@@ -175,7 +178,7 @@ export class SubscriptionService {
     );
   }
 
-  async getChannel(user: IJwtPayload, payload: GetSubscriptionsRequest) {
+  async getChannels(user: IJwtPayload, payload: GetSubscriptionsRequest) {
     return await this.channelRepository.getChannel(
       user._id,
       user.organizationId,
@@ -184,13 +187,21 @@ export class SubscriptionService {
     );
   }
 
+  async getChannel(user: IJwtPayload, channelId: string) {
+    return await this.channelRepository.findOne({
+      _id: channelId,
+      _userId: user._id,
+      _organizationId: user.organizationId,
+    });
+  }
+
   async delSubscription(user: IJwtPayload, payload: DelSubscriptionRequest) {
     const subs = this.subscriptionRepository.findOne({
       _userId: user._id,
       _id: payload.subscriptionId,
     });
 
-    if (!subs) return new PreconditionFailedException('Subscription not exist');
+    if (!subs) throw new PreconditionFailedException('Subscription not exist');
 
     await this.subscriptionRepository.delete({
       _userId: user._id,
