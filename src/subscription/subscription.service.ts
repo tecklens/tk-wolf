@@ -11,10 +11,9 @@ import { ISubscription } from '@libs/repositories/subscription/types';
 import { CreateSubscriptionsRequest } from '@app/subscription/dtos/create-subscriptions.request';
 import { UserRateLimitRepository } from '@libs/repositories/user-rate-limit/user-rate-limit.repository';
 import { getRateLimitThresh, UserRateLimitPolicy } from '@libs/shared/consts';
-import { GetSubscriptionsResponse } from '@app/subscription/dtos/get-subscriptions.response';
 import { GetSubscriptionsRequest } from '@app/subscription/dtos/get-subscriptions.request';
-import mongoose from 'mongoose';
-import { InjectConnection } from '@nestjs/mongoose';
+import { GetSubscriptionsResponse } from '@app/subscription/dtos/get-subscriptions.response';
+import { DelSubscriptionRequest } from '@app/subscription/dtos/del-subscription.request';
 
 @Injectable()
 export class SubscriptionService {
@@ -22,81 +21,70 @@ export class SubscriptionService {
     private readonly subscriptionRepository: SubscriptionRepository,
     private readonly channelRepository: ChannelRepository,
     private readonly userRateLimitRepository: UserRateLimitRepository,
-    @InjectConnection() private readonly connection: mongoose.Connection,
   ) {}
 
   async createChannel(user: IJwtPayload, payload: CreateChannelRequest) {
-    const transactionSession = await this.connection.startSession();
-    try {
-      transactionSession.startTransaction();
+    const valid = await this.checkRateLimit(
+      user._id,
+      'channel',
+      UserRateLimitPolicy.CHANNEL,
+      getRateLimitThresh(user.plan).channel,
+    );
+    if (!valid) {
+      return new UnauthorizedException(
+        'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
+      );
+    }
+    const channel = await this.channelRepository.create({
+      channelName: payload.channelName,
+      channelDescription: payload.channelDescription,
+      _userId: user._id,
+      _organizationId: user.organizationId,
+    });
+
+    await this.userRateLimitRepository.increaseRequestCount(
+      user._id,
+      UserRateLimitPolicy.CHANNEL,
+      'channel',
+      1,
+    );
+
+    if (payload.targets?.length > 0) {
       const valid = await this.checkRateLimit(
         user._id,
-        'channel',
-        UserRateLimitPolicy.CHANNEL,
-        getRateLimitThresh(user.plan).channel,
+        `subscription ${channel._id}`,
+        UserRateLimitPolicy.SUBSCRIPTION_PER_CHANNEL,
+        getRateLimitThresh(user.plan).subscription_per_channel,
       );
       if (!valid) {
         return new UnauthorizedException(
           'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
         );
       }
-      const channel = await this.channelRepository.create({
-        channelName: payload.channelName,
-        channelDescription: payload.channelDescription,
-        _userId: user._id,
-        _organizationId: user.organizationId,
-      });
+      await this.subscriptionRepository.insertMany(
+        payload.targets.map(
+          (e): ISubscription => ({
+            channelId: channel._id,
+            _userId: user._id,
+            email: e.email,
+            phone: e.phone,
+            firstName: e.firstName,
+            lastName: e.lastName,
+            isOnline: false,
+            locale: e.locale ?? 'en',
+            subscribed_at: new Date(),
+            overrides: e.overrides,
+            createdBy: user._id,
+          }),
+        ),
+      );
 
       await this.userRateLimitRepository.increaseRequestCount(
         user._id,
-        UserRateLimitPolicy.CHANNEL,
-        'channel',
+        UserRateLimitPolicy.SUBSCRIPTION_PER_CHANNEL,
+        `subscription ${channel}`,
         1,
       );
-
-      if (payload.targets?.length > 0) {
-        const valid = await this.checkRateLimit(
-          user._id,
-          `subscription ${channel._id}`,
-          UserRateLimitPolicy.SUBSCRIPTION_PER_CHANNEL,
-          getRateLimitThresh(user.plan).subscription_per_channel,
-        );
-        if (!valid) {
-          return new UnauthorizedException(
-            'Exceeding the max channel for your Wolf account. Please upgrade pricing plan of you',
-          );
-        }
-        await this.subscriptionRepository.insertMany(
-          payload.targets.map(
-            (e): ISubscription => ({
-              channelId: channel._id,
-              _userId: user._id,
-              email: e.email,
-              phone: e.phone,
-              firstName: e.firstName,
-              lastName: e.lastName,
-              isOnline: false,
-              locale: e.locale ?? 'en',
-              subscribed_at: new Date(),
-              overrides: e.overrides,
-              createdBy: user._id,
-            }),
-          ),
-        );
-
-        await this.userRateLimitRepository.increaseRequestCount(
-          user._id,
-          UserRateLimitPolicy.SUBSCRIPTION_PER_CHANNEL,
-          `subscription ${channel}`,
-          1,
-        );
-      }
-      await transactionSession.commitTransaction();
-    } catch (e) {
-      await transactionSession.abortTransaction();
-      return e;
-    } finally {
-      await transactionSession.endSession();
     }
   }
 
@@ -179,7 +167,7 @@ export class SubscriptionService {
   async getAllSubscriptionOfUser(
     user: IJwtPayload,
     payload: GetSubscriptionsRequest,
-  ): Promise<GetSubscriptionsResponse[]> {
+  ): Promise<GetSubscriptionsResponse> {
     return await this.subscriptionRepository.findAllSubscriptions(
       user._id,
       payload.page * payload.page,
@@ -194,6 +182,20 @@ export class SubscriptionService {
       payload.page * payload.limit,
       payload.limit,
     );
+  }
+
+  async delSubscription(user: IJwtPayload, payload: DelSubscriptionRequest) {
+    const subs = this.subscriptionRepository.findOne({
+      _userId: user._id,
+      _id: payload.subscriptionId,
+    });
+
+    if (!subs) return new PreconditionFailedException('Subscription not exist');
+
+    await this.subscriptionRepository.delete({
+      _userId: user._id,
+      _id: payload.subscriptionId,
+    });
   }
 
   private async checkRateLimit(

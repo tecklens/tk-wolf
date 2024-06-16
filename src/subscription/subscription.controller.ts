@@ -1,13 +1,13 @@
 import {
   Body,
   ClassSerializerInterceptor,
-  Controller,
+  Controller, Delete,
   Get,
   Post,
   Query,
   UseGuards,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { SubscriptionService } from '@app/subscription/subscription.service';
 import { ApiResponse } from '@tps/decorators/api-response.decorator';
@@ -19,8 +19,9 @@ import { ChannelEntity } from '@libs/repositories/channel/channel.entity';
 import { UserSession } from '@libs/utils/user.session';
 import { CreateSubscriptionsRequest } from '@app/subscription/dtos/create-subscriptions.request';
 import { SubscriptionEntity } from '@libs/repositories/subscription/subscription.entity';
-import { GetSubscriptionsResponse } from '@app/subscription/dtos/get-subscriptions.response';
+import { GetSubscriptionResponse } from '@app/subscription/dtos/get-subscription.response';
 import { GetSubscriptionsRequest } from '@app/subscription/dtos/get-subscriptions.request';
+import { DelSubscriptionRequest } from "@app/subscription/dtos/del-subscription.request";
 
 @Controller('sub')
 @ApiBearerAuth()
@@ -64,7 +65,7 @@ export class SubscriptionController {
   }
 
   @Get('/all')
-  @ApiResponse(GetSubscriptionsResponse)
+  @ApiResponse(GetSubscriptionResponse)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getAllSubscriptionOfUser(
@@ -83,5 +84,16 @@ export class SubscriptionController {
     @Query() payload: GetSubscriptionsRequest,
   ) {
     return this.sub.getChannel(user, payload);
+  }
+
+  @Delete('/')
+  @ApiResponse(SubscriptionEntity)
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  delSubscription(
+    @UserSession() user: IJwtPayload,
+    @Query() payload: DelSubscriptionRequest,
+  ) {
+    return this.sub.delSubscription(user, payload);
   }
 }

@@ -1,12 +1,9 @@
-export class GetSubscriptionsResponse {
-  _id: string;
-  _userId: string;
-  channelId: string;
-  channelName: string;
-  email: string;
-  phone?: string;
-  firstName?: string;
-  lastName?: string;
-  locale?: string;
-  overrides?: any;
+import { IPageResponse } from '@tps/index';
+import { GetSubscriptionResponse } from '@app/subscription/dtos/get-subscription.response';
+
+export class GetSubscriptionsResponse
+  implements IPageResponse<GetSubscriptionResponse>
+{
+  data: GetSubscriptionResponse[];
+  total: number;
 }

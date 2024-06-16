@@ -24,7 +24,7 @@ import { PaymentModule } from './payment/payment.module';
 import { NotificationModule } from './notification/notification.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 
-const dbService = {
+export const dbService = {
   provide: DbService,
   useFactory: async () => {
     const service = new DbService();
