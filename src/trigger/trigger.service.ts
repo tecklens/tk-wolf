@@ -23,6 +23,7 @@ import { getDateDataTimeout } from '@libs/utils';
 import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
 import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
 import { ILogTrigger } from '@libs/repositories/log/types';
+import { CreateBulkTriggerDto } from '@app/trigger/dtos/create-bulk-trigger.dto';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {
@@ -93,6 +94,66 @@ export class TriggerService implements OnModuleInit {
     }
 
     await this.logRepository.create(log);
+    return null;
+  }
+
+  async createBulkTrigger(
+    user: IJwtPayload,
+    payload: CreateBulkTriggerDto,
+  ): Promise<CreateTriggerResponse> {
+    const wf: WorkflowEntity = await this.workflowRepository.findById(
+      payload.workflowId,
+      '_id _organizationId _environmentId _userId identifier name',
+    );
+
+    if (!wf) throw new NotFoundException('Workflow not found');
+
+    for (const target of payload.targets) {
+      const log: ILogTrigger = {
+        _userId: wf._userId,
+        _organizationId: wf._organizationId,
+        _environmentId: wf._environmentId,
+
+        _workflowId: wf._id,
+        workflowName: wf.name,
+        recipient: target.email ?? target.phone,
+
+        status: 1,
+        event_type: 'create_trigger',
+        deletedAt: getDateDataTimeout(user.plan),
+      };
+
+      try {
+        const variables: IVariable[] = await this.variableRepository.findByWfId(
+          wf._id,
+        );
+
+        await this.validateVariables(variables, {
+          workflowId: payload.workflowId,
+          target,
+          overrides: payload.overrides,
+        });
+
+        await this.taskService.nextJob(
+          wf._id,
+          wf.name,
+          wf._organizationId,
+          wf._environmentId,
+          target,
+          payload.overrides,
+          wf._userId,
+          'starter',
+          undefined,
+        );
+
+        log.status = 1;
+      } catch (e) {
+        this.logger.error(e);
+        log.status = 2;
+      }
+
+      await this.logRepository.create(log);
+    }
     return null;
   }
 

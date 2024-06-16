@@ -22,6 +22,7 @@ import { ProviderModule } from './provider/provider.module';
 import { LogModule } from './log/log.module';
 import { PaymentModule } from './payment/payment.module';
 import { NotificationModule } from './notification/notification.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 const dbService = {
   provide: DbService,
@@ -40,7 +41,7 @@ const dbService = {
     }),
     CacheModule.register({
       isGlobal: true,
-      ttl: 30 * 1000,
+      ttl: 30 * 1000, // * 30 second
       max: 100,
       useFactory: async () => ({
         store: await redisStore({
@@ -68,7 +69,7 @@ const dbService = {
     ThrottlerModule.forRoot([
       {
         name: 'short',
-        ttl: 1000, // * millisecond
+        ttl: 1000, // * millisecond - 1s
         limit: 30,
       },
       {
@@ -95,6 +96,7 @@ const dbService = {
     LogModule,
     PaymentModule,
     NotificationModule,
+    SubscriptionModule,
   ],
   providers: [
     AppService,

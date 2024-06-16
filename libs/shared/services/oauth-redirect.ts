@@ -1,4 +1,14 @@
-export const buildOauthRedirectUrl = (request): string => {
+import { NotFoundException } from '@nestjs/common';
+
+export const buildOauthRedirectUrl = (request: {
+  user: {
+    token: string;
+    newUser: any;
+  };
+  query: {
+    state: string;
+  };
+}): string => {
   let url = process.env.FRONT_BASE_URL + '/sign-in';
 
   if (!request.user || !request.user.token) {
@@ -48,6 +58,52 @@ export const buildOauthRedirectUrl = (request): string => {
   if (invitationToken) {
     url += `&invitationToken=${invitationToken}`;
   }
+
+  return url;
+};
+
+export const buildGoogleOauthRedirectUrl = (request: {
+  user: {
+    email: string;
+    newUser: boolean;
+    token: string;
+  };
+  query: {
+    code: string;
+    scope: string;
+    authuser: string;
+  };
+}): string => {
+  if (!request.user) {
+    throw new NotFoundException('No user from google');
+  }
+  console.log('request', request);
+  let url = process.env.FRONT_BASE_URL + '/sign-in';
+
+  if (!request.user || !request.user.token) {
+    return `${url}?error=AuthenticationError`;
+  }
+
+  url += `?token=${request.user.token}`;
+
+  if (request.user.newUser) {
+    url += '&newUser=true';
+  }
+
+  // const next = JSON.parse(request.query.state).next;
+  // if (next) {
+  //   url += `&next=${next}`;
+  // }
+  //
+  // const configurationId = JSON.parse(request.query.state).configurationId;
+  // if (configurationId) {
+  //   url += `&configurationId=${configurationId}`;
+  // }
+  //
+  // const invitationToken = JSON.parse(request.query.state).invitationToken;
+  // if (invitationToken) {
+  //   url += `&invitationToken=${invitationToken}`;
+  // }
 
   return url;
 };

@@ -14,7 +14,6 @@ export class CreateTriggerDto {
 }
 
 export interface ITargetTrigger {
-  subcriberId: string;
   email: string;
   phone: string;
   firstName: string;

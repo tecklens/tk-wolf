@@ -28,7 +28,11 @@ const corsOptionsDelegate = function (req, callback) {
   ) {
     corsOptions.origin = '*';
   } else {
-    corsOptions.origin = [process.env.FRONT_BASE_URL];
+    corsOptions.origin = [
+      process.env.FRONT_BASE_URL,
+      process.env.API_ROOT_URL,
+      'https://accounts.google.com',
+    ];
     if (process.env.WIDGET_BASE_URL) {
       corsOptions.origin.push(process.env.WIDGET_BASE_URL);
     }

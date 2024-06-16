@@ -198,6 +198,86 @@ export class AuthService {
     };
   }
 
+  public async authenticateGoogle(
+    authProvider: AuthProviderEnum,
+    accessToken: string,
+    refreshToken: string | undefined,
+    profile: {
+      id: string;
+      displayName: string;
+      name: {
+        familyName: string;
+        givenName: string;
+      };
+      emails: { value: string; verified: boolean }[];
+      photos: { value: string }[];
+    },
+  ) {
+    const { name, emails, photos } = profile;
+    const email = normalizeEmail(emails[0].value);
+    let user = await this.userRepository.findByEmail(email);
+    let newUser = false;
+
+    if (!user) {
+      const firstName = name.givenName;
+      const lastName = name.familyName;
+
+      user = await this.userRepository.create({
+        profilePicture: photos[0].value,
+        email,
+        firstName,
+        lastName,
+        showOnBoarding: true,
+        tokens: {
+          username: profile.emails[0].value,
+          profileId: profile.id,
+          provider: authProvider,
+          accessToken,
+          refreshToken,
+          valid: true,
+        },
+      });
+      newUser = true;
+
+      let wrapOrg: { organization: OrganizationEntity; environmentId: any };
+      // eslint-disable-next-line prefer-const
+      wrapOrg = await this.createOrg({
+        name: email,
+        userId: user._id,
+        jobTitle: JobTitleEnum.OTHER,
+        domain: '',
+      });
+    } else {
+      if (
+        authProvider === AuthProviderEnum.GITHUB ||
+        authProvider === AuthProviderEnum.GOOGLE
+      ) {
+        user = await this.updateUserUsername(
+          user,
+          {
+            email: email,
+            name: profile.displayName,
+            avatar_url: profile.photos[0].value,
+            login: email,
+            id: profile.id,
+          },
+          authProvider,
+        );
+      }
+
+      // this.analyticsService.track('[Authentication] - Login', user._id, {
+      //   loginType: authProvider,
+      // });
+    }
+
+    // this.analyticsService.upsertUser(user, user._id);
+
+    return {
+      newUser,
+      token: await this.generateUserToken(user),
+    };
+  }
+
   public async validateApiKey(apiKey: string): Promise<IJwtPayload> {
     const { environment, user, error } = await this.getApiKeyUser({
       apiKey,

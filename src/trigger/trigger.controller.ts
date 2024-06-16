@@ -31,6 +31,7 @@ import { UserSession } from '@libs/utils/user.session';
 import { IJwtPayload } from '@libs/shared/types';
 import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
 import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
+import { CreateBulkTriggerDto } from "@app/trigger/dtos/create-bulk-trigger.dto";
 
 @ApiBearerAuth()
 @Controller('trigger')
@@ -55,6 +56,20 @@ export class TriggerController {
     @Body() payload: CreateTriggerDto,
   ): Promise<CreateTriggerResponse> {
     return this.triggerService.createTrigger(user, payload);
+  }
+
+  @Post('/bulk')
+  @ApiResponse(CreateTriggerResponse, 200)
+  @ApiOperation({
+    summary: 'API save trigger and exe workflow',
+  })
+  @UseGuards(ApiKeyAuthGuard)
+  @ExternalApiAccessible()
+  createBulkTrigger(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: CreateBulkTriggerDto,
+  ): Promise<CreateTriggerResponse> {
+    return this.triggerService.createBulkTrigger(user, payload);
   }
 
   @Get('/task')

@@ -209,7 +209,6 @@ export class TaskService {
         type: node.type,
         status: TaskStatus.in_process,
         priority: 'medium',
-        subscriberId: inp.target.subcriberId,
         email: inp.target.email,
       });
 
@@ -297,7 +296,6 @@ export class TaskService {
       type: node.type,
       status: TaskStatus.in_process,
       priority: 'medium',
-      subscriberId: inp.target.subcriberId,
       email: inp.target.email,
       phone: inp.target.phone,
     });
@@ -389,7 +387,6 @@ export class TaskService {
           type: node.type,
           status: TaskStatus.in_process,
           priority: 'medium',
-          subscriberId: inp.target.subcriberId,
           email: inp.target.email,
         });
         // this.emitEventToMembers(members, {

@@ -19,12 +19,16 @@ import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { ApiException } from '@app/packages/utils/exceptions';
 import { GitHubAuthGuard } from '@app/auth/strategy/github-auth.guard';
 import { IJwtPayload } from '@libs/shared/types';
-import { buildOauthRedirectUrl } from '@libs/shared/services/oauth-redirect';
+import {
+  buildGoogleOauthRedirectUrl,
+  buildOauthRedirectUrl,
+} from '@libs/shared/services/oauth-redirect';
 import { UserRegistrationBodyDto } from '@app/auth/dtos/user-registration.dto';
 import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
 import { LoginBodyDto } from '@app/auth/dtos/login.dto';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { UserSession } from '@libs/utils/user.session';
+import { GoogleOAuthGuard } from '@app/auth/strategy/google-auth.guard';
 
 @ApiBearerAuth()
 @Controller('auth')
@@ -34,8 +38,8 @@ import { UserSession } from '@libs/utils/user.session';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Get('/github')
-  githubAuth() {
+  @Get('/github/check')
+  checkGithubAuth() {
     Logger.verbose('Checking Github Auth');
 
     if (
@@ -54,10 +58,39 @@ export class AuthController {
     };
   }
 
+  @Get('/google/check')
+  checkGoogleAuth() {
+    Logger.verbose('Checking Google Auth');
+
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+      throw new ApiException(
+        'Google auth is not configured, please provide GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET as env variables',
+      );
+    }
+
+    Logger.verbose('Google Auth has all variables.');
+
+    return {
+      success: true,
+    };
+  }
+
+  @Get('/google')
+  @UseGuards(GoogleOAuthGuard)
+  async googleAuth(@Req() req: any) {}
+
   @Get('/github/callback')
   @UseGuards(GitHubAuthGuard)
   async githubCallback(@Req() request: any, @Res() response: any) {
     const url = buildOauthRedirectUrl(request);
+
+    return response.redirect(url);
+  }
+
+  @Get('/google/callback')
+  @UseGuards(GoogleOAuthGuard)
+  async googleCallback(@Req() request: any, @Res() response: any) {
+    const url = buildGoogleOauthRedirectUrl(request);
 
     return response.redirect(url);
   }

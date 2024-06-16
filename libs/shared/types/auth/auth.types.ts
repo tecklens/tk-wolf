@@ -22,5 +22,6 @@ export enum PassportStrategyEnum {
   JWT = 'jwt',
   HEADER_API_KEY = 'apikey',
   GITHUB = 'github',
+  GOOGLE = 'google',
   LOCAL = 'local',
 }
