@@ -3,12 +3,15 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
+  Header,
   Logger,
-  Param, Post,
-  Put, Query,
+  Param,
+  Post,
+  Put,
+  Query,
   UseGuards,
-  UseInterceptors
-} from "@nestjs/common";
+  UseInterceptors,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiExcludeController,
@@ -25,7 +28,7 @@ import { UserSession } from '@libs/utils/user.session';
 import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
 import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
-import { SubmitBugRequestDto } from "@app/users/dtos/submit-bug-request.dto";
+import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
 
 @ApiBearerAuth()
 @Controller('user')

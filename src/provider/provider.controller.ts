@@ -86,4 +86,14 @@ export class ProviderController {
     // @ts-ignore
     return this.providerService.getListProvider(user, body);
   }
+
+  @Get('/connected')
+  @ApiOperation({
+    summary: 'Get connected provider',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  async getConnectedProvider(@UserSession() user: IJwtPayload) {
+    return await this.providerService.getConnectedProvider(user);
+  }
 }

@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { passwordConstraints } from '@libs/shared/consts';
 import { JobTitleEnum, SignUpOriginEnum } from '@libs/shared/types';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 export class UserRegistrationBodyDto {
   @IsDefined()
   @IsEmail()

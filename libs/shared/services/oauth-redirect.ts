@@ -54,9 +54,9 @@ export const buildOauthRedirectUrl = (request: {
     url += `&configurationId=${configurationId}`;
   }
 
-  const invitationToken = JSON.parse(request.query.state).invitationToken;
-  if (invitationToken) {
-    url += `&invitationToken=${invitationToken}`;
+  const inviteToken = JSON.parse(request.query.state).inviteToken;
+  if (inviteToken) {
+    url += `&inviteToken=${inviteToken}`;
   }
 
   return url;
@@ -67,6 +67,7 @@ export const buildGoogleOauthRedirectUrl = (request: {
     email: string;
     newUser: boolean;
     token: string;
+    inviteToken: string;
   };
   query: {
     code: string;
@@ -100,9 +101,9 @@ export const buildGoogleOauthRedirectUrl = (request: {
   //   url += `&configurationId=${configurationId}`;
   // }
   //
-  // const invitationToken = JSON.parse(request.query.state).invitationToken;
-  // if (invitationToken) {
-  //   url += `&invitationToken=${invitationToken}`;
+  // const inviteToken = JSON.parse(request.query.state).inviteToken;
+  // if (inviteToken) {
+  //   url += `&inviteToken=${inviteToken}`;
   // }
 
   return url;

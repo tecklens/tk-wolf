@@ -123,27 +123,8 @@ export class AuthController {
   @Post('/login')
   @Header('Cache-Control', 'no-store')
   async userLogin(@Body() body: LoginBodyDto) {
-    return await this.authService.login({
-      email: body.email,
-      password: body.password,
-    });
+    return await this.authService.login(body);
   }
-
-  // @Post('/organizations/:organizationId/switch')
-  // @UseGuards(UserAuthGuard)
-  // @HttpCode(200)
-  // @Header('Cache-Control', 'no-store')
-  // async organizationSwitch(
-  //   @Body() user: IJwtPayload,
-  //   @Param('organizationId') organizationId: string,
-  // ): Promise<string> {
-  //   const command = SwitchOrganizationCommand.create({
-  //     userId: user._id,
-  //     newOrganizationId: organizationId,
-  //   });
-  //
-  //   return await this.switchOrganizationUsecase.execute(command);
-  // }
 
   @Post('/environments/:environmentId/switch')
   @Header('Cache-Control', 'no-store')
@@ -168,5 +149,14 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   async getRemainingRequest(@UserSession() user: IJwtPayload): Promise<number> {
     return this.authService.getRemainingRequest(user);
+  }
+
+  @Post('/organizations/:organizationId/switch')
+  @UseGuards(JwtAuthGuard)
+  async organizationSwitch(
+    @UserSession() user: IJwtPayload,
+    @Param('organizationId') organizationId: string,
+  ): Promise<string> {
+    return await this.authService.organizationSwitch(user, organizationId);
   }
 }

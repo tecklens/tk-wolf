@@ -29,6 +29,7 @@ import {
 import * as shortid from 'shortid';
 import { ProviderId } from '@libs/repositories/provider/types';
 import { GetProviderRequestDto } from '@app/provider/dtos/get-provider-request.dto';
+import { CacheKey } from "@nestjs/cache-manager";
 
 @Injectable()
 export class ProviderService {
@@ -203,6 +204,19 @@ export class ProviderService {
       }
       throw e;
     }
+  }
+
+  @CacheKey('provider:connected')
+  async getConnectedProvider(user: IJwtPayload) {
+    const providers = await this.providerRepository.find(
+      {
+        _environmentId: user.environmentId,
+        _organizationId: user.organizationId,
+      },
+      'providerId',
+    );
+
+    return providers.map((e) => e.providerId);
   }
 
   private getDecryptedCredentials(integration: ProviderEntity) {

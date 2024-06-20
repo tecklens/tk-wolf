@@ -59,6 +59,7 @@ import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
 import { LimitService, MAX_POINT_IN_MONTH } from '@app/auth/limit.service';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -1195,5 +1196,33 @@ export class AuthService {
     const cPoint = consumePoints[plan];
 
     return Math.ceil(remainPoint / cPoint);
+  }
+
+  async organizationSwitch(u: IJwtPayload, newOrgId: string): Promise<string> {
+    const isAuthenticated = await this.isAuthenticatedForOrganization(
+      u._id,
+      newOrgId,
+    );
+    if (!isAuthenticated) {
+      throw new UnauthorizedException(
+        `Not authorized for organization ${newOrgId}`,
+      );
+    }
+
+    const member = await this.memberRepository.findMemberByUserId(
+      newOrgId,
+      u._id,
+    );
+    if (!member) throw new ApiException('Member not found');
+
+    const user = await this.userRepository.findById(u._id);
+    if (!user) throw new ApiException(`User ${user._id} not found`);
+
+    const environment = await this.environmentRepository.findOne({
+      _organizationId: new Types.ObjectId(newOrgId),
+      _parentId: { $ne: null },
+    });
+
+    return await this.getSignedToken(user, newOrgId, environment?._id, member);
   }
 }
