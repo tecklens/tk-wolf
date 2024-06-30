@@ -148,9 +148,13 @@ export class TaskService {
           this.logger.log('Not members in workflow org');
         }
 
+        let variables = null;
         switch (node.type) {
           case ChannelTypeEnum.EMAIL:
-            await this.executeEmail(provider, node, data, members);
+            variables = await this.variableRepository.findByWfId(
+              data.workflowId,
+            );
+            await this.executeEmail(provider, node, data, members, variables);
             break;
           case ChannelTypeEnum.DELAY:
             await this.executeDelay(node.data, strData, data.userId);
@@ -159,7 +163,7 @@ export class TaskService {
             await this.executeWebhook(node, data);
             break;
           case ChannelTypeEnum.SMS:
-            const variables = await this.variableRepository.findByWfId(
+            variables = await this.variableRepository.findByWfId(
               data.workflowId,
             );
             await this.executeSms(provider, node, data, members, variables);
@@ -313,17 +317,17 @@ export class TaskService {
         );
       }
 
-      // const result = await smsHandler.send({
-      //   to: phone,
-      //   from: overrides.from || provider.credentials.from,
-      //   content: contentPlainText,
-      //   id: identifier,
-      //   customData: overrides.customData || {},
-      // });
-      //
-      // if (!result?.id) {
-      //   return;
-      // }
+      const result = await smsHandler.send({
+        to: phone,
+        from: overrides.from || provider.credentials.from,
+        content: contentPlainText,
+        id: identifier,
+        customData: overrides.customData || {},
+      });
+
+      if (!result?.id) {
+        return;
+      }
 
       await this.taskRepository.updateStatus(
         task._id,
@@ -357,6 +361,7 @@ export class TaskService {
     node: NodeEntity,
     inp: INextJob,
     members: MemberEntity[],
+    variables: VariableEntity[],
   ) {
     if (!provider) {
       this.logger.error('Error missing providerId in node');
@@ -389,11 +394,11 @@ export class TaskService {
           priority: 'medium',
           email: inp.target.email,
         });
-        // this.emitEventToMembers(members, {
-        //   type: 'task',
-        //   data: task,
-        // });
         try {
+          const html = transformContent(variables, data.designHtml, {
+            ...inp.target,
+            ...inp.overrides,
+          });
           const result = await mailHandler.send({
             from: data.sender,
             to: [inp.target.email],
