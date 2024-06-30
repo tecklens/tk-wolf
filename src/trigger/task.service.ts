@@ -402,7 +402,7 @@ export class TaskService {
           const result = await mailHandler.send({
             from: data.sender,
             to: [inp.target.email],
-            html: data.designHtml,
+            html: html,
             subject: data.subject,
           });
           if (!result?.id) {
