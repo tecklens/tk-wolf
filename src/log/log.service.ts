@@ -59,6 +59,7 @@ export class LogService {
       },
       { $skip: payload.page * payload.limit },
       { $limit: payload.limit },
+      { $sort: { createdAt: -1 } },
     ]);
 
     return {
