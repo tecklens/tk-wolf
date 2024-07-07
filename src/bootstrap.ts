@@ -44,7 +44,7 @@ export default async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     rawBody: true,
     bodyParser: false,
-    logger: ['error', 'warn', 'verbose'],
+    logger: ['debug'],
   });
 
   const configService = app.get(ConfigService);
