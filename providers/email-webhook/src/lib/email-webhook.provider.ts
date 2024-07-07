@@ -23,7 +23,10 @@ export class EmailWebhookProvider implements IEmailProvider {
       retryDelay?: number;
     },
   ) {
-    this.config.retryDelay ??= 30 * 1000;
+    this.config.retryDelay =
+      config.retryDelay && config.retryDelay < 100000
+        ? config.retryDelay
+        : 30 * 1000;
     this.config.retryCount ??= 3;
   }
 
