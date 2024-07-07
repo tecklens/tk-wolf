@@ -247,8 +247,8 @@ export class TriggerService implements OnModuleInit {
           skip: payload.page * payload.limit,
           limit: payload.limit,
           sort: {
-            createdAt: -1
-          }
+            createdAt: -1,
+          },
         },
       ),
     };

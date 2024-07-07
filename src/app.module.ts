@@ -70,17 +70,12 @@ export const dbService = {
       {
         name: 'short',
         ttl: 1000, // * millisecond - 1s
-        limit: 30,
+        limit: 2000,
       },
       {
         name: 'medium',
-        ttl: 1000, // * millisecond
-        limit: 200,
-      },
-      {
-        name: 'long',
-        ttl: 1000,
-        limit: 1000,
+        ttl: 1500, // * millisecond
+        limit: 4000,
       },
     ]),
     AuthModule,
