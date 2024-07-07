@@ -21,14 +21,14 @@ export class EmailWebhookProvider implements IEmailProvider {
       webhookUrl: string;
       retryCount?: number;
       retryDelay?: number;
-    }
+    },
   ) {
     this.config.retryDelay ??= 30 * 1000;
     this.config.retryCount ??= 3;
   }
 
   async checkIntegration(
-    options: IEmailOptions
+    options: IEmailOptions,
   ): Promise<ICheckIntegrationResponse> {
     return {
       success: true,
@@ -38,7 +38,7 @@ export class EmailWebhookProvider implements IEmailProvider {
   }
 
   async sendMessage(
-    options: IEmailOptions
+    options: IEmailOptions,
   ): Promise<ISendMessageSuccessResponse> {
     const bodyData = this.createBody(options);
     const hmacValue = this.computeHmac(bodyData);
