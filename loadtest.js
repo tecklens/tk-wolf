@@ -2,8 +2,8 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  vus: 2000, // Virtual Users
-  duration: '1s', // Duration of the test
+  vus: 400, // Virtual Users
+  duration: '5s', // Duration of the test
 };
 
 export default function () {
@@ -35,5 +35,5 @@ export default function () {
 
   check(res, { 'success send trigger': (r) => r.status === 201 });
 
-  sleep(1);
+  sleep(0.3);
 }

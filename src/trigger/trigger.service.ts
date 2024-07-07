@@ -7,9 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateTriggerResponse } from '@app/trigger/dtos/create-trigger.response';
 import { CreateTriggerDto } from '@app/trigger/dtos/create-trigger.dto';
-import { ProducerService } from '@app/kafka/producer/producer.service';
 import { ConsumerService } from '@app/kafka/consumer/consumer.service';
-import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { INextJob } from '@libs/shared/entities/workflow';
 import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
 import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
@@ -174,25 +172,29 @@ export class TriggerService implements OnModuleInit {
             const topic = batch.topic,
               partition = batch.partition;
             if (topic === process.env.KAFKA_NEXT_JOB_TOPIC) {
-              await _this.taskService.exeNextJob({
-                topic,
-                partition,
-                message,
-              });
+              _this.taskService
+                .exeNextJob({
+                  topic,
+                  partition,
+                  message,
+                })
+                .then(() => {});
             } else if (topic === nextTopicDelay) {
               const data: INextJob = JSON.parse(message.value.toString());
               if (data.workflowId && data.organizationId) {
-                await _this.taskService.nextJob(
-                  data.workflowId,
-                  data.workflowName,
-                  data.organizationId,
-                  data.environmentId,
-                  data.target,
-                  data.overrides,
-                  data.userId,
-                  'delay',
-                  data.currentNodeId,
-                );
+                _this.taskService
+                  .nextJob(
+                    data.workflowId,
+                    data.workflowName,
+                    data.organizationId,
+                    data.environmentId,
+                    data.target,
+                    data.overrides,
+                    data.userId,
+                    'delay',
+                    data.currentNodeId,
+                  )
+                  .then(() => {});
               }
             }
 
