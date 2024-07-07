@@ -168,28 +168,36 @@ export class TriggerService implements OnModuleInit {
         topics: [process.env.KAFKA_NEXT_JOB_TOPIC, nextTopicDelay],
       },
       {
-        eachMessage: async ({ topic, partition, message }) => {
-          if (topic === process.env.KAFKA_NEXT_JOB_TOPIC) {
-            await _this.taskService.exeNextJob({
-              topic,
-              partition,
-              message,
-            });
-          } else if (topic === nextTopicDelay) {
-            const data: INextJob = JSON.parse(message.value.toString());
-            if (data.workflowId && data.organizationId) {
-              await _this.taskService.nextJob(
-                data.workflowId,
-                data.workflowName,
-                data.organizationId,
-                data.environmentId,
-                data.target,
-                data.overrides,
-                data.userId,
-                'delay',
-                data.currentNodeId,
-              );
+        eachBatchAutoResolve: true,
+        eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
+          for (const message of batch.messages) {
+            const topic = batch.topic,
+              partition = batch.partition;
+            if (topic === process.env.KAFKA_NEXT_JOB_TOPIC) {
+              await _this.taskService.exeNextJob({
+                topic,
+                partition,
+                message,
+              });
+            } else if (topic === nextTopicDelay) {
+              const data: INextJob = JSON.parse(message.value.toString());
+              if (data.workflowId && data.organizationId) {
+                await _this.taskService.nextJob(
+                  data.workflowId,
+                  data.workflowName,
+                  data.organizationId,
+                  data.environmentId,
+                  data.target,
+                  data.overrides,
+                  data.userId,
+                  'delay',
+                  data.currentNodeId,
+                );
+              }
             }
+
+            resolveOffset(message.offset);
+            await heartbeat();
           }
         },
         autoCommitInterval: 500,
