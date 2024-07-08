@@ -29,6 +29,8 @@ import {
   decryptCredentials,
 } from '@libs/shared/encryptions/encrypt-provider';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { UpdateBrandDto } from './dtos/update-brand.dto';
+import { BrandRepository } from "@libs/repositories/brand/brand.repository";
 
 const designHtmlInvite =
   '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n' +
@@ -577,6 +579,7 @@ export class OrganizationService {
     private readonly organizationRepository: OrganizationRepository,
     private readonly userRepository: UserRepository,
     private readonly authService: AuthService,
+    private readonly brandRepository: BrandRepository,
   ) {}
 
   async delMember(u: IJwtPayload, id: string) {
@@ -848,6 +851,41 @@ export class OrganizationService {
         `Error when send email invite member ${to}.`,
       );
     }
+  }
+
+  async updateBrand(user: IJwtPayload, payload: UpdateBrandDto) {
+    const brand = await this.brandRepository.findByOrgId(
+      user._id,
+      user.organizationId,
+      '_id _userId _organizationId color font logo',
+    );
+
+    if (brand == null) {
+      await this.brandRepository.create({
+        _userId: user._id,
+        _organizationId: user.organizationId,
+        ...payload,
+      });
+    } else {
+      await this.brandRepository.updateOne(
+        {
+          _id: brand._id,
+        },
+        {
+          ...payload,
+        },
+      );
+    }
+
+    return payload;
+  }
+
+  async getBrand(user: IJwtPayload) {
+    return await this.brandRepository.findByOrgId(
+      user._id,
+      user.organizationId,
+      '_id _userId _organizationId color font logo',
+    )
   }
 
   public buildFactoryIntegration(

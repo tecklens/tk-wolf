@@ -1,4 +1,5 @@
 export type OrganizationId = string;
+export type BrandId = string;
 
 export enum ApiServiceLevelEnum {
   FREE = 'free',

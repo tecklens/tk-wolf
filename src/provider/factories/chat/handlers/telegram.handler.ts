@@ -1,16 +1,16 @@
 import { ICredentials } from '@libs/shared/entities/integration';
 import { ChannelTypeEnum } from '@novu/stateless';
 // @ts-ignore
-import { SlackProvider } from '@wolf/slack';
+import { TelegramProvider } from '@wolf/telegram';
 
 import { BaseChatHandler } from './base.handler';
 
-export class SlackHandler extends BaseChatHandler {
+export class TelegramHandler extends BaseChatHandler {
   constructor() {
-    super('slack', ChannelTypeEnum.CHAT);
+    super('telegram', ChannelTypeEnum.CHAT);
   }
 
   buildProvider(_: ICredentials) {
-    this.provider = new SlackProvider();
+    this.provider = new TelegramProvider();
   }
 }

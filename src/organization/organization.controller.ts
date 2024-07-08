@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -27,6 +28,8 @@ import { OrganizationService } from '@app/organization/organization.service';
 import { InviteMemberDto } from '@app/organization/dtos/invite-member.dto';
 import { ResendInviteDto } from '@app/organization/dtos/resend-invite.dto';
 import { IGetInviteResponseDto } from '@libs/shared/dto';
+import { BrandEntity } from '@libs/repositories/brand/brand.entity';
+import { UpdateBrandDto } from '@app/organization/dtos/update-brand.dto';
 
 @Controller('org')
 @ApiBearerAuth()
@@ -108,5 +111,30 @@ export class OrganizationController {
     @Param('token') inviteToken: string,
   ): Promise<string> {
     return this.organizationService.acceptInviteMember(user, inviteToken);
+  }
+
+  @Put('/brand')
+  @ExternalApiAccessible()
+  @ApiResponse(UpdateBrandDto)
+  @ApiOperation({
+    summary: 'Update organization brand',
+  })
+  @UseGuards(JwtAuthGuard)
+  async updateBrand(
+    @UserSession() user: IJwtPayload,
+    @Body() body: UpdateBrandDto,
+  ) {
+    return this.organizationService.updateBrand(user, body);
+  }
+
+  @Get('/brand')
+  @ExternalApiAccessible()
+  @ApiResponse(BrandEntity)
+  @ApiOperation({
+    summary: 'Update organization brand',
+  })
+  @UseGuards(JwtAuthGuard)
+  async getBrand(@UserSession() user: IJwtPayload) {
+    return this.organizationService.getBrand(user);
   }
 }

@@ -170,6 +170,7 @@
     "@wolf/ses": "^0.0.1",
     "@wolf/simpletexting": "^0.0.1",
     "@wolf/slack": "^0.0.1",
+    "@wolf/telegram": "^0.0.1",
     "@wolf/sms-central": "^0.0.1",
     "@wolf/sms77": "^0.0.1",
     "@wolf/sns": "^0.0.1",
