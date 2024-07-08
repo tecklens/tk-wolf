@@ -16,6 +16,7 @@ import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { FileService } from '@app/file/file.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
+import { Throttle } from '@nestjs/throttler';
 
 @ApiBearerAuth()
 @Controller('file')
@@ -27,20 +28,21 @@ export class FileController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
+  @Throttle({ default: { limit: 10, ttl: 1000 } })
   uploadFile(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
           new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }),
           new FileTypeValidator({
-            fileType: 'image/jpeg|images/png|image/jpg|image/gif',
+            fileType: /(jpg|jpeg|png|gif|webp)$/,
           }),
         ],
       }),
     )
     file: Express.Multer.File,
   ) {
-    this.fileService.uploadObject(file, file.originalname);
+    return this.fileService.uploadObject(file, file.originalname);
   }
 
   @Get('s3/staging/:path')
@@ -49,8 +51,8 @@ export class FileController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<StreamableFile> {
     res.set({
-      'Content-Type': 'application/octet-stream',
-      'Content-Disposition': 'attachment',
+      'Content-Type': 'image/png',
+      // 'Content-Disposition': 'attachment',
     });
     return new StreamableFile(await this.fileService.downloadObject(value));
   }

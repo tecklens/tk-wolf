@@ -4,7 +4,8 @@ import { IsImageUrl } from '@libs/shared/validators/image.validator';
 export class UpdateBrandDto {
   @IsUrl({
     require_protocol: true,
-    protocols: ['https'],
+    require_tld: false,
+    protocols: ['https', 'http'],
   })
   @IsImageUrl({
     message:

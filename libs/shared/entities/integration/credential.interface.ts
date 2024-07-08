@@ -42,4 +42,8 @@ export interface ICredentials {
   imageUrl?: string;
   state?: string;
   externalLink?: string;
+
+  testEnvironment?: boolean;
+  chatId?: string;
+  channel?: string;
 }

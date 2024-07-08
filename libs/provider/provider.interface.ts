@@ -99,6 +99,11 @@ export interface IChatOptions {
   channel?: string;
   content: string;
   blocks?: IBlock[];
+
+  baseUrl?: string;
+  token?: string;
+  testEnvironment?: boolean;
+  chatId?: string;
 }
 
 export interface IBlock {

@@ -43,4 +43,6 @@ export interface IOverridesDataTrigger {
   to?: string;
   from?: string;
   customData?: any;
+
+  webhookUrl?: string;
 }
