@@ -94,7 +94,7 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
-    "@novu/nodemailer": "^0.0.1",
+    "@wolf/nodemailer": "^0.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/bluebird": "^3.5.42",
     "@types/chai": "^4.3.14",

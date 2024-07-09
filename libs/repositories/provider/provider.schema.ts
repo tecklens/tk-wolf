@@ -58,6 +58,8 @@ const providerSchema = new Schema<ProviderDBModel>(
       state: Schema.Types.String,
       externalLink: Schema.Types.String,
       apiToken: Schema.Types.String,
+      chatId: Schema.Types.String,
+      testEnvironment: Schema.Types.Boolean,
     },
     active: {
       type: Schema.Types.Boolean,

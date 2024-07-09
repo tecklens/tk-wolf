@@ -258,27 +258,6 @@ export interface IPushOptions {
   };
 }
 
-export interface IChatOptions {
-  webhookUrl: string;
-  channel?: string;
-  content: string;
-  blocks?: IBlock[];
-}
-
-export interface IBlock {
-  type: 'section' | 'header';
-  text: {
-    type: 'mrkdwn';
-    text: string;
-  };
-}
-
-export interface ISendMessageSuccessResponse {
-  id?: string;
-  ids?: string[];
-  date?: string;
-}
-
 export enum EmailEventStatusEnum {
   OPENED = 'opened',
   REJECTED = 'rejected',

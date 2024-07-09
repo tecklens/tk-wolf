@@ -1,5 +1,4 @@
-import { IChatOptions, ISendMessageSuccessResponse } from '@novu/stateless';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { ChannelTypeEnum, IChatOptions, ISendMessageSuccessResponse } from '@libs/provider/provider.interface';
 import { ICredentials } from '@libs/shared/entities/integration';
 import { ProviderEntity } from '@libs/repositories/provider';
 

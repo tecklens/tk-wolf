@@ -20,7 +20,8 @@ export class TelegramProvider implements IChatProvider {
 
     if (!url.includes(`/bot`)) {
       url =
-        url + `${data.token}${data.testEnvironment ? '/test' : ''}/sendMessage`;
+        url +
+        `/bot${data.token}${data.testEnvironment ? '/test' : ''}/sendMessage`;
     }
 
     const form = new FormData();
@@ -31,7 +32,7 @@ export class TelegramProvider implements IChatProvider {
     const response = await this.axiosInstance.post(url, form);
 
     return {
-      id: response.headers['x-slack-req-id'],
+      id: response.data['result']['message_id'],
       date: new Date().toISOString(),
     };
   }

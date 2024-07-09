@@ -367,7 +367,7 @@ export class TaskService {
       await this.taskRepository.updateStatus(
         task._id,
         TaskStatus.cancel,
-        e,
+        e.toString(),
         undefined,
       );
     }
@@ -423,11 +423,10 @@ export class TaskService {
       try {
         const identifier = uuidv4();
         const overrides = inp.overrides ?? {};
+        const plainProvider = this.buildFactoryIntegration(provider);
 
         const chatFactory = new ChatFactory();
-        const chatHandler = chatFactory.getHandler(
-          this.buildFactoryIntegration(provider),
-        );
+        const chatHandler = chatFactory.getHandler(plainProvider);
         if (!chatHandler) {
           throw new PlatformException(
             `Chat message handler for provider ${provider.providerId} is  not found`,
@@ -435,12 +434,16 @@ export class TaskService {
         }
 
         const chatWebhookUrl =
-          overrides?.webhookUrl || provider.credentials?.webhookUrl;
+          overrides?.baseUrl || provider.credentials?.baseUrl;
 
         const result = await chatHandler.send({
           webhookUrl: chatWebhookUrl,
-          channel: provider.credentials?.channel,
+          channel: plainProvider.credentials?.channel,
           content: contentPlainText,
+          chatId: plainProvider.credentials.chatId,
+          token: plainProvider.credentials.token,
+          baseUrl: plainProvider.credentials.baseUrl,
+          testEnvironment: plainProvider.credentials.testEnvironment,
         });
         // TODO setup properties of chat sender
 
@@ -469,7 +472,7 @@ export class TaskService {
         await this.taskRepository.updateStatus(
           task._id,
           TaskStatus.cancel,
-          e,
+          e.toString(),
           undefined,
         );
       }
