@@ -381,94 +381,100 @@ export class TaskService {
     variables: VariableEntity[],
     overrides: Record<string, any> = {},
   ) {
-    if (!provider) return;
-    // * validate sms
-    const content: IContent = get(node.data, 'content');
-    const phone = overrides.to || inp.target.phone;
-
-    if (!content)
-      throw new PreconditionFailedException('Content sms provider is required');
-    if (!phone)
-      throw new PreconditionFailedException(
-        'Target phone number of sms provider is required',
-      );
-    let contentPlainText = overrides.content || content.plainText;
-    contentPlainText = transformContent(variables, contentPlainText, {
-      ...inp.target,
-      ...inp.overrides,
-    });
-
-    const task = await this.taskRepository.create({
-      _userId: inp.userId,
-      _environmentId: inp.environmentId,
-      _organizationId: inp.organizationId,
-      _workflowId: node._workflowId,
-      workflowName: inp.workflowName,
-      _nodeId: node._id,
-      _providerId: null,
-      providerName: provider.name,
-      payload: node.data,
-      channel: null,
-      code: 'TASK-' + makeid(8),
-      name: provider.name,
-      type: node.type,
-      status: TaskStatus.in_process,
-      priority: 'medium',
-      email: inp.target.email,
-      phone: inp.target.phone,
-    });
     try {
-      const identifier = uuidv4();
-      const overrides = inp.overrides ?? {};
+      if (!provider) return;
+      // * validate sms
+      const content: IContent = get(node.data, 'content');
+      const phone = overrides.to || inp.target.phone;
 
-      const chatFactory = new ChatFactory();
-      const chatHandler = chatFactory.getHandler(
-        this.buildFactoryIntegration(provider),
-      );
-      if (!chatHandler) {
-        throw new PlatformException(
-          `Chat message handler for provider ${provider.providerId} is  not found`,
+      if (!content)
+        throw new PreconditionFailedException(
+          'Content sms provider is required',
+        );
+      if (!phone)
+        throw new PreconditionFailedException(
+          'Target phone number of sms provider is required',
+        );
+      let contentPlainText = overrides.content || content.plainText;
+      contentPlainText = transformContent(variables, contentPlainText, {
+        ...inp.target,
+        ...inp.overrides,
+      });
+
+      const task = await this.taskRepository.create({
+        _userId: inp.userId,
+        _environmentId: inp.environmentId,
+        _organizationId: inp.organizationId,
+        _workflowId: node._workflowId,
+        workflowName: inp.workflowName,
+        _nodeId: node._id,
+        _providerId: null,
+        providerName: provider.name,
+        payload: node.data,
+        channel: null,
+        code: 'TASK-' + makeid(8),
+        name: provider.name,
+        type: node.type,
+        status: TaskStatus.in_process,
+        priority: 'medium',
+        email: inp.target.email,
+        phone: inp.target.phone,
+      });
+      try {
+        const identifier = uuidv4();
+        const overrides = inp.overrides ?? {};
+
+        const chatFactory = new ChatFactory();
+        const chatHandler = chatFactory.getHandler(
+          this.buildFactoryIntegration(provider),
+        );
+        if (!chatHandler) {
+          throw new PlatformException(
+            `Chat message handler for provider ${provider.providerId} is  not found`,
+          );
+        }
+
+        const chatWebhookUrl =
+          overrides?.webhookUrl || provider.credentials?.webhookUrl;
+
+        const result = await chatHandler.send({
+          webhookUrl: chatWebhookUrl,
+          channel: provider.credentials?.channel,
+          content: contentPlainText,
+        });
+        // TODO setup properties of chat sender
+
+        if (!result?.id) {
+          return;
+        }
+
+        await this.taskRepository.updateStatus(
+          task._id,
+          TaskStatus.done,
+          null,
+          undefined,
+        );
+      } catch (e) {
+        // await this.sendErrorStatus(
+        //   message,
+        //   'error',
+        //   'unexpected_sms_error',
+        //   e.message || e.name || 'Un-expect SMS provider error',
+        //   command,
+        //   LogCodeEnum.SMS_ERROR,
+        //   e,
+        // );
+
+        this.logger.error(e);
+        await this.taskRepository.updateStatus(
+          task._id,
+          TaskStatus.cancel,
+          e,
+          undefined,
         );
       }
-
-      const chatWebhookUrl =
-        overrides?.webhookUrl || provider.credentials?.webhookUrl;
-
-      const result = await chatHandler.send({
-        webhookUrl: chatWebhookUrl,
-        channel: provider.credentials?.channel,
-        content: contentPlainText,
-      });
-      // TODO setup properties of chat sender
-
-      if (!result?.id) {
-        return;
-      }
-
-      await this.taskRepository.updateStatus(
-        task._id,
-        TaskStatus.done,
-        null,
-        undefined,
-      );
     } catch (e) {
-      // await this.sendErrorStatus(
-      //   message,
-      //   'error',
-      //   'unexpected_sms_error',
-      //   e.message || e.name || 'Un-expect SMS provider error',
-      //   command,
-      //   LogCodeEnum.SMS_ERROR,
-      //   e,
-      // );
-
-      this.logger.error(e);
-      await this.taskRepository.updateStatus(
-        task._id,
-        TaskStatus.cancel,
-        e,
-        undefined,
-      );
+      this.logger.debug(e);
     }
   }
 

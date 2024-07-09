@@ -4,12 +4,14 @@ import {
   RateLimiterRedis,
 } from 'rate-limiter-flexible';
 import Redis from 'ioredis';
+import * as process from 'process';
 
 export const MAX_POINT_IN_MONTH = 1000000000;
 
 @Injectable()
 export class LimitService {
   private limiter: RateLimiterRedis;
+
   constructor() {
     const redisClient = new Redis({
       host: process.env.REDIS_HOST,
@@ -20,11 +22,11 @@ export class LimitService {
       // Basic options
       storeClient: redisClient,
       points: MAX_POINT_IN_MONTH, // Number of points
-      duration: 30 * 24 * 60 * 60, // Per second(s)
+      duration: 30 * 24 * 60 * 60, // Per second(s) // * 1 tháng
 
       // Custom
       blockDuration: 0, // Do not block if consumed more than points
-      keyPrefix: 'wolf-limit', // must be unique for limiters with different purpose
+      keyPrefix: `${process.env.NODE_ENV ?? 'production'}-wolf-limit`, // must be unique for limiters with different purpose
     };
 
     this.limiter = new RateLimiterRedis(opts);

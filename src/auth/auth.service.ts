@@ -296,12 +296,6 @@ export class AuthService {
         .getLimiter()
         .consume(`${user._id}_${environment._id}`, cPoint);
 
-      this.cacheManager.set(
-        `r_p_${user._id}_${environment._id}`,
-        rspLimit.remainingPoints,
-        30 * 24 * 60 * 60 * 1000, // * millisecond
-      );
-
       return {
         plan: user.plan,
         _id: user._id,
@@ -1179,23 +1173,23 @@ export class AuthService {
     return { environment, user };
   }
 
-  @CacheKey('user.remain-req')
-  @CacheTTL(30)
   async getRemainingRequest(user: IJwtPayload) {
     const u = await this.userRepository.findById(user._id);
     if (!u) throw new UnauthorizedException('User not existed');
-    const remainPointStr: string = await this.cacheManager.get(
-      `r_p_${user._id}_${user.environmentId}`,
-    );
 
-    let remainPoint = MAX_POINT_IN_MONTH;
-    if (remainPointStr) remainPoint = parseInt(remainPointStr);
-    let plan: UserPlan = u.plan;
+    let plan: UserPlan = user.plan;
     if (!plan) plan = UserPlan.free;
 
     const cPoint = consumePoints[plan];
 
-    return Math.ceil(remainPoint / cPoint);
+    const rKey = await this.limitService
+      .getLimiter()
+      .get(`${user._id}_${user.environmentId}`);
+
+    let remainPoint = 0;
+    if (rKey) remainPoint = Math.round(rKey.remainingPoints / (cPoint ?? 1));
+
+    return remainPoint;
   }
 
   async organizationSwitch(u: IJwtPayload, newOrgId: string): Promise<string> {

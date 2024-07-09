@@ -2,13 +2,13 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  vus: 400, // Virtual Users
+  vus: 10, // Virtual Users
   duration: '5s', // Duration of the test
 };
 
 export default function () {
   const data = {
-    workflowId: '66810e9daf8b2fec595f7039',
+    workflowId: '665c005477c806d498a43195',
     data: {},
     target: {
       subcriberId: 'abc',
@@ -23,12 +23,12 @@ export default function () {
   const params = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'ApiKey a105c8a49df5c03e3c4eddc23b5e0782',
+      Authorization: 'ApiKey 189a7b2dc04a1bd7f714de4d2d5ee668',
     },
   };
 
   let res = http.post(
-    'https://flow.wolfx.app/wolf/v1/trigger/',
+    'http://localhost:5000/wolf/v1/trigger/',
     JSON.stringify(data),
     params,
   );
