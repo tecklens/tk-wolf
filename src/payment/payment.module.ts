@@ -5,6 +5,8 @@ import { StripeModule } from '@golevelup/nestjs-stripe';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserRepository } from '@libs/repositories/user';
 import { SkipThrottle } from '@nestjs/throttler';
+import { BillingRepository } from '@libs/repositories/billing/billing.repository';
+import { LimitService } from '@app/auth/limit.service';
 
 @Module({
   imports: [
@@ -28,7 +30,7 @@ import { SkipThrottle } from '@nestjs/throttler';
       }),
     }),
   ],
-  providers: [PaymentService, UserRepository],
+  providers: [PaymentService, LimitService, UserRepository, BillingRepository],
   controllers: [PaymentController],
 })
 export class PaymentModule {}
