@@ -30,7 +30,7 @@ import {
 } from '@libs/shared/encryptions/encrypt-provider';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 import { UpdateBrandDto } from './dtos/update-brand.dto';
-import { BrandRepository } from "@libs/repositories/brand/brand.repository";
+import { BrandRepository } from '@libs/repositories/brand/brand.repository';
 
 const designHtmlInvite =
   '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n' +
@@ -885,7 +885,7 @@ export class OrganizationService {
       user._id,
       user.organizationId,
       '_id _userId _organizationId color font logo',
-    )
+    );
   }
 
   public buildFactoryIntegration(

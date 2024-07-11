@@ -23,15 +23,13 @@ export class WorkflowRepository extends BaseRepository<
     return this.mapEntity(data.toObject());
   }
 
-  async findByUserId(
-    userId: string,
+  async findListWf(
     envId: string,
     orgId: string,
     skip = 0,
     limit = 10,
   ): Promise<IWfPage> {
     const query = {
-      _userId: userId,
       _environmentId: envId,
       _organizationId: orgId,
     };
@@ -74,12 +72,10 @@ export class WorkflowRepository extends BaseRepository<
   }
 
   async getActive(
-    userId: string,
     environmentId: string,
     organizationId: string,
   ) {
     return await this.findOne({
-      _userId: userId,
       _environmentId: environmentId,
       _organizationId: organizationId,
       active: true,

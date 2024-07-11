@@ -40,8 +40,7 @@ export class WorkflowService {
   ) {}
 
   async getWorkflows(u: IJwtPayload, d: WorkflowsRequestDto) {
-    const data = await this.workflowRepository.findByUserId(
-      u._id,
+    const data = await this.workflowRepository.findListWf(
       u.environmentId,
       u.organizationId,
     );
@@ -154,7 +153,6 @@ export class WorkflowService {
 
   async getActive(u: IJwtPayload): Promise<WorkflowResponse> {
     const wf = await this.workflowRepository.getActive(
-      u._id,
       u.environmentId,
       u.organizationId,
     );

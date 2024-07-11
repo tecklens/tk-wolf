@@ -1,8 +1,9 @@
 import {
+  BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { UsersService } from '@app/users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -60,6 +61,10 @@ import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
 import { LimitService, MAX_POINT_IN_MONTH } from '@app/auth/limit.service';
 import { Types } from 'mongoose';
+import { MailFactory } from '@app/provider/factories';
+import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { decryptApiKey, decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
+import { ProviderEntity } from '@libs/repositories/provider';
 
 @Injectable()
 export class AuthService {
@@ -1218,5 +1223,52 @@ export class AuthService {
     });
 
     return await this.getSignedToken(user, newOrgId, environment?._id, member);
+  }
+
+  private async sendEmail(to: string[], designHtml: string, subject: string) {
+    const mailFactory = new MailFactory();
+    const mailHandler = mailFactory.getHandler(
+      this.buildFactoryIntegration({
+        providerId: 'resend',
+        channel: ChannelTypeEnum.EMAIL,
+        _environmentId: '',
+        _organizationId: '',
+        active: false,
+        credentials: {
+          apiKey: decryptApiKey(process.env.APP_RESEND_API_KEY),
+          senderName: process.env.APP_RESEND_SENDER_NAME,
+        },
+        identifier: '',
+        name: '',
+        primary: false,
+        priority: 0,
+      }),
+      process.env.APP_DEFAULT_EMAIL,
+    );
+
+    const result = await mailHandler.send({
+      from: process.env.APP_DEFAULT_EMAIL,
+      to: [...to],
+      html: designHtml,
+      subject: subject,
+    });
+    if (!result?.id) {
+      throw new BadRequestException(
+        `Error when send email invite member ${to}.`,
+      );
+    }
+  }
+
+  public buildFactoryIntegration(
+    integration: ProviderEntity,
+    senderName?: string,
+  ) {
+    return {
+      ...integration,
+      credentials: {
+        ...decryptCredentials(integration.credentials),
+      },
+      providerId: integration.providerId,
+    };
   }
 }
