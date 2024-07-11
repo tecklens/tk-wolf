@@ -36,11 +36,33 @@ export class LogController {
   })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
-  getTask(
+  getLogTrigger(
     @UserSession() user: IJwtPayload,
     @Query() payload: FilterLogDto,
   ): Promise<FilterLogResponse> {
     return this.logService.analysisLog(user, payload);
+  }
+
+  @Get('/analyse/task-error')
+  @ApiResponse(FilterLogResponse, 200)
+  @ApiOperation({
+    summary: 'API get analysis error of user',
+  })
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  getTaskErrorAnalyse(
+    @UserSession() user: IJwtPayload,
+    @Query() payload: FilterLogDto,
+  ): Promise<FilterLogResponse> {
+    return this.logService.analysisTaskError(user, payload);
+  }
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  getBillingAnalyse(
+    @UserSession() user: IJwtPayload,
+    @Query() payload: FilterLogDto,
+  ): Promise<FilterLogResponse> {
+    return this.logService.analysisBilling(user, payload);
   }
 
   @Get('/dashboard')
