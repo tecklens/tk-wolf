@@ -635,7 +635,7 @@ export class TaskService implements OnModuleInit {
           _environmentId: u.environmentId,
           _organizationId: u.organizationId,
         },
-        '',
+        '_id _workflowId _userId _environmentId _organizationId workflowName _providerId providerName channel transactionId createdAt code name status priority',
         {
           skip: payload.page * payload.limit,
           limit: payload.limit,
