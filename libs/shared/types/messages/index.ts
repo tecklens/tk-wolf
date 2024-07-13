@@ -1,8 +1,5 @@
 import { EnvironmentId, OrganizationId, UserId } from '@libs/shared/types';
-import {
-  IOverridesDataTrigger,
-  ITargetTrigger,
-} from '@app/trigger/dtos/create-trigger.dto';
+import { IOverridesDataTrigger, ITargetTrigger } from '@app/trigger/dtos/create-trigger.dto';
 
 export enum MarkMessagesAsEnum {
   READ = 'read',

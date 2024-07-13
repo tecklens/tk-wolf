@@ -1,9 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IWfTemplate } from '@libs/shared/entities/wf-template';
 import { INodeEntity } from '@libs/shared/entities/workflow/node.interface';
 import { IEdgeEntity } from '@libs/shared/entities/workflow/edge.interface';
 
-export class WorkflowResponse implements IWfTemplate {
+export class WorkflowResponse {
   @ApiPropertyOptional()
   _id?: string;
 

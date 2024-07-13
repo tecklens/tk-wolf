@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger, StreamableFile } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  StreamableFile,
+} from '@nestjs/common';
 import { InjectS3, S3 } from 'nestjs-s3';
 import { PutObjectCommand } from '@aws-sdk/client-s3';
 import { GetObjectCommandOutput } from '@aws-sdk/client-s3/dist-types/commands/GetObjectCommand';
