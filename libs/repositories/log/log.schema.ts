@@ -16,7 +16,7 @@ const logSchema = new Schema<LogDBModel>(
     workflowName: Schema.Types.String,
     recipient: Schema.Types.String,
 
-    createdAt: Schema.Types.Date,
+    createdAt: { type: Schema.Types.Date, index: -1 },
     updatedAt: Schema.Types.Date,
     deletedAt: {
       type: Schema.Types.Date,
