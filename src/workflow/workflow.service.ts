@@ -28,6 +28,8 @@ import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { variableWorkflowDefault } from '@libs/repositories/variable/variable.entity';
 import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
 import { UpdateViewPortWorkflowRequestDto } from '@app/workflow/dto/update-viewport-workflow.request.dto';
+import { ProducerService } from '@app/kafka/producer/producer.service';
+import { EventTypes } from '@libs/shared/types/events/event-types';
 
 @Injectable()
 export class WorkflowService {
@@ -37,6 +39,7 @@ export class WorkflowService {
     private edgeRepository: EdgeRepository,
     private emailTemplateRepository: EmailTemplateRepository,
     private variableRepository: VariableRepository,
+    private readonly producerService: ProducerService,
   ) {}
 
   async getWorkflows(u: IJwtPayload, d: WorkflowsRequestDto) {
@@ -229,6 +232,14 @@ export class WorkflowService {
     if (payload.name) objForUpdate.name = payload.name;
     if (payload.description) objForUpdate.description = payload.description;
     if (payload.tags) objForUpdate.tags = payload.tags;
+
+    this.producerService.sendEvent(EventTypes['workflow.updated'], {
+      type: EventTypes['workflow.updated'],
+      createdAt: new Date(),
+      data: {
+        workflowId: payload.workflowId,
+      },
+    });
 
     return this.workflowRepository.updateOne(
       {

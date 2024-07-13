@@ -4,6 +4,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Kafka, Producer, ProducerRecord } from 'kafkajs';
+import { IEventQueue } from '@libs/shared/types';
 
 @Injectable()
 export class ProducerService implements OnModuleInit, OnApplicationShutdown {
@@ -27,6 +28,23 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown {
   async onModuleInit() {
     // Connect Producer on Module initialization
     await this.producer.connect();
+  }
+
+  sendEvent(topic: string, data: IEventQueue) {
+    this.producer
+      .send({
+        topic: topic,
+        acks: 1,
+        timeout: 10000, //10s
+        messages: [
+          {
+            value: JSON.stringify(data),
+          },
+        ],
+      })
+      .then((e) => {
+        console.debug('send event to kafka');
+      });
   }
 
   async produce(record: ProducerRecord) {

@@ -6,8 +6,10 @@ import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
 import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { KafkaModule } from '@app/kafka/kafka.module';
 
 @Module({
+  imports: [KafkaModule],
   providers: [
     WorkflowService,
     WorkflowRepository,
