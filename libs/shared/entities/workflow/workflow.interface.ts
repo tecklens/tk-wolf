@@ -40,6 +40,7 @@ export interface INextJob {
   organizationId: string;
   environmentId: string;
   userId: string;
+  transactionId: string;
 
   target: ITargetTrigger;
   overrides?: IOverridesDataTrigger;

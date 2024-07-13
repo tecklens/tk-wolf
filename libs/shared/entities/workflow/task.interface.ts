@@ -19,6 +19,7 @@ export interface ITaskEntity {
   providerName: string;
   payload: any;
   channel: string;
+  transactionId: string;
 
   code: string;
   name: string;

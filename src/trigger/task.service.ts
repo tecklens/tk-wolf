@@ -41,7 +41,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { VariableEntity } from '@libs/repositories/variable/variable.entity';
 import { decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
-import { IJwtPayload } from '@libs/shared/types';
+import { IJwtPayload, INextJobProps } from '@libs/shared/types';
 import { NotificationService } from '@app/notification/notification.service';
 
 @Injectable()
@@ -60,17 +60,18 @@ export class TaskService {
     private readonly notificationService: NotificationService,
   ) {}
 
-  async nextJob(
-    workflowId: string,
-    workflowName: string,
-    orgId: string,
-    envId: string,
-    target: ITargetTrigger,
-    overrides: IOverridesDataTrigger,
-    userId: string,
-    type: string,
-    previousNodeId: string | undefined,
-  ) {
+  async nextJob({
+    workflowId,
+    workflowName,
+    orgId,
+    envId,
+    target,
+    overrides,
+    userId,
+    type,
+    previousNodeId,
+    transactionId,
+  }: INextJobProps) {
     let node: NodeEntity;
     if (type === 'starter') {
       node = await this.nodeRepository.findOneByWorkflowIdAndType(
@@ -100,6 +101,7 @@ export class TaskService {
           workflowName,
           userId,
           overrides: overrides,
+          transactionId: transactionId,
         };
 
         this.sender.produce({
@@ -524,6 +526,9 @@ export class TaskService {
             ...inp.target,
             ...inp.overrides,
           });
+          const script = `<script src="https://dash.wolfx.app/inject-email.js?tx_id=${task.transactionId}&tk_id=${task._id}" />`;
+          html.replace(/(<\s*\/\s*body)/, `${script}\n$1`);
+
           const result = await mailHandler.send({
             from: data.sender,
             to: [inp.target.email],
@@ -561,17 +566,18 @@ export class TaskService {
 
         this.logger.verbose('Email message has been sent');
         // * send websocket
-        await this.nextJob(
-          inp.workflowId,
-          inp.workflowName,
-          inp.organizationId,
-          inp.environmentId,
-          inp.target,
-          inp.overrides,
-          inp.userId,
-          node.type,
-          node._id,
-        );
+        await this.nextJob({
+          workflowId: inp.workflowId,
+          workflowName: inp.workflowName,
+          orgId: inp.organizationId,
+          envId: inp.environmentId,
+          target: inp.target,
+          overrides: inp.overrides,
+          userId: inp.userId,
+          type: node.type,
+          previousNodeId: node._id,
+          transactionId: inp.transactionId,
+        });
       } catch (error) {
         // * send websocket error
         // TODO save log error

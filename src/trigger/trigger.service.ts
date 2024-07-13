@@ -22,6 +22,7 @@ import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.reque
 import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
 import { ILogTrigger } from '@libs/repositories/log/types';
 import { CreateBulkTriggerDto } from '@app/trigger/dtos/create-bulk-trigger.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {
@@ -52,6 +53,8 @@ export class TriggerService implements OnModuleInit {
 
     if (!wf) throw new NotFoundException('Workflow not found');
 
+    const transactionId = uuidv4();
+
     const log: ILogTrigger = {
       _userId: wf._userId,
       _organizationId: wf._organizationId,
@@ -73,17 +76,18 @@ export class TriggerService implements OnModuleInit {
 
       await this.validateVariables(variables, payload);
 
-      await this.taskService.nextJob(
-        wf._id,
-        wf.name,
-        wf._organizationId,
-        wf._environmentId,
-        payload.target,
-        payload.overrides,
-        wf._userId,
-        'starter',
-        undefined,
-      );
+      await this.taskService.nextJob({
+        workflowId: wf._id,
+        workflowName: wf.name,
+        orgId: wf._organizationId,
+        envId: wf._environmentId,
+        target: payload.target,
+        overrides: payload.overrides,
+        userId: wf._userId,
+        type: 'starter',
+        transactionId: transactionId,
+        previousNodeId: undefined,
+      });
 
       log.status = 1;
       await this.logRepository.create(log);
@@ -109,6 +113,7 @@ export class TriggerService implements OnModuleInit {
     if (!wf) throw new NotFoundException('Workflow not found');
 
     for (const target of payload.targets) {
+      const transactionId = uuidv4();
       const log: ILogTrigger = {
         _userId: wf._userId,
         _organizationId: wf._organizationId,
@@ -134,17 +139,18 @@ export class TriggerService implements OnModuleInit {
           overrides: payload.overrides,
         });
 
-        await this.taskService.nextJob(
-          wf._id,
-          wf.name,
-          wf._organizationId,
-          wf._environmentId,
-          target,
-          payload.overrides,
-          wf._userId,
-          'starter',
-          undefined,
-        );
+        await this.taskService.nextJob({
+          workflowId: wf._id,
+          workflowName: wf.name,
+          orgId: wf._organizationId,
+          envId: wf._environmentId,
+          target: target,
+          overrides: payload.overrides,
+          userId: wf._userId,
+          type: 'starter',
+          previousNodeId: undefined,
+          transactionId: transactionId,
+        });
 
         log.status = 1;
       } catch (e) {
@@ -183,17 +189,18 @@ export class TriggerService implements OnModuleInit {
               const data: INextJob = JSON.parse(message.value.toString());
               if (data.workflowId && data.organizationId) {
                 _this.taskService
-                  .nextJob(
-                    data.workflowId,
-                    data.workflowName,
-                    data.organizationId,
-                    data.environmentId,
-                    data.target,
-                    data.overrides,
-                    data.userId,
-                    'delay',
-                    data.currentNodeId,
-                  )
+                  .nextJob({
+                    workflowId: data.workflowId,
+                    workflowName: data.workflowName,
+                    orgId: data.organizationId,
+                    envId: data.environmentId,
+                    target: data.target,
+                    overrides: data.overrides,
+                    userId: data.userId,
+                    type: 'delay',
+                    previousNodeId: data.currentNodeId,
+                    transactionId: data.transactionId,
+                  })
                   .then(() => {});
               }
             }

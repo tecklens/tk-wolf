@@ -19,6 +19,7 @@ export class TaskEntity implements ITaskEntity {
   providerName: string;
   payload: any;
   channel: string;
+  transactionId: string;
 
   deletedAt?: string;
   deletedBy?: string;

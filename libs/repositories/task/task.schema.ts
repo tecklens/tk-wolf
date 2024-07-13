@@ -20,6 +20,8 @@ const taskSchema = new Schema<TaskDBModel>(
     _providerId: Schema.Types.String,
     providerName: Schema.Types.String,
     channel: Schema.Types.String,
+    transactionId: { type: Schema.Types.String, index: 1 },
+
     payload: Schema.Types.Mixed,
     code: Schema.Types.String,
     createdBy: Schema.Types.String,
@@ -35,6 +37,8 @@ const taskSchema = new Schema<TaskDBModel>(
   },
   schemaOptions,
 );
+
+taskSchema.index({ _userId: 1, _environmentId: 1, _organizationId: 1 });
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const Task =
