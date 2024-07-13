@@ -169,7 +169,11 @@ export class TriggerService implements OnModuleInit {
     const nextTopicDelay = `${process.env.KAFKA_PREFIX_JOB_TOPIC}.delay`;
     await this.consumerService.consume(
       {
-        topics: [process.env.KAFKA_NEXT_JOB_TOPIC, nextTopicDelay],
+        topics: [
+          process.env.KAFKA_NEXT_JOB_TOPIC,
+          process.env.KAFKA_LOG_TASK_TIMELINE,
+          nextTopicDelay,
+        ],
       },
       {
         eachBatchAutoResolve: true,
@@ -203,6 +207,8 @@ export class TriggerService implements OnModuleInit {
                   })
                   .then(() => {});
               }
+            } else if (topic === process.env.KAFKA_LOG_TASK_TIMELINE) {
+              _this.taskService.saveTaskTimeline(message).then(() => {});
             }
 
             resolveOffset(message.offset);

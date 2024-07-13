@@ -3,7 +3,6 @@ import {
   Injectable,
   Logger,
   NotFoundException,
-  OnModuleInit,
   PreconditionFailedException,
 } from '@nestjs/common';
 import { ProducerService } from '@app/kafka/producer/producer.service';
@@ -46,7 +45,7 @@ import { ITaskTimeline } from '@libs/shared/entities/workflow/task.interface';
 import { EventTypes } from '@libs/shared/types/events/event-types';
 
 @Injectable()
-export class TaskService implements OnModuleInit {
+export class TaskService {
   private logger = new Logger('TaskService');
   private topicTaskTimeline: string;
 
@@ -61,33 +60,12 @@ export class TaskService implements OnModuleInit {
     private readonly taskTimelineRepository: TaskTimelineRepository,
     private readonly httpService: HttpService,
     private readonly notificationService: NotificationService,
-    private readonly consumerService: ConsumerService,
     private readonly producerService: ProducerService,
   ) {
     this.topicTaskTimeline = process.env.KAFKA_LOG_TASK_TIMELINE;
   }
 
-  async onModuleInit() {
-    await this.consumerService.consume(
-      {
-        topics: [this.topicTaskTimeline],
-      },
-      {
-        eachBatchAutoResolve: true,
-        eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
-          for (const message of batch.messages) {
-            const topic = batch.topic,
-              partition = batch.partition;
-            this.logger.debug(topic, partition);
-
-            this.saveTaskTimeline(message);
-          }
-        },
-      },
-    );
-  }
-
-  private async saveTaskTimeline(message: KafkaMessage) {
+  async saveTaskTimeline(message: KafkaMessage) {
     const strData = message.value.toString();
 
     const data: IEventQueue<ITaskTimeline> = JSON.parse(strData);
@@ -355,6 +333,7 @@ export class TaskService implements OnModuleInit {
       priority: 'medium',
       email: inp.target.email,
       phone: inp.target.phone,
+      transactionId: inp.transactionId,
     });
     try {
       const identifier = uuidv4();
@@ -446,6 +425,7 @@ export class TaskService implements OnModuleInit {
         priority: 'medium',
         email: inp.target.email,
         phone: inp.target.phone,
+        transactionId: inp.transactionId,
       });
       try {
         const identifier = uuidv4();
@@ -536,6 +516,7 @@ export class TaskService implements OnModuleInit {
           status: TaskStatus.in_process,
           priority: 'medium',
           email: inp.target.email,
+          transactionId: inp.transactionId,
         });
         this.sendLogTaskTimeline(
           EventTypes['message.in_process'],
@@ -544,12 +525,12 @@ export class TaskService implements OnModuleInit {
           inp.workflowId,
         );
         try {
-          const html = transformContent(variables, data.designHtml, {
+          let html = transformContent(variables, data.designHtml, {
             ...inp.target,
             ...inp.overrides,
           });
-          const script = `<script src="https://dash.wolfx.app/inject-email.js?tx_id=${task.transactionId}&tk_id=${task._id}" />`;
-          html.replace(/(<\s*\/\s*body)/, `${script}\n$1`);
+          const script = `<script src="https://dash.wolfx.app/inject-email.js?tx_id=${inp.transactionId}&tk_id=${task._id}" type="text/javascript"></script>`;
+          html = html.replace(/(<\s*\/\s*body)/, `${script}\n$1`);
 
           const result = await mailHandler.send({
             from: data.sender,
