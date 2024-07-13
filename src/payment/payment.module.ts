@@ -12,7 +12,8 @@ import { LimitService } from '@app/auth/limit.service';
   imports: [
     StripeModule.forRootAsync(StripeModule, {
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         apiKey: configService.get('STRIPE_API_KEY'),
         webhookConfig: {
           stripeWebhookSecret: configService.get('STRIPE_WEBHOOK_SECRET'),
@@ -26,7 +27,12 @@ import { LimitService } from '@app/auth/limit.service';
       }),
     }),
   ],
-  providers: [PaymentService, LimitService, UserRepository, BillingRepository],
+  providers: [
+    PaymentService,
+    LimitService,
+    UserRepository,
+    BillingRepository,
+  ],
   controllers: [PaymentController],
 })
 export class PaymentModule {}
