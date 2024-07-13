@@ -18,6 +18,7 @@ import { VariableRepository } from '@libs/repositories/variable/variable.reposit
 import { NotificationModule } from '@app/notification/notification.module';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationRepository } from '@libs/repositories/notification';
+import { TaskTimelineRepository } from '@libs/repositories/task-timeline/task-timeline.repository';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { NotificationRepository } from '@libs/repositories/notification';
     VariableRepository,
     NotificationService,
     NotificationRepository,
+    TaskTimelineRepository,
   ],
   controllers: [TriggerController],
 })

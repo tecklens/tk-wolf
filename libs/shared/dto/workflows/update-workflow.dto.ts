@@ -1,5 +1,4 @@
 import { NotificationStepDto } from './workflow.dto';
-import { NotificationTemplateCustomData } from '../../types';
 
 export interface IUpdateWorkflowDto {
   name?: string;
@@ -16,5 +15,5 @@ export interface IUpdateWorkflowDto {
 
   notificationGroupId?: string;
 
-  data?: NotificationTemplateCustomData;
+  data?: any;
 }

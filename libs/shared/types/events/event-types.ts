@@ -1,6 +1,7 @@
 export enum EventTypes {
   'message.done' = 'message.done',
   'message.in_process' = 'message.in_process',
+  'message.cancel' = 'message.cancel',
   'message.bounced' = 'message.bounced',
   'message.seen' = 'message.seen',
   'message.unseen' = 'message.unseen',

@@ -233,13 +233,16 @@ export class WorkflowService {
     if (payload.description) objForUpdate.description = payload.description;
     if (payload.tags) objForUpdate.tags = payload.tags;
 
-    this.producerService.sendEvent(EventTypes['workflow.updated'], {
-      type: EventTypes['workflow.updated'],
-      createdAt: new Date(),
-      data: {
-        workflowId: payload.workflowId,
+    this.producerService.sendEvent<{ workflowId: string }>(
+      EventTypes['workflow.updated'],
+      {
+        type: EventTypes['workflow.updated'],
+        createdAt: new Date(),
+        data: {
+          workflowId: payload.workflowId,
+        },
       },
-    });
+    );
 
     return this.workflowRepository.updateOne(
       {

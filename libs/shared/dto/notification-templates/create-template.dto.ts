@@ -1,6 +1,5 @@
 import { NotificationStepDto } from '../workflows';
 import { IPreferenceChannels } from '../../entities/subscriber-preference';
-import { NotificationTemplateCustomData } from '../../types';
 import { INotificationGroup } from '../../entities/notification-group';
 
 export interface ICreateNotificationTemplateDto {
@@ -26,5 +25,5 @@ export interface ICreateNotificationTemplateDto {
 
   blueprintId?: string;
 
-  data?: NotificationTemplateCustomData;
+  data?: any;
 }

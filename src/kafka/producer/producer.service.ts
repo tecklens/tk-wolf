@@ -30,7 +30,7 @@ export class ProducerService implements OnModuleInit, OnApplicationShutdown {
     await this.producer.connect();
   }
 
-  sendEvent(topic: string, data: IEventQueue) {
+  sendEvent<T>(topic: string, data: IEventQueue<T>) {
     this.producer
       .send({
         topic: topic,

@@ -1,10 +1,7 @@
 import { Types } from 'mongoose';
-import {
-  EncryptedSecret,
-  IApiRateLimitMaximum,
-  OrganizationId,
-} from '@libs/shared/types';
+import { IApiRateLimitMaximum, OrganizationId } from '@libs/shared/types';
 import { ChangePropsValueType } from '@tps/helpers';
+import { EncryptedSecret } from '../../../dist/libs/shared/types';
 
 export interface IApiKey {
   /*

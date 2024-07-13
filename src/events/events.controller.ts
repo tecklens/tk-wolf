@@ -5,11 +5,11 @@ import { EventsService } from '@app/events/events.service';
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
-  @Get('email/tracking/:transactionId')
+  @Get('email/tracking/:taskId')
   async logEmailTracking(
-    @Param('transactionId') transactionId: string,
+    @Param('taskId') taskId: string,
     @Query() query: EmailEventTrackingDto,
   ) {
-    return this.eventsService.logEmailTracking(transactionId, query);
+    return this.eventsService.logEmailTracking(taskId, query);
   }
 }

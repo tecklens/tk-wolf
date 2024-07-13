@@ -11,10 +11,10 @@ const taskSchema = new Schema<TaskDBModel>(
     _environmentId: Schema.Types.String,
     _organizationId: Schema.Types.String,
     workflowName: Schema.Types.String,
-    deletedAt: Schema.Types.String,
+    deletedAt: Schema.Types.Date,
     deletedBy: Schema.Types.String,
-    createdAt: Schema.Types.String,
-    updatedAt: Schema.Types.String,
+    createdAt: Schema.Types.Date,
+    updatedAt: Schema.Types.Date,
 
     _nodeId: Schema.Types.String,
     _providerId: Schema.Types.String,

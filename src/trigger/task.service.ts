@@ -3,12 +3,9 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  OnModuleInit,
   PreconditionFailedException,
 } from '@nestjs/common';
-import {
-  IOverridesDataTrigger,
-  ITargetTrigger,
-} from '@app/trigger/dtos/create-trigger.dto';
 import { ProducerService } from '@app/kafka/producer/producer.service';
 import { NodeRepository } from '@libs/repositories/node/node.repository';
 import { WfNodeType } from '@libs/shared/entities/workflow/node.interface';
@@ -41,12 +38,17 @@ import { v4 as uuidv4 } from 'uuid';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { VariableEntity } from '@libs/repositories/variable/variable.entity';
 import { decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
-import { IJwtPayload, INextJobProps } from '@libs/shared/types';
+import { IEventQueue, IJwtPayload, INextJobProps } from '@libs/shared/types';
 import { NotificationService } from '@app/notification/notification.service';
+import { ConsumerService } from '@app/kafka/consumer/consumer.service';
+import { TaskTimelineRepository } from '@libs/repositories/task-timeline/task-timeline.repository';
+import { ITaskTimeline } from '@libs/shared/entities/workflow/task.interface';
+import { EventTypes } from '@libs/shared/types/events/event-types';
 
 @Injectable()
-export class TaskService {
+export class TaskService implements OnModuleInit {
   private logger = new Logger('TaskService');
+  private topicTaskTimeline: string;
 
   constructor(
     private readonly sender: ProducerService,
@@ -56,9 +58,46 @@ export class TaskService {
     private readonly providerRepository: ProviderRepository,
     private readonly memberRepository: MemberRepository,
     private readonly variableRepository: VariableRepository,
+    private readonly taskTimelineRepository: TaskTimelineRepository,
     private readonly httpService: HttpService,
     private readonly notificationService: NotificationService,
-  ) {}
+    private readonly consumerService: ConsumerService,
+    private readonly producerService: ProducerService,
+  ) {
+    this.topicTaskTimeline = process.env.KAFKA_LOG_TASK_TIMELINE;
+  }
+
+  async onModuleInit() {
+    await this.consumerService.consume(
+      {
+        topics: [this.topicTaskTimeline],
+      },
+      {
+        eachBatchAutoResolve: true,
+        eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
+          for (const message of batch.messages) {
+            const topic = batch.topic,
+              partition = batch.partition;
+            this.logger.debug(topic, partition);
+
+            this.saveTaskTimeline(message);
+          }
+        },
+      },
+    );
+  }
+
+  private async saveTaskTimeline(message: KafkaMessage) {
+    const strData = message.value.toString();
+
+    const data: IEventQueue<ITaskTimeline> = JSON.parse(strData);
+
+    await this.taskTimelineRepository.create({
+      event: data.type,
+      createdAt: data.createdAt,
+      ...data.data,
+    });
+  }
 
   async nextJob({
     workflowId,
@@ -268,12 +307,7 @@ export class TaskService {
             );
           });
       } catch (e) {
-        await this.taskRepository.updateStatus(
-          task._id,
-          TaskStatus.cancel,
-          e,
-          null,
-        );
+        await this.markCancelTask(task._id, inp.userId, inp.workflowId);
       }
     }
   }
@@ -345,15 +379,11 @@ export class TaskService {
       });
 
       if (!result?.id) {
+        await this.markCancelTask(task._id, inp.userId, inp.workflowId);
         return;
       }
 
-      await this.taskRepository.updateStatus(
-        task._id,
-        TaskStatus.done,
-        null,
-        undefined,
-      );
+      await this.markDoneTask(task._id, inp.userId, inp.workflowId);
     } catch (e) {
       // await this.sendErrorStatus(
       //   message,
@@ -366,12 +396,7 @@ export class TaskService {
       // );
 
       this.logger.error(e);
-      await this.taskRepository.updateStatus(
-        task._id,
-        TaskStatus.cancel,
-        e.toString(),
-        undefined,
-      );
+      await this.markCancelTask(task._id, inp.userId, inp.workflowId);
     }
   }
 
@@ -450,15 +475,11 @@ export class TaskService {
         // TODO setup properties of chat sender
 
         if (!result?.id) {
+          await this.markCancelTask(task._id, inp.userId, inp.workflowId);
           return;
         }
 
-        await this.taskRepository.updateStatus(
-          task._id,
-          TaskStatus.done,
-          null,
-          undefined,
-        );
+        await this.markDoneTask(task._id, inp.userId, inp.workflowId);
       } catch (e) {
         // await this.sendErrorStatus(
         //   message,
@@ -471,12 +492,7 @@ export class TaskService {
         // );
 
         this.logger.error(e);
-        await this.taskRepository.updateStatus(
-          task._id,
-          TaskStatus.cancel,
-          e.toString(),
-          undefined,
-        );
+        await this.markCancelTask(task._id, inp.userId, inp.workflowId);
       }
     } catch (e) {
       this.logger.debug(e);
@@ -521,6 +537,12 @@ export class TaskService {
           priority: 'medium',
           email: inp.target.email,
         });
+        this.sendLogTaskTimeline(
+          EventTypes['message.in_process'],
+          inp.userId,
+          task._id,
+          inp.workflowId,
+        );
         try {
           const html = transformContent(variables, data.designHtml, {
             ...inp.target,
@@ -536,16 +558,12 @@ export class TaskService {
             subject: data.subject,
           });
           if (!result?.id) {
+            await this.markCancelTask(task._id, inp.userId, inp.workflowId);
             throw new BadRequestException(
               'Error when send email. Check log task id: ' + task._id,
             );
           }
-          await this.taskRepository.updateStatus(
-            task._id,
-            TaskStatus.done,
-            null,
-            undefined,
-          );
+          await this.markDoneTask(task._id, inp.userId, inp.workflowId);
 
           await this.notificationService.create({
             userId: inp.userId,
@@ -556,12 +574,7 @@ export class TaskService {
           });
         } catch (e) {
           this.logger.error(e);
-          await this.taskRepository.updateStatus(
-            task._id,
-            TaskStatus.cancel,
-            e.toString(),
-            undefined,
-          );
+          await this.markCancelTask(task._id, inp.userId, inp.workflowId);
         }
 
         this.logger.verbose('Email message has been sent');
@@ -637,5 +650,63 @@ export class TaskService {
       code: code,
       _userId: u._id,
     });
+  }
+
+  private sendLogTaskTimeline(
+    type: EventTypes,
+    userId: string,
+    taskId: string,
+    workflowId: string,
+  ) {
+    this.producerService.sendEvent<ITaskTimeline>(this.topicTaskTimeline, {
+      type: type,
+      createdAt: new Date(),
+      data: {
+        _userId: userId,
+        _taskId: taskId,
+        _workflowId: workflowId,
+        createdBy: userId,
+      },
+    });
+  }
+
+  private async markDoneTask(
+    taskId: string,
+    userId: string,
+    workflowId: string,
+  ) {
+    await this.taskRepository.updateStatus(
+      taskId,
+      TaskStatus.done,
+      null,
+      undefined,
+    );
+
+    this.sendLogTaskTimeline(
+      EventTypes['message.done'],
+      userId,
+      taskId,
+      workflowId,
+    );
+  }
+
+  private async markCancelTask(
+    taskId: string,
+    userId: string,
+    workflowId: string,
+  ) {
+    await this.taskRepository.updateStatus(
+      taskId,
+      TaskStatus.cancel,
+      null,
+      undefined,
+    );
+
+    this.sendLogTaskTimeline(
+      EventTypes['message.cancel'],
+      userId,
+      taskId,
+      workflowId,
+    );
   }
 }

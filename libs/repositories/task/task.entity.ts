@@ -1,13 +1,13 @@
 import { NodeId } from '@libs/repositories/node/types';
 import { WorkflowId } from '@libs/repositories/workflow/types';
-import { ITaskEntity } from '@libs/shared/entities/workflow/task.interface';
+import { ITask } from '@libs/shared/entities/workflow/task.interface';
 import { TaskId } from '@libs/repositories/task/types';
 import { ProviderId } from '@libs/repositories/provider/types';
 import { TaskStatus } from '@tps/task.interface';
 import { UserId } from '@libs/repositories/user';
 import { EnvironmentId, OrganizationId } from '@libs/shared/types';
 
-export class TaskEntity implements ITaskEntity {
+export class TaskEntity implements ITask {
   id?: string;
   _id?: TaskId;
   _workflowId: WorkflowId;
@@ -21,10 +21,10 @@ export class TaskEntity implements ITaskEntity {
   channel: string;
   transactionId: string;
 
-  deletedAt?: string;
+  deletedAt?: Date;
   deletedBy?: string;
-  createdAt: string;
-  updatedAt?: string;
+  createdAt: Date;
+  updatedAt?: Date;
   _nodeId: NodeId;
   code: string;
   createdBy: string;

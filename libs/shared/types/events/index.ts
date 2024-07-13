@@ -1,5 +1,3 @@
-import { TopicKey } from '../topic';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
 import { EventTypes } from '@libs/shared/types/events/event-types';
 
 export enum TriggerRecipientsTypeEnum {
@@ -7,13 +5,8 @@ export enum TriggerRecipientsTypeEnum {
   TOPIC = 'Topic',
 }
 
-export interface ITopic {
-  type: TriggerRecipientsTypeEnum.TOPIC;
-  topicKey: TopicKey;
-}
-
-export interface IEventQueue {
+export interface IEventQueue<T> {
   type: EventTypes;
   createdAt: Date;
-  data: any;
+  data: T;
 }
