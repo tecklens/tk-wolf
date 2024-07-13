@@ -29,6 +29,7 @@ import { LoginBodyDto } from '@app/auth/dtos/login.dto';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { UserSession } from '@libs/utils/user.session';
 import { GoogleOAuthGuard } from '@app/auth/strategy/google-auth.guard';
+import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
 
 @ApiBearerAuth()
 @Controller('auth')

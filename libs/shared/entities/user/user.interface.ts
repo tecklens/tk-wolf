@@ -25,4 +25,6 @@ export interface IUserEntity {
   workflowGuide?: boolean;
   billingGuide?: boolean;
   apiKeyGuide?: boolean;
+
+  changePasswordTransactionId?: string;
 }

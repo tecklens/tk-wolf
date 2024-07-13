@@ -29,6 +29,8 @@ import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-reques
 import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
 import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
 import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
+import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
+import { HttpService } from '@nestjs/axios';
 
 @ApiBearerAuth()
 @Controller('user')
@@ -37,7 +39,7 @@ import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
 @ApiExcludeController()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get('/me')
   @ApiOperation({
@@ -104,5 +106,20 @@ export class UsersController {
     @Body() payload: SubmitBugRequestDto,
   ) {
     return this.usersService.submitBugFromWeb(user, payload);
+  }
+
+  @Post('/send-email-change-pass')
+  @UseGuards(JwtAuthGuard)
+  async sendEmailChangePass(@UserSession() user: IJwtPayload) {
+    return await this.usersService.sendChangePassword(user);
+  }
+
+  @Post('/change-pass')
+  @UseGuards(JwtAuthGuard)
+  async changePass(
+    @UserSession() user: IJwtPayload,
+    @Body() payload: ChangePassDto,
+  ) {
+    return await this.usersService.changePass(user, payload);
   }
 }

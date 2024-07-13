@@ -525,12 +525,12 @@ export class TaskService {
           inp.workflowId,
         );
         try {
-          let html = transformContent(variables, data.designHtml, {
+          const html = transformContent(variables, data.designHtml, {
             ...inp.target,
             ...inp.overrides,
           });
-          const script = `<script src="https://dash.wolfx.app/inject-email.js?tx_id=${inp.transactionId}&tk_id=${task._id}" type="text/javascript"></script>`;
-          html = html.replace(/(<\s*\/\s*body)/, `${script}\n$1`);
+          // const script = `<img src="http://localhost:5000/wolf/v1/events/email/tracking/${task._id}?type=message.link_clicked&tx_id=${task.transactionId}" alt="" style="display:none;"></img>`;
+          // html = html.replace(/(<\s*\/\s*table)/, `${script}\n$1`);
 
           const result = await mailHandler.send({
             from: data.sender,

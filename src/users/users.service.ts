@@ -22,6 +22,11 @@ import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-to
 import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
 import { BugReportRepository } from '@libs/repositories/bug-report/bug-report.repository';
 import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
+import { v4 as uuidv4 } from 'uuid';
+import { HttpStatusCode } from 'axios';
+import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
+import * as bcrypt from 'bcrypt';
+import { HttpService } from '@nestjs/axios';
 
 // This should be a real class/interface representing a user entity
 export type User = any;
@@ -32,6 +37,7 @@ export class UsersService {
     private readonly userRepository: UserRepository,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private environmentRepository: EnvironmentRepository,
+    private readonly httpService: HttpService,
     private readonly bugReportRepository: BugReportRepository,
   ) {}
   private readonly users = [
@@ -261,5 +267,78 @@ export class UsersService {
       description: payload.description,
       _userId: u._id,
     });
+  }
+
+  async sendChangePassword(u: IJwtPayload) {
+    const tx_id = uuidv4();
+    const user = await this.userRepository.findById(u._id, '_id email');
+
+    if (user) {
+      await this.userRepository.updateOne(
+        {
+          _id: user._id,
+        },
+        {
+          changePasswordTransactionId: tx_id,
+        },
+      );
+
+      const response = await this.httpService
+        .request({
+          method: 'POST',
+          url: 'https://flow.wolfx.app/wolf/v1/trigger/',
+          data: JSON.stringify({
+            workflowId: '669237b10327d4603ce954a2',
+            target: {
+              subcriberId: `change-password-${tx_id}`,
+              phone: '0339210372',
+              email: user.email,
+              tx_id: tx_id,
+            },
+            overrides: {},
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `ApiKey d171212c22a1fa2b7b4643a75fbf3e8e`,
+          },
+          validateStatus: null,
+        })
+        .toPromise();
+
+      if (response.status === HttpStatusCode.Created) {
+        console.debug('send change password success');
+      } else {
+        throw new BadRequestException(
+          'There was an error when sending the password reset email.',
+        );
+      }
+    }
+  }
+
+  async changePass(u: IJwtPayload, payload: ChangePassDto) {
+    const user = await this.userRepository.findById(
+      u._id,
+      '_id changePasswordTransactionId',
+    );
+
+    if (
+      !user ||
+      payload.changePasswordTransactionId !== user.changePasswordTransactionId
+    )
+      throw new BadRequestException(
+        'Invalid request. The Transaction ID is either unsuccessful or has expired.',
+      );
+
+    const passwordHash = await bcrypt.hash(payload.password, 10);
+
+    await this.userRepository.updateOne(
+      {
+        _id: user._id,
+      },
+      {
+        password: passwordHash,
+        changePasswordTransactionId: null,
+      },
+    );
   }
 }

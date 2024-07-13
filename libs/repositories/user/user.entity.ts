@@ -79,6 +79,8 @@ export class UserEntity implements IUserEntity {
   workflowGuide?: boolean;
   billingGuide?: boolean;
   apiKeyGuide?: boolean;
+
+  changePasswordTransactionId?: string;
 }
 
 export type UserDBModel = UserEntity;

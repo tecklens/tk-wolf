@@ -11,9 +11,16 @@ import { EnvironmentModule } from '@app/environment/environment.module';
 import { MemberRepository } from '@libs/repositories/member';
 import { LimitService } from '@app/auth/limit.service';
 import { BugReportRepository } from '@libs/repositories/bug-report/bug-report.repository';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [EnvironmentModule],
+  imports: [
+    EnvironmentModule,
+    HttpModule.register({
+      timeout: 10000,
+      maxRedirects: 2,
+    }),
+  ],
   providers: [
     LimitService,
     UsersService,

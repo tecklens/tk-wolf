@@ -16,7 +16,7 @@ import { ApiKeyStrategy } from '@app/auth/strategy/apikey.strategy';
 import { EnvironmentModule } from '@app/environment/environment.module';
 import { MemberRepository } from '@libs/repositories/member';
 import { LimitService } from '@app/auth/limit.service';
-import { GoogleStrategy } from "@app/auth/strategy/google.strategy";
+import { GoogleStrategy } from '@app/auth/strategy/google.strategy';
 
 @Module({
   imports: [

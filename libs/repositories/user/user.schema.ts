@@ -50,6 +50,7 @@ const userSchema = new Schema<UserDBModel>(
     workflowGuide: { type: Schema.Types.Boolean, default: false },
     billingGuide: { type: Schema.Types.Boolean, default: false },
     apiKeyGuide: { type: Schema.Types.Boolean, default: false },
+    changePasswordTransactionId: Schema.Types.String,
   },
   schemaOptions,
 );

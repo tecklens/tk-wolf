@@ -3,7 +3,7 @@ import {
   Inject,
   Injectable,
   NotFoundException,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from '@app/users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -59,11 +59,14 @@ import { EnvironmentService } from '@app/environment/environment.service';
 import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
-import { LimitService, MAX_POINT_IN_MONTH } from '@app/auth/limit.service';
+import { LimitService } from '@app/auth/limit.service';
 import { Types } from 'mongoose';
 import { MailFactory } from '@app/provider/factories';
 import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { decryptApiKey, decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
+import {
+  decryptApiKey,
+  decryptCredentials,
+} from '@libs/shared/encryptions/encrypt-provider';
 import { ProviderEntity } from '@libs/repositories/provider';
 
 @Injectable()
