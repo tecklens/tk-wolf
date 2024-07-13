@@ -23,7 +23,6 @@ const corsOptionsDelegate = function (req, callback) {
 
   if (
     ['dev', 'test', 'local'].includes(process.env.NODE_ENV) ||
-    isWidgetRoute(req.url) ||
     isBlueprintRoute(req.url)
   ) {
     corsOptions.origin = '*';
@@ -116,10 +115,6 @@ export default async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-}
-
-function isWidgetRoute(url: string) {
-  return url.startsWith('/v1/widgets');
 }
 
 function isBlueprintRoute(url: string) {

@@ -12,17 +12,13 @@ import { LimitService } from '@app/auth/limit.service';
   imports: [
     StripeModule.forRootAsync(StripeModule, {
       imports: [ConfigModule],
-      useFactory: async (configSvc: ConfigService) => ({
-        apiKey:
-          'sk_test_51OEMRZGcJkgHU4pfc3P5Gi7itVP1N9yxYVmrj5TFrYVnkYLE1eknqFPmOPzoA82okIAiH87iU0ICZLbghWqAQVC7007SfteeeI',
+      useFactory: async (configService: ConfigService) => ({
+        apiKey: configService.get('STRIPE_API_KEY'),
         webhookConfig: {
-          stripeWebhookSecret:
-            'whsec_25b58266dcbbcdebc4bd61d9035f11c5463e3b585f7cc4c789097df9e6720e84',
+          stripeWebhookSecret: configService.get('STRIPE_WEBHOOK_SECRET'),
           stripeSecrets: {
-            account:
-              'whsec_25b58266dcbbcdebc4bd61d9035f11c5463e3b585f7cc4c789097df9e6720e84',
-            accountTest:
-              'whsec_25b58266dcbbcdebc4bd61d9035f11c5463e3b585f7cc4c789097df9e6720e84',
+            account: configService.get('STRIPE_WEBHOOK_SECRET'),
+            accountTest: configService.get('STRIPE_WEBHOOK_SECRET'),
           },
           requestBodyProperty: 'rawBody',
           decorators: [SkipThrottle()],
