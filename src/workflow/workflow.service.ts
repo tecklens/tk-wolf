@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  PreconditionFailedException,
 } from '@nestjs/common';
 import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { IJwtPayload } from '@libs/shared/types';
@@ -98,6 +99,37 @@ export class WorkflowService {
     }
 
     return wf;
+  }
+
+  async deleteWorkflow(u: IJwtPayload, workflowId: string) {
+    if (!workflowId || '' === workflowId)
+      return new PreconditionFailedException('Workflow Id is required');
+
+    const workflows = await this.workflowRepository.find({
+      _userId: u._id,
+      _environmentId: u.environmentId,
+      _organizationId: u.organizationId,
+    });
+
+    const nodes = await this.nodeRepository.findByWorkflowId(workflowId);
+    const edges = await this.edgeRepository.findByWorkflowId(workflowId);
+
+    for (const workflow of workflows) {
+      if (workflow._id != workflowId) {
+        await this.workflowRepository.updateActive(workflow._id, u._id);
+        break;
+      }
+    }
+
+    await this.workflowRepository.delete({
+      _userId: u._id,
+      _id: {
+        $in: [workflowId],
+      },
+    });
+
+    await this.nodeRepository.delByIds(nodes.map((e) => e._id));
+    await this.edgeRepository.delByIds(edges.map((e) => e.id));
   }
 
   async getOneNode(nodeId: string) {
@@ -214,8 +246,8 @@ export class WorkflowService {
     const nodeIds = payload.nodeIds;
     const edgeIds = payload.edgeIds;
 
-    this.nodeRepository.delByIds(nodeIds);
-    this.edgeRepository.delByIds(edgeIds);
+    await this.nodeRepository.delByIds(nodeIds);
+    await this.edgeRepository.delByIds(edgeIds);
   }
 
   async updateWorkflow(u: IJwtPayload, payload: UpdateWorkflowRequestDto) {

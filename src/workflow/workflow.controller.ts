@@ -81,6 +81,16 @@ export class WorkflowController {
     return this.workflowService.createWorkflow(user, payload);
   }
 
+  @Delete('/:workflowId')
+  @UseGuards(JwtAuthGuard)
+  @ExternalApiAccessible()
+  deleteWorkflow(
+    @UserSession() user: IJwtPayload,
+    @Param('workflowId') workflowId: string,
+  ) {
+    return this.workflowService.deleteWorkflow(user, workflowId);
+  }
+
   @Put('/')
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
@@ -181,7 +191,7 @@ export class WorkflowController {
     @UserSession() user: IJwtPayload,
     @Body() payload: DelEleWorkflowRequestDto,
   ) {
-    this.workflowService.delNodeEdge(user, payload);
+    return this.workflowService.delNodeEdge(user, payload);
   }
 
   @Get('/email/templates')

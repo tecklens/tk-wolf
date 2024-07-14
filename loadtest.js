@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 export let options = {
-  vus: 1, // Virtual Users
+  vus: 100, // Virtual Users
   duration: '5s', // Duration of the test
 };
 
@@ -32,8 +32,6 @@ export default function () {
     JSON.stringify(data),
     params,
   );
-
-  console.log(res);
 
   check(res, { 'success send trigger': (r) => r.status === 201 });
 
