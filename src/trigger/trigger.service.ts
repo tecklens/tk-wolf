@@ -98,7 +98,9 @@ export class TriggerService implements OnModuleInit {
       throw e;
     }
 
-    return null;
+    return {
+      transactionId: transactionId,
+    };
   }
 
   async createBulkTrigger(

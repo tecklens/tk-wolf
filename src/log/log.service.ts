@@ -225,7 +225,7 @@ export class LogService {
           _userId: user._id,
           _environmentId: user.environmentId,
           _organizationId: user.organizationId,
-          status: TaskStatus.cancel,
+          status: 1,
           createdAt: {
             $gte: oneWeekAgo,
           },
@@ -247,7 +247,7 @@ export class LogService {
             },
           },
           count: {
-            $sum: 1,
+            $sum: '$amount_received',
           },
         },
       },

@@ -56,6 +56,12 @@ export class LogController {
   ): Promise<FilterLogResponse> {
     return this.logService.analysisTaskError(user, payload);
   }
+
+  @Get('/analyse/billing')
+  @ApiResponse(FilterLogResponse, 200)
+  @ApiOperation({
+    summary: 'API get log billing of user',
+  })
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getBillingAnalyse(

@@ -60,7 +60,6 @@ export class PaymentService {
           .getLimiter()
           .delete(`${user._id}_${metadata?.environmentId}`);
       } catch (e) {
-        console.log(e);
         evtObj.status = 1;
       } finally {
         await this.billingRepository.create(evtObj);
