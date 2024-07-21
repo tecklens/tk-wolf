@@ -1,14 +1,16 @@
 {
-  "name": "@wolf/stateless",
+  "name": "@wolfxlabs/stateless",
   "version": "1.0.0",
-  "description": "",
+  "description": "A stateless lib for wolfx backend",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
+  "homepage": "git://github.com:tecklens/tk-wolf.git",
   "repository": "git://github.com:tecklens/wolf-stateless.git",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "engines": {
     "node": ">=10"
@@ -51,7 +53,7 @@
   "prettier": {
     "singleQuote": true
   },
-  "author": "",
+  "author": "Tecklens",
   "license": "MIT",
   "dependencies": {
     "class-validator": "^0.14.1",

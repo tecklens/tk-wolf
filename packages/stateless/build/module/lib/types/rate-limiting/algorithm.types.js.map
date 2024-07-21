@@ -1,1 +1,0 @@
-{"version":3,"file":"algorithm.types.js","sourceRoot":"","sources":["../../../../../src/lib/types/rate-limiting/algorithm.types.ts"],"names":[],"mappings":"AAKA,MAAM,CAAN,IAAY,yBAGX;AAHD,WAAY,yBAAyB;IACnC,gEAAmC,CAAA;IACnC,gEAAmC,CAAA;AACrC,CAAC,EAHW,yBAAyB,KAAzB,yBAAyB,QAGpC;AAKD,MAAM,OAAO,sBAAsB;IAQjC,CAAC,yBAAyB,CAAC,eAAe,CAAC,CAAS;IAMpD,CAAC,yBAAyB,CAAC,eAAe,CAAC,CAAS;CACrD"}
