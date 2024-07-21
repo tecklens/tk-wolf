@@ -6,7 +6,7 @@
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "private": false,
-  "repository": "https://github.com/tecklens/tk-wolf/",
+  "repository": "git://github.com:tecklens/wolf-stateless.git",
   "publishConfig": {
     "access": "public"
   },
