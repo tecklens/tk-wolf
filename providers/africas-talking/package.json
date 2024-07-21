@@ -1,6 +1,6 @@
 {
   "name": "@wolfxlabs/africas-talking",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An Africa's Talking wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

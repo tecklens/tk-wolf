@@ -1,6 +1,6 @@
 {
   "name": "@wolfxlabs/email-webhook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An email channel webhook provider wrapper for wolf",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

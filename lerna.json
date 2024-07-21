@@ -6,6 +6,6 @@
       "message": "chore(release): publish - ci skip"
     }
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "$schema": "node_modules/lerna/schemas/lerna-schema.json"
 }
