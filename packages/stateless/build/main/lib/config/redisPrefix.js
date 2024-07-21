@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getRedisPrefix = void 0;
+function getRedisPrefix() {
+    let redisPrefix = '';
+    if (process.env.REDIS_PREFIX) {
+        redisPrefix = process.env.REDIS_PREFIX;
+    }
+    return redisPrefix;
+}
+exports.getRedisPrefix = getRedisPrefix;
+//# sourceMappingURL=redisPrefix.js.map
