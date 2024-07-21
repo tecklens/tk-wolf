@@ -18,7 +18,7 @@ import {
   UserRateLimitPolicy,
   getRateLimitThresh,
   ISubscriber,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 @Injectable()
 export class SubscriptionService {

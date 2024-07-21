@@ -1,5 +1,5 @@
 import { Exclude } from 'class-transformer';
-import { AuthProviderEnum, IUser, JobTitleEnum, UserId } from '@wolf/stateless';
+import { AuthProviderEnum, IUser, JobTitleEnum, UserId } from '@wolfxlabs/stateless';
 
 export enum UserPlan {
   free,

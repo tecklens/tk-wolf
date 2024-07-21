@@ -14,7 +14,7 @@ import {
   ProviderEntity,
   ProviderRepository,
 } from '@libs/repositories/provider';
-import { ChatFactory, MailFactory, SmsFactory } from '@wolf/providers';
+import { ChatFactory, MailFactory, SmsFactory } from '@wolfxlabs/providers';
 import { makeid, transformContent } from '@libs/utils';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { HttpService } from '@nestjs/axios';
@@ -38,7 +38,7 @@ import {
   PlatformException,
   TaskStatus,
   WfNodeType,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import { GetTaskRequestDto, TaskResponseDto } from './dtos';
 
 @Injectable()

@@ -1,6 +1,6 @@
-import { OneSignalPushProvider } from '@wolf/one-signal';
+import { OneSignalPushProvider } from '@wolfxlabs/one-signal';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class OneSignalHandler extends BasePushHandler {
   constructor() {

@@ -1,6 +1,6 @@
-import { MailtrapEmailProvider } from '@wolf/mailtrap';
+import { MailtrapEmailProvider } from '@wolfxlabs/mailtrap';
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum, EmailProviderIdEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, EmailProviderIdEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class MailtrapHandler extends BaseHandler {
   constructor() {

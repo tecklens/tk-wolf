@@ -1,6 +1,6 @@
-import { FcmPushProvider } from '@wolf/fcm';
+import { FcmPushProvider } from '@wolfxlabs/fcm';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class FCMHandler extends BasePushHandler {
   constructor() {

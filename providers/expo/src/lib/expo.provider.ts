@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   IPushOptions,
   IPushProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { Expo, ExpoPushMessage, ExpoPushTicket } from 'expo-server-sdk';
 
 export class ExpoPushProvider implements IPushProvider {

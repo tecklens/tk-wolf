@@ -1,6 +1,6 @@
-import { MaqsamSmsProvider } from '@wolf/maqsam';
+import { MaqsamSmsProvider } from '@wolfxlabs/maqsam';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class MaqsamHandler extends BaseSmsHandler {
     constructor() {
         super('maqsam', ChannelTypeEnum.SMS);

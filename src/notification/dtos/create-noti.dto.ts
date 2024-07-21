@@ -1,4 +1,4 @@
-import { EnvironmentId, OrganizationId } from '@wolf/stateless';
+import { EnvironmentId, OrganizationId } from '@wolfxlabs/stateless';
 
 export class CreateNotiDto {
   title: string;

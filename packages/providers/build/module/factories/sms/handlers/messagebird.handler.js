@@ -1,6 +1,6 @@
-import { MessageBirdSmsProvider } from '@wolf/messagebird';
+import { MessageBirdSmsProvider } from '@wolfxlabs/messagebird';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class MessageBirdHandler extends BaseSmsHandler {
     constructor() {
         super('messagebird', ChannelTypeEnum.SMS);

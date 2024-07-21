@@ -1,4 +1,4 @@
-import { EmailEventStatusEnum } from '@novu/stateless';
+import { EmailEventStatusEnum } from '@wolfxlabs/stateless';
 import { SESClient } from '@aws-sdk/client-ses';
 import { SESEmailProvider } from './ses.provider';
 

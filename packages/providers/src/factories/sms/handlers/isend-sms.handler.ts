@@ -1,6 +1,6 @@
-import { ISendSmsProvider } from '@wolf/isend-sms';
+import { ISendSmsProvider } from '@wolfxlabs/isend-sms';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class ISendSmsHandler extends BaseSmsHandler {
   constructor() {

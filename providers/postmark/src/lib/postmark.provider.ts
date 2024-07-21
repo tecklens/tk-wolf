@@ -7,7 +7,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailEventBody,
   EmailEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { Errors, ServerClient, Message, Models } from 'postmark';
 
 export class PostmarkEmailProvider implements IEmailProvider {

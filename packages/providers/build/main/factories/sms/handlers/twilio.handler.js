@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TwilioHandler = void 0;
-const twilio_1 = require("@wolf/twilio");
+const twilio_1 = require("@wolfxlabs/twilio");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class TwilioHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('twilio', stateless_1.ChannelTypeEnum.SMS);

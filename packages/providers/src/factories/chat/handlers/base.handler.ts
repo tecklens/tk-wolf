@@ -1,5 +1,5 @@
 import { IChatHandler } from '../interfaces';
-import { ChannelTypeEnum, IChatOptions, IChatProvider } from '@wolf/stateless';
+import { ChannelTypeEnum, IChatOptions, IChatProvider } from '@wolfxlabs/stateless';
 
 export abstract class BaseChatHandler implements IChatHandler {
   protected provider: IChatProvider;

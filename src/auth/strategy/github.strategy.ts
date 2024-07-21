@@ -7,7 +7,7 @@ import {
   StateStoreVerifyCallback,
 } from 'passport-oauth2';
 import { AuthService } from '@app/auth/auth.service';
-import { PassportStrategyEnum, AuthProviderEnum } from '@wolf/stateless';
+import { PassportStrategyEnum, AuthProviderEnum } from '@wolfxlabs/stateless';
 
 @Injectable()
 export class GitHubStrategy extends PassportStrategy(

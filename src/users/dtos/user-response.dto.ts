@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { JobTitleEnum } from '@wolf/stateless';
+import { JobTitleEnum } from '@wolfxlabs/stateless';
 
 export class ServicesHashesDto {
   @ApiProperty()

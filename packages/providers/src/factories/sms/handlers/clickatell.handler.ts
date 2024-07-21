@@ -1,6 +1,6 @@
-import { ClickatellSmsProvider } from '@wolf/clickatell';
+import { ClickatellSmsProvider } from '@wolfxlabs/clickatell';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class ClickatellHandler extends BaseSmsHandler {
   constructor() {

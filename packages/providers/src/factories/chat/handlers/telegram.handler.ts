@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { TelegramProvider } from '@wolf/telegram';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { TelegramProvider } from '@wolfxlabs/telegram';
 
 import { BaseChatHandler } from './base.handler';
 

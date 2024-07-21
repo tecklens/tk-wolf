@@ -1,6 +1,6 @@
-import { TwilioSmsProvider } from '@wolf/twilio';
+import { TwilioSmsProvider } from '@wolfxlabs/twilio';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class TwilioHandler extends BaseSmsHandler {
     constructor() {
         super('twilio', ChannelTypeEnum.SMS);

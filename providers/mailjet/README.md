@@ -5,7 +5,7 @@ A Mailjet email provider library for [@novu/stateless](https://github.com/teckle
 ## Usage
 
 ```javascript
-    import { MailjetEmailProvider } from "@wolf/mailjet";
+    import { MailjetEmailProvider } from "@wolfxlabs/mailjet";
     const provider = new MailjetEmailProvider({
       apiKey: process.env.MAILJET_APIKEY,
       apiSecret: process.env.MAILJET_API_SECRET,

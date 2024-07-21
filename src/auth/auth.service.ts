@@ -43,7 +43,7 @@ import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { LimitService } from '@app/auth/limit.service';
 import { Types } from 'mongoose';
-import { MailFactory } from '@wolf/providers';
+import { MailFactory } from '@wolfxlabs/providers';
 import { ProviderEntity } from '@libs/repositories/provider';
 import {
   ApiException,
@@ -61,7 +61,7 @@ import {
   ChannelTypeEnum,
   decryptApiKey,
   decryptCredentials,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import {
   LoginBodyDto,
   PasswordResetBodyDto,

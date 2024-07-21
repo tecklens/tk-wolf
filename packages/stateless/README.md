@@ -1,5 +1,5 @@
 ## Install 
 
 ```shell
-npm install @wolf/stateless
+npm install @wolfxlabs/stateless
 ```

@@ -8,7 +8,7 @@ import {
   TaskStatus,
   UserId,
   WorkflowId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class TaskEntity implements ITask {
   id?: string;

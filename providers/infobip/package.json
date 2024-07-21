@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/infobip",
+  "name": "@wolfxlabs/infobip",
   "version": "1.0.0",
   "description": "A infobip wrapper for wolf",
   "main": "build/main/index.js",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@infobip-api/sdk": "^0.3.2",
-    "@novu/stateless": "^0.24.1"
+    "@wolfxlabs/stateless": "^1.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

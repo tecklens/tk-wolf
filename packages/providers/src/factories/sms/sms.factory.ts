@@ -29,7 +29,7 @@ import {
   RingCentralHandler,
   BrevoSmsHandler,
 } from './handlers';
-import { IProvider } from '@wolf/stateless';
+import { IProvider } from '@wolfxlabs/stateless';
 
 export class SmsFactory implements ISmsFactory {
   handlers: ISmsHandler[] = [

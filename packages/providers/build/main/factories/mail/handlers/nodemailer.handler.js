@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NodemailerHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const nodemailer_1 = require("@wolf/nodemailer");
+const stateless_1 = require("@wolfxlabs/stateless");
+const nodemailer_1 = require("@wolfxlabs/nodemailer");
 const base_handler_1 = require("./base.handler");
 class NodemailerHandler extends base_handler_1.BaseHandler {
     constructor() {

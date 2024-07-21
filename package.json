@@ -136,8 +136,8 @@
     "typescript": "^5.1.3",
     "webpack": "^5.91.0",
     "webpack-node-externals": "^3.0.0",
-    "@wolf/stateless": "^1.0.0",
-    "@wolf/providers": "^1.0.0"
+    "@wolfxlabs/stateless": "^1.0.0",
+    "@wolfxlabs/providers": "^1.0.0"
   },
   "jest": {
     "moduleFileExtensions": [

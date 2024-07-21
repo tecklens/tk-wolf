@@ -1,6 +1,6 @@
-import { BandwidthSmsProvider } from '@wolf/bandwidth';
+import { BandwidthSmsProvider } from '@wolfxlabs/bandwidth';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class BandwidthHandler extends BaseSmsHandler {
     constructor() {
         super('bandwidth', ChannelTypeEnum.SMS);

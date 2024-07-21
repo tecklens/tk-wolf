@@ -1,5 +1,5 @@
 import { IChatHandler } from '../interfaces';
-import { ChannelTypeEnum, IChatOptions, IChatProvider } from '@wolf/stateless';
+import { ChannelTypeEnum, IChatOptions, IChatProvider } from '@wolfxlabs/stateless';
 export declare abstract class BaseChatHandler implements IChatHandler {
     private providerId;
     private channelType;
@@ -7,5 +7,5 @@ export declare abstract class BaseChatHandler implements IChatHandler {
     protected constructor(providerId: string, channelType: string);
     canHandle(providerId: string, channelType: ChannelTypeEnum): boolean;
     abstract buildProvider(credentials: any): any;
-    send(chatContent: IChatOptions): Promise<import("@wolf/stateless").ISendMessageSuccessResponse>;
+    send(chatContent: IChatOptions): Promise<import("@wolfxlabs/stateless").ISendMessageSuccessResponse>;
 }

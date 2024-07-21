@@ -4,7 +4,7 @@ import {
   ISendMessageSuccessResponse,
   IChatOptions,
   IChatProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 interface IMattermostPayload {
   channel?: string;

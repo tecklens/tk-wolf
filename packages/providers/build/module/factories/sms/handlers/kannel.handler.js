@@ -1,6 +1,6 @@
-import { KannelSmsProvider } from '@wolf/kannel';
+import { KannelSmsProvider } from '@wolfxlabs/kannel';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class KannelSmsHandler extends BaseSmsHandler {
     constructor() {
         super('kannel', ChannelTypeEnum.SMS);

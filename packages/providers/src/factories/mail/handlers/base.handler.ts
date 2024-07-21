@@ -3,7 +3,7 @@ import {
   IEmailOptions,
   IEmailProvider,
   PlatformException,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import { IMailHandler } from '../interfaces';
 
 export abstract class BaseHandler implements IMailHandler {

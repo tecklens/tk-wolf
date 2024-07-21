@@ -5,7 +5,7 @@ A MsTeams chat provider library for [@novu/node](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { MsTeamsProvider } from '@wolf/ms-teams';
+import { MsTeamsProvider } from '@wolfxlabs/ms-teams';
 
 const provider = new MsTeamsProvider({});
 ```

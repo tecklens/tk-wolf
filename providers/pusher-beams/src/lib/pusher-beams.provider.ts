@@ -3,7 +3,7 @@ import {
   IPushOptions,
   IPushProvider,
   ISendMessageSuccessResponse,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import axios, { AxiosInstance } from 'axios';
 
 export class PusherBeamsPushProvider implements IPushProvider {

@@ -1,4 +1,4 @@
-import { PaginationWithFiltersRequestDto } from '@wolf/stateless';
+import { PaginationWithFiltersRequestDto } from '@wolfxlabs/stateless';
 
 export class GetLogTriggerRequestDto extends PaginationWithFiltersRequestDto({
   defaultLimit: 10,

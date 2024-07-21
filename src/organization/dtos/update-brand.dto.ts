@@ -1,5 +1,5 @@
 import { IsHexColor, IsOptional, IsString, IsUrl } from 'class-validator';
-import { IsImageUrl } from '@wolf/stateless';
+import { IsImageUrl } from '@wolfxlabs/stateless';
 
 export class UpdateBrandDto {
   @IsUrl({

@@ -1,10 +1,10 @@
-import { InfobipSmsProvider } from '@wolf/infobip';
+import { InfobipSmsProvider } from '@wolfxlabs/infobip';
 import { BaseSmsHandler } from './base.handler';
 import {
   ChannelTypeEnum,
   ICredentials,
   SmsProviderIdEnum,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 export class InfobipSmsHandler extends BaseSmsHandler {
   constructor() {
     super(SmsProviderIdEnum.Infobip, ChannelTypeEnum.SMS);

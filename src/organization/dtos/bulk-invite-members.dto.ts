@@ -7,7 +7,7 @@ import {
   IsNotEmpty,
   ValidateNested,
 } from 'class-validator';
-import { IBulkInviteRequestDto } from '@wolf/stateless';
+import { IBulkInviteRequestDto } from '@wolfxlabs/stateless';
 
 class EmailInvitee {
   @IsDefined()

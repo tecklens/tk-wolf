@@ -1,6 +1,6 @@
-import { APNSPushProvider } from '@wolf/apns';
+import { APNSPushProvider } from '@wolfxlabs/apns';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class APNSHandler extends BasePushHandler {
     constructor() {
         super('apns', ChannelTypeEnum.PUSH);

@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SESHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const ses_1 = require("@wolf/ses");
+const stateless_1 = require("@wolfxlabs/stateless");
+const ses_1 = require("@wolfxlabs/ses");
 const base_handler_1 = require("./base.handler");
 class SESHandler extends base_handler_1.BaseHandler {
     constructor() {

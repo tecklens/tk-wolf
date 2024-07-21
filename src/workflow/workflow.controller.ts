@@ -25,7 +25,7 @@ import {
   ExternalApiAccessible,
   IEmailTemplate,
   IJwtPayload,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import {
   AddEdgeWorkflowRequestDto,
   AddNodeWorkflowRequestDto,

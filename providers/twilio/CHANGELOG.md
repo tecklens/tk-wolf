@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.2.5](https://github.com/wolfhq/twilio/compare/v0.2.4...v0.2.5) (2021-11-05)
 
-**Note:** Version bump only for package @notifire/twilio (now @wolf/twilio)
+**Note:** Version bump only for package @notifire/twilio (now @wolfxlabs/twilio)
 
 
 

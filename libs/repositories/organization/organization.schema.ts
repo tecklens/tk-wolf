@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
 import { OrganizationDBModel } from './organization.entity';
-import { ApiServiceLevelEnum } from '@wolf/stateless';
+import { ApiServiceLevelEnum } from '@wolfxlabs/stateless';
 
 const organizationSchema = new Schema<OrganizationDBModel>(
   {

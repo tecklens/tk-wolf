@@ -1,6 +1,6 @@
-import { SendchampSmsProvider } from '@wolf/sendchamp';
+import { SendchampSmsProvider } from '@wolfxlabs/sendchamp';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class SendchampSmsHandler extends BaseSmsHandler {
   constructor() {

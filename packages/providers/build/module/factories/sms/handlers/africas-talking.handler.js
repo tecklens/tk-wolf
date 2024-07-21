@@ -1,6 +1,6 @@
-import { AfricasTalkingSmsProvider } from '@wolf/africas-talking';
+import { AfricasTalkingSmsProvider } from '@wolfxlabs/africas-talking';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class AfricasTalkingSmsHandler extends BaseSmsHandler {
     constructor() {
         super('africas-talking', ChannelTypeEnum.SMS);

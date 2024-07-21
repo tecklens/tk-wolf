@@ -1,5 +1,5 @@
 import { GetSubscriberResponse } from '@app/subscription/dtos/get-subscriber.response';
-import { IPageResponse } from '@wolf/stateless';
+import { IPageResponse } from '@wolfxlabs/stateless';
 
 export class GetSubscribersResponse
   implements IPageResponse<GetSubscriberResponse>

@@ -1,6 +1,6 @@
-import { PushWebhookPushProvider } from '@wolf/push-webhook';
+import { PushWebhookPushProvider } from '@wolfxlabs/push-webhook';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class PushWebhookHandler extends BasePushHandler {
     constructor() {
         super('push-webhook', ChannelTypeEnum.PUSH);

@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   IPushOptions,
   IPushProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { initializeApp, cert, deleteApp, getApp } from 'firebase-admin/app';
 import {
   AndroidConfig,

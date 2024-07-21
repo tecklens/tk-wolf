@@ -20,7 +20,7 @@ import {
   createHash,
   decryptApiKey,
   normalizeEmail,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import {
   ChangePassDto,
   ChangeProfileDto,

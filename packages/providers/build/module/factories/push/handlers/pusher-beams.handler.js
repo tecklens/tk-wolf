@@ -1,6 +1,6 @@
-import { PusherBeamsPushProvider } from '@wolf/pusher-beams';
+import { PusherBeamsPushProvider } from '@wolfxlabs/pusher-beams';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class PusherBeamsHandler extends BasePushHandler {
     constructor() {
         super('pusher-beams', ChannelTypeEnum.PUSH);

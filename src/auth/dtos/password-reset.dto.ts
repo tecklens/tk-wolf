@@ -5,7 +5,7 @@ import {
   MaxLength,
   IsUUID,
 } from 'class-validator';
-import { passwordConstraints } from '@wolf/stateless';
+import { passwordConstraints } from '@wolfxlabs/stateless';
 export class PasswordResetBodyDto {
   @IsDefined()
   @MinLength(passwordConstraints.minLength)

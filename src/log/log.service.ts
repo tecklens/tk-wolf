@@ -11,7 +11,7 @@ import { SubscriberRepository } from '@libs/repositories/subscriber';
 import moment from 'moment';
 import { find } from 'lodash';
 import { BillingRepository } from '@libs/repositories/billing';
-import { IJwtPayload, TaskStatus } from '@wolf/stateless';
+import { IJwtPayload, TaskStatus } from '@wolfxlabs/stateless';
 
 @Injectable()
 export class LogService {

@@ -1,6 +1,6 @@
 import { BaseHandler } from './base.handler';
-import { EmailWebhookProvider } from '@wolf/email-webhook';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { EmailWebhookProvider } from '@wolfxlabs/email-webhook';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 export class EmailWebhookHandler extends BaseHandler {
   constructor() {
     super('email-webhook', ChannelTypeEnum.EMAIL);

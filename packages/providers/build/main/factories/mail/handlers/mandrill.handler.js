@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MandrillHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const mandrill_1 = require("@wolf/mandrill");
+const stateless_1 = require("@wolfxlabs/stateless");
+const mandrill_1 = require("@wolfxlabs/mandrill");
 const base_handler_1 = require("./base.handler");
 class MandrillHandler extends base_handler_1.BaseHandler {
     constructor() {

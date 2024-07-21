@@ -1,4 +1,4 @@
-import { PlatformException, } from '@wolf/stateless';
+import { PlatformException, } from '@wolfxlabs/stateless';
 export class BaseHandler {
     providerId;
     channelType;

@@ -1,4 +1,4 @@
-import { PassportStrategyEnum } from '@wolf/stateless';
+import { PassportStrategyEnum } from '@wolfxlabs/stateless';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';

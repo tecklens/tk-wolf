@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import { Client, ApiController } from '@bandwidth/messaging';
 export class BandwidthSmsProvider implements ISmsProvider {

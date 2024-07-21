@@ -20,7 +20,7 @@ import {
   BrazeEmailHandler,
 } from './handlers';
 import { IMailHandler } from './interfaces/send.handler.interface';
-import { IProvider } from '@wolf/stateless';
+import { IProvider } from '@wolfxlabs/stateless';
 
 export class MailFactory {
   handlers: IMailHandler[] = [

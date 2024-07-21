@@ -4,7 +4,7 @@ import {
   TaskId,
   UserId,
   WorkflowId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class TaskTimelineEntity implements ITaskTimeline {
   _id?: TaskId;

@@ -9,7 +9,7 @@ import {
   EnforceEnvOrOrgIds,
   EnvironmentId,
   StepTypeEnum,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class NotificationRepository extends BaseRepository<
   NotificationDBModel,

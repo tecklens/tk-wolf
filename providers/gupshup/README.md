@@ -5,7 +5,7 @@ A Gupshup sms provider library for [@novu/node](https://github.com/tecklens/tk-w
 ## Usage
 
 ```javascript
-import { GupshupSmsProvider } from '@wolf/gupshup';
+import { GupshupSmsProvider } from '@wolfxlabs/gupshup';
 
 const provider = new GupshupSmsProvider({
     userId: process.env.GUPSHUP_USER_ID,

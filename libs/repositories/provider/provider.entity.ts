@@ -5,7 +5,7 @@ import {
   ICredentials,
   OrganizationId,
   ProviderId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class ProviderEntity {
   _id?: ProviderId;

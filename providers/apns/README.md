@@ -5,7 +5,7 @@ A Apns push provider library for [@novu/node](https://github.com/tecklens/tk-wol
 ## Usage
 
 ```javascript
-import { APNSPushProvider } from '@wolf/apns';
+import { APNSPushProvider } from '@wolfxlabs/apns';
 
 const provider = new APNSPushProvider({
     key: "path/to/APNsAuthKey_XXXXXXXXXX.p8",

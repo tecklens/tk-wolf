@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/firetext",
+  "name": "@wolfxlabs/firetext",
   "version": "1.0.0",
   "description": "A firetext wrapper for wolf",
   "main": "build/main/index.js",
@@ -32,7 +32,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "node-fetch": "^3.2.10"
   },
   "devDependencies": {

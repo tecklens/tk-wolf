@@ -27,7 +27,7 @@ import {
   IJwtPayload,
   MemberRoleEnum,
   Roles,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import {
   InviteMemberDto,
   MemberResponseDto,

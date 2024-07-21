@@ -5,7 +5,7 @@ A Discord chat provider library for [@novu/node](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { DiscordProvider } from '@wolf/discord';
+import { DiscordProvider } from '@wolfxlabs/discord';
 
 const provider = new DiscordProvider({});
 ```

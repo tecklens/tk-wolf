@@ -4,7 +4,7 @@ import {
   ISubscribersDefine,
   OrganizationId,
   StepTypeEnum,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class NotificationEntity {
   _id: string;

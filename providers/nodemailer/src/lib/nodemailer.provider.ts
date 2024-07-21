@@ -5,7 +5,7 @@ import {
   ISendMessageSuccessResponse,
   ICheckIntegrationResponse,
   CheckIntegrationResponseEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import nodemailer, { SendMailOptions, Transporter } from 'nodemailer';
 import DKIM from 'nodemailer/lib/dkim';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';

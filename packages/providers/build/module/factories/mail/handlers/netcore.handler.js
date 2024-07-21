@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { NetCoreProvider } from '@wolf/netcore';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { NetCoreProvider } from '@wolfxlabs/netcore';
 import { BaseHandler } from './base.handler';
 export class NetCoreHandler extends BaseHandler {
     constructor() {

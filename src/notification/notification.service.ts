@@ -6,7 +6,7 @@ import {
   ListNotificationDto,
   NotificationsRequestDto,
 } from './dtos';
-import { IEvent, IJwtPayload } from '@wolf/stateless';
+import { IEvent, IJwtPayload } from '@wolfxlabs/stateless';
 
 @Injectable()
 export class NotificationService {

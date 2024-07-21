@@ -5,7 +5,7 @@ import {
   ProviderId,
   WorkflowId,
   XYPosition,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class NodeEntity implements INodeEntity {
   _id?: NodeId;

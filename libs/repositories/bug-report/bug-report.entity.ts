@@ -1,4 +1,4 @@
-import { BugReportId, IBugReport, UserId } from '@wolf/stateless';
+import { BugReportId, IBugReport, UserId } from '@wolfxlabs/stateless';
 
 export class BugReportEntity implements IBugReport {
   id?: BugReportId;

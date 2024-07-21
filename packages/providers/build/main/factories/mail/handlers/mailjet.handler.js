@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MailjetHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const mailjet_1 = require("@wolf/mailjet");
+const stateless_1 = require("@wolfxlabs/stateless");
+const mailjet_1 = require("@wolfxlabs/mailjet");
 const base_handler_1 = require("./base.handler");
 class MailjetHandler extends base_handler_1.BaseHandler {
     constructor() {

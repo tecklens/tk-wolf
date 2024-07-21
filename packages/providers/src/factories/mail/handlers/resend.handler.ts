@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { ResendEmailProvider } from '@wolf/resend';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { ResendEmailProvider } from '@wolfxlabs/resend';
 import { BaseHandler } from './base.handler';
 
 export class ResendHandler extends BaseHandler {

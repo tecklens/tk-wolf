@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetstreamChatHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 const base_handler_1 = require("./base.handler");
-const getstream_1 = require("@wolf/getstream");
+const getstream_1 = require("@wolfxlabs/getstream");
 class GetstreamChatHandler extends base_handler_1.BaseChatHandler {
     constructor() {
         super('getstream', stateless_1.ChannelTypeEnum.CHAT);

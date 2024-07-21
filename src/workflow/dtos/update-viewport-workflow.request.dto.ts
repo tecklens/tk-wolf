@@ -1,6 +1,6 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { WorkflowId } from '@wolf/stateless';
+import { WorkflowId } from '@wolfxlabs/stateless';
 
 export class UpdateViewPortWorkflowRequestDto {
   @ApiProperty()

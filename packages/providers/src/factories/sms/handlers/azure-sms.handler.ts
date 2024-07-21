@@ -1,6 +1,6 @@
-import { AzureSmsProvider } from '@wolf/azure-sms';
+import { AzureSmsProvider } from '@wolfxlabs/azure-sms';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class AzureSmsHandler extends BaseSmsHandler {
   constructor() {

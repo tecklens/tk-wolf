@@ -1,4 +1,4 @@
-import { IChatOptions } from '@novu/stateless';
+import { IChatOptions } from '@wolfxlabs/stateless';
 
 export interface IDataTelegram extends IChatOptions {
   baseUrl?: string;

@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { SmsClient } from '@azure/communication-sms';
 
 export class AzureSmsProvider implements ISmsProvider {

@@ -1,5 +1,5 @@
 import { find, get } from 'lodash';
-import { IVariable, UserPlan } from '@wolf/stateless';
+import { IVariable, UserPlan } from '@wolfxlabs/stateless';
 
 function makeid(length: number) {
   let result = '';

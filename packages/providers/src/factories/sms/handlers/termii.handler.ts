@@ -1,6 +1,6 @@
-import { TermiiSmsProvider } from '@wolf/termii';
+import { TermiiSmsProvider } from '@wolfxlabs/termii';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class TermiiSmsHandler extends BaseSmsHandler {
   constructor() {

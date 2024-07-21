@@ -5,7 +5,7 @@ import {
   ISendMessageSuccessResponse,
   ICheckIntegrationResponse,
   CheckIntegrationResponseEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import nodemailer, { SendMailOptions, Transporter } from 'nodemailer';
 
 export class Outlook365Provider implements IEmailProvider {

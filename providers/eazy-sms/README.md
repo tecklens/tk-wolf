@@ -5,7 +5,7 @@ A EazySms sms provider library for [@novu/node](https://github.com/tecklens/tk-w
 ## Usage
 
 ```javascript
-import { EazySmsProvider } from '@wolf/eazy-sms';
+import { EazySmsProvider } from '@wolfxlabs/eazy-sms';
 
 const provider = new EazySmsProvider({
     apiKey: process.env.API_KEY,

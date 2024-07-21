@@ -1,6 +1,6 @@
-import { IPushOptions, IPushProvider } from '@novu/stateless';
+import { IPushOptions, IPushProvider } from '@wolfxlabs/stateless';
 import { IPushHandler } from '../interfaces';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export abstract class BasePushHandler implements IPushHandler {
   protected provider: IPushProvider;

@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/plunk",
+  "name": "@wolfxlabs/plunk",
   "version": "1.0.0",
   "description": "A plunk wrapper for wolf",
   "main": "build/main/index.js",
@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "@plunk/node": "2.0.0"
   },
   "devDependencies": {

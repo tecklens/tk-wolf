@@ -4,7 +4,7 @@ import {
   EncryptedSecret,
   IApiRateLimitMaximum,
   OrganizationId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export interface IApiKey {
   /*

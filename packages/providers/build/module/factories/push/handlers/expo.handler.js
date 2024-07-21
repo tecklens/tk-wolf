@@ -1,6 +1,6 @@
-import { ExpoPushProvider } from '@wolf/expo';
+import { ExpoPushProvider } from '@wolfxlabs/expo';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class ExpoHandler extends BasePushHandler {
     constructor() {
         super('expo', ChannelTypeEnum.PUSH);

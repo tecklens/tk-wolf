@@ -3,7 +3,7 @@ import {
   ICredentials,
   IPushOptions,
   ISendMessageSuccessResponse,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export interface IPushHandler {
   canHandle(providerId: string, channelType: ChannelTypeEnum);

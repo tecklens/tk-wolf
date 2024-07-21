@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BandwidthHandler = void 0;
-const bandwidth_1 = require("@wolf/bandwidth");
+const bandwidth_1 = require("@wolfxlabs/bandwidth");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class BandwidthHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('bandwidth', stateless_1.ChannelTypeEnum.SMS);

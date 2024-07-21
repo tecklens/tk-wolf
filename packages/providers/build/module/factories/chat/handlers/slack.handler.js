@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { SlackProvider } from '@wolf/slack';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { SlackProvider } from '@wolfxlabs/slack';
 import { BaseChatHandler } from './base.handler';
 export class SlackHandler extends BaseChatHandler {
     constructor() {

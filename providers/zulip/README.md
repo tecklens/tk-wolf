@@ -5,7 +5,7 @@ A Zulip chat provider library for [@novu/node](https://github.com/tecklens/tk-wo
 ## Usage
 
 ```javascript
-import { ZulipProvider } from '@wolf/zulip';
+import { ZulipProvider } from '@wolfxlabs/zulip';
 
 const provider = new ZulipProvider({});
 ```

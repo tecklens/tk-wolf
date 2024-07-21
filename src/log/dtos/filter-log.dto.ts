@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsString } from 'class-validator';
-import { PaginationWithFiltersRequestDto } from '@wolf/stateless';
+import { PaginationWithFiltersRequestDto } from '@wolfxlabs/stateless';
 
 export class FilterLogDto extends PaginationWithFiltersRequestDto({
   defaultLimit: 10,

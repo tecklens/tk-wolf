@@ -1,6 +1,6 @@
-import { BulkSmsProvider } from '@wolf/bulk-sms';
+import { BulkSmsProvider } from '@wolfxlabs/bulk-sms';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class BulkSmsHandler extends BaseSmsHandler {
     constructor() {
         super('bulk-sms', ChannelTypeEnum.SMS);

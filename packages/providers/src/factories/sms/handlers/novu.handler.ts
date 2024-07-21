@@ -1,11 +1,11 @@
 // @ts-ignore
-import { TwilioSmsProvider } from '@wolf/twilio';
+import { TwilioSmsProvider } from '@wolfxlabs/twilio';
 import { BaseSmsHandler } from './base.handler';
 import {
   ChannelTypeEnum,
   ICredentials,
   SmsProviderIdEnum,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class WolfSmsHandler extends BaseSmsHandler {
   constructor() {

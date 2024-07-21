@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BrevoSmsHandler = void 0;
 const base_handler_1 = require("./base.handler");
-const brevo_sms_1 = require("@wolf/brevo-sms");
-const stateless_1 = require("@wolf/stateless");
+const brevo_sms_1 = require("@wolfxlabs/brevo-sms");
+const stateless_1 = require("@wolfxlabs/stateless");
 class BrevoSmsHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('brevo-sms', stateless_1.ChannelTypeEnum.SMS);

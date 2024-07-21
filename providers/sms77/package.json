@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/sms77",
+  "name": "@wolfxlabs/sms77",
   "version": "1.0.0",
   "description": "A sms77 wrapper for wolf",
   "main": "build/main/index.js",
@@ -32,7 +32,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "node-fetch": "^2.6.7",
     "sms77-client": "^2.14.0"
   },

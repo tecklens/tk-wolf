@@ -7,7 +7,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailEventBody,
   EmailEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import mailchimp from '@mailchimp/mailchimp_transactional';
 import { IMandrilInterface } from './mandril.interface';

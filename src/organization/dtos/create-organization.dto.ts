@@ -1,5 +1,5 @@
 import { IsDefined, IsEnum, IsOptional, IsString } from 'class-validator';
-import { ICreateOrganizationDto, JobTitleEnum } from '@wolf/stateless';
+import { ICreateOrganizationDto, JobTitleEnum } from '@wolfxlabs/stateless';
 
 export class CreateOrganizationDto implements ICreateOrganizationDto {
   @IsString()

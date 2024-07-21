@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/push-webhook",
+  "name": "@wolfxlabs/push-webhook",
   "version": "1.0.0",
   "description": "A push-webhook wrapper for wolf",
   "main": "build/main/index.js",
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "axios": "^1.6.2"
   },
   "devDependencies": {

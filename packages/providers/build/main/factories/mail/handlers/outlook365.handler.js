@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Outlook365Handler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const outlook365_1 = require("@wolf/outlook365");
+const stateless_1 = require("@wolfxlabs/stateless");
+const outlook365_1 = require("@wolfxlabs/outlook365");
 const base_handler_1 = require("./base.handler");
 class Outlook365Handler extends base_handler_1.BaseHandler {
     constructor() {

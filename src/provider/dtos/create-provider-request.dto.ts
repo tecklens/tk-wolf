@@ -12,7 +12,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { CredentialsDto } from './credentials.dto';
-import { ChannelTypeEnum, ICreateProviderDto } from '@wolf/stateless';
+import { ChannelTypeEnum, ICreateProviderDto } from '@wolfxlabs/stateless';
 
 export class CreateProviderRequestDto implements ICreateProviderDto {
   @ApiPropertyOptional({ type: String })

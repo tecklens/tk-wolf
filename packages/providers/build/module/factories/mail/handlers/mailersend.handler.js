@@ -1,6 +1,6 @@
-import { MailersendEmailProvider } from '@wolf/mailersend';
+import { MailersendEmailProvider } from '@wolfxlabs/mailersend';
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class MailerSendHandler extends BaseHandler {
     constructor() {
         super('mailersend', ChannelTypeEnum.EMAIL);

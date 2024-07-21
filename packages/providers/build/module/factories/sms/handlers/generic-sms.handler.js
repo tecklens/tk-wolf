@@ -1,6 +1,6 @@
-import { GenericSmsProvider } from '@wolf/generic-sms';
+import { GenericSmsProvider } from '@wolfxlabs/generic-sms';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class GenericSmsHandler extends BaseSmsHandler {
     constructor() {
         super('generic-sms', ChannelTypeEnum.SMS);

@@ -1,7 +1,7 @@
-import { SendgridEmailProvider } from '@wolf/sendgrid';
+import { SendgridEmailProvider } from '@wolfxlabs/sendgrid';
 
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class SendgridHandler extends BaseHandler {
   constructor() {

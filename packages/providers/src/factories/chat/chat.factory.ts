@@ -9,7 +9,7 @@ import { ZulipHandler } from './handlers/zulip.handler';
 import { GetstreamChatHandler } from './handlers/getstream.handler';
 import { RocketChatHandler } from './handlers/rocket-chat.handler';
 import { TelegramHandler } from './handlers/telegram.handler';
-import { IProvider } from '@wolf/stateless';
+import { IProvider } from '@wolfxlabs/stateless';
 
 export class ChatFactory implements IChatFactory {
   handlers: IChatHandler[] = [

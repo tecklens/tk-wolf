@@ -5,7 +5,7 @@ A Telnyx sms provider library for [@novu/stateless](https://github.com/tecklens/
 ## Usage
 
 ```javascript
-import { TelnyxSmsProvider } from '@wolf/telnyx';
+import { TelnyxSmsProvider } from '@wolfxlabs/telnyx';
 
 const provider = new TelnyxSmsProvider({
   apiKey: process.env.TELNYX_API_KEY,

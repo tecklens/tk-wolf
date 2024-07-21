@@ -16,7 +16,7 @@ import {
   NotFoundException,
   PreconditionFailedException,
 } from '@nestjs/common';
-import { EventTypes, IJwtPayload, WorkflowId } from '@wolf/stateless';
+import { EventTypes, IJwtPayload, WorkflowId } from '@wolfxlabs/stateless';
 import { v4 as uuidv4 } from 'uuid';
 import {
   AddEdgeWorkflowRequestDto,

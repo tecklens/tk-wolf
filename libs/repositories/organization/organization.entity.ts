@@ -1,4 +1,4 @@
-import { ApiServiceLevelEnum, IOrganization } from '@wolf/stateless';
+import { ApiServiceLevelEnum, IOrganization } from '@wolfxlabs/stateless';
 
 export class OrganizationEntity implements IOrganization {
   _id: string;

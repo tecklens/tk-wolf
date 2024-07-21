@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { Outlook365Provider } from '@wolf/outlook365';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { Outlook365Provider } from '@wolfxlabs/outlook365';
 import { BaseHandler } from './base.handler';
 export class Outlook365Handler extends BaseHandler {
     constructor() {

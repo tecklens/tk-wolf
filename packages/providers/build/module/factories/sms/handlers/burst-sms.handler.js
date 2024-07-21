@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { BurstSmsProvider } from '@wolf/burst-sms';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { BurstSmsProvider } from '@wolfxlabs/burst-sms';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class BurstSmsHandler extends BaseSmsHandler {
     constructor() {
         super('burst-sms', ChannelTypeEnum.SMS);

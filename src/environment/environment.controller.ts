@@ -24,7 +24,7 @@ import {
   ApiResponse,
   ExternalApiAccessible,
   IJwtPayload,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 @ApiBearerAuth()
 @Controller('environment')

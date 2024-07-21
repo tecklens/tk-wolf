@@ -5,7 +5,7 @@ A plivo sms provider library for [@novu/stateless](https://github.com/tecklens/t
 ## Usage
 
 ```javascript
-import { PlivoSmsProvider } from '@wolf/plivo';
+import { PlivoSmsProvider } from '@wolfxlabs/plivo';
 
 const provider = new PlivoSmsProvider({
   accountSid: process.env.PLIVO_ACCOUNT_ID,

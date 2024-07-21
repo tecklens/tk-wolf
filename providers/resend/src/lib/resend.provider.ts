@@ -5,7 +5,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailOptions,
   IEmailProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { Resend } from 'resend';
 
 export class ResendEmailProvider implements IEmailProvider {

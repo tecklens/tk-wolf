@@ -7,7 +7,7 @@ import {
   MemberRoleEnum,
   MemberStatusEnum,
   OrganizationId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class MemberEntity {
   _id: string;

@@ -1,4 +1,4 @@
-import { IEdgeEntity, NodeId, WorkflowId } from '@wolf/stateless';
+import { IEdgeEntity, NodeId, WorkflowId } from '@wolfxlabs/stateless';
 
 export class EdgeEntity implements IEdgeEntity {
   id?: NodeId;

@@ -1,6 +1,6 @@
-import { MailgunEmailProvider } from '@wolf/mailgun';
+import { MailgunEmailProvider } from '@wolfxlabs/mailgun';
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class MailgunHandler extends BaseHandler {
   constructor() {

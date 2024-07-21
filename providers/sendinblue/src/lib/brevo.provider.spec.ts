@@ -1,5 +1,5 @@
 import { BrevoEmailProvider } from './brevo.provider';
-import { EmailEventStatusEnum } from '@novu/stateless';
+import { EmailEventStatusEnum } from '@wolfxlabs/stateless';
 
 const mockConfig = {
   apiKey:

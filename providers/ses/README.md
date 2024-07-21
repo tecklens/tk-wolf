@@ -5,7 +5,7 @@ A SES email provider library for [@novu/stateless](https://github.com/tecklens/t
 ## Usage
 
 ```javascript
-import { SESEmailProvider } from "@wolf/ses"
+import { SESEmailProvider } from "@wolfxlabs/ses"
 
 const provider = new SESEmailProvider({
     region: "eu-west-1",

@@ -1,6 +1,6 @@
 import { BaseChatHandler } from './base.handler';
-import { MattermostProvider } from '@wolf/mattermost';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { MattermostProvider } from '@wolfxlabs/mattermost';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class MattermostHandler extends BaseChatHandler {
     constructor() {
         super('mattermost', ChannelTypeEnum.CHAT);

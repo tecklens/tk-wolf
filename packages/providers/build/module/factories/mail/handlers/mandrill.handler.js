@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { MandrillProvider } from '@wolf/mandrill';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { MandrillProvider } from '@wolfxlabs/mandrill';
 import { BaseHandler } from './base.handler';
 export class MandrillHandler extends BaseHandler {
     constructor() {

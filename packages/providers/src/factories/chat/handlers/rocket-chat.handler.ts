@@ -1,10 +1,10 @@
 import { BaseChatHandler } from './base.handler';
-import { RocketChatProvider } from '@wolf/rocket-chat';
+import { RocketChatProvider } from '@wolfxlabs/rocket-chat';
 import {
   ChannelTypeEnum,
   ChatProviderIdEnum,
   ICredentials,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class RocketChatHandler extends BaseChatHandler {
   constructor() {

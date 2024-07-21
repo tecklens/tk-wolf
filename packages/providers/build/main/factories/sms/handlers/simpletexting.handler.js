@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpletextingSmsHandler = void 0;
-const simpletexting_1 = require("@wolf/simpletexting");
+const simpletexting_1 = require("@wolfxlabs/simpletexting");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class SimpletextingSmsHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('simpletexting', stateless_1.ChannelTypeEnum.SMS);

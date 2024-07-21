@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClickatellHandler = void 0;
-const clickatell_1 = require("@wolf/clickatell");
+const clickatell_1 = require("@wolfxlabs/clickatell");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class ClickatellHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('clickatell', stateless_1.ChannelTypeEnum.SMS);

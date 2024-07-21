@@ -5,7 +5,7 @@ import {
   IEmailProvider,
   ICheckIntegrationResponse,
   CheckIntegrationResponseEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import MailerSend, { EmailParams, Recipient, Attachment } from 'mailersend';
 

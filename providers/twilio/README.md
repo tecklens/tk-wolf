@@ -5,7 +5,7 @@ A twilio sms provider library for [@novu/stateless](https://github.com/tecklens/
 ## Usage
 
 ```javascript
-import { TwilioSmsProvider } from '@wolf/twilio';
+import { TwilioSmsProvider } from '@wolfxlabs/twilio';
 
 const provider = new TwilioSmsProvider({
   accountSid: process.env.TWILIO_ACCOUNT_SID,

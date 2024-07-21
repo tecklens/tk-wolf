@@ -6,7 +6,7 @@ import {
   ICheckIntegrationResponse,
   IEmailEventBody,
   CheckIntegrationResponseEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import Plunk from '@plunk/node';
 import { IPlunkResponse } from './plunk.interface';

@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { NodemailerProvider } from '@wolf/nodemailer';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { NodemailerProvider } from '@wolfxlabs/nodemailer';
 import { BaseHandler } from './base.handler';
 
 export class NodemailerHandler extends BaseHandler {

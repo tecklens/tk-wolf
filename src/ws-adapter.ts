@@ -10,7 +10,7 @@ import { filter, mergeMap } from 'rxjs/operators';
 import { CLOSE_EVENT, CONNECTION_EVENT } from '@nestjs/websockets/constants';
 import * as url from 'url';
 import { jwtDecode } from 'jwt-decode';
-import { IEvent } from '@wolf/stateless';
+import { IEvent } from '@wolfxlabs/stateless';
 
 export class WsAdapter implements WebSocketAdapter {
   constructor(private app: INestApplicationContext) {}

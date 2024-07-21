@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RyverHandler = void 0;
-const ryver_1 = require("@wolf/ryver");
+const ryver_1 = require("@wolfxlabs/ryver");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class RyverHandler extends base_handler_1.BaseChatHandler {
     constructor() {
         super('ryver', stateless_1.ChannelTypeEnum.CHAT);

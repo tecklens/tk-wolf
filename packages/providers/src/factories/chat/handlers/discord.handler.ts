@@ -1,6 +1,6 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 import { BaseChatHandler } from './base.handler';
-import { DiscordProvider } from '@wolf/discord';
+import { DiscordProvider } from '@wolfxlabs/discord';
 
 export class DiscordHandler extends BaseChatHandler {
   constructor() {

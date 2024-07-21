@@ -5,7 +5,7 @@ A SNS SMS provider library for [@novu/stateless](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { SNSSmsProvider } from "@wolf/sns"
+import { SNSSmsProvider } from "@wolfxlabs/sns"
 
 const provider = new SNSSmsProvider({
     region: "eu-west-1",

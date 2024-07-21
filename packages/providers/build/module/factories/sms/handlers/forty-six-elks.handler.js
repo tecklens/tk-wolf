@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { FortySixElksSmsProvider } from '@wolf/forty-six-elks';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { FortySixElksSmsProvider } from '@wolfxlabs/forty-six-elks';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class FortySixElksHandler extends BaseSmsHandler {
     constructor() {
         super('forty-six-elks', ChannelTypeEnum.SMS);

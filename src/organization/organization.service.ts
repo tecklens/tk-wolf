@@ -14,7 +14,7 @@ import { UserEntity, UserRepository } from '@libs/repositories/user';
 
 import { v1 as uuidv1 } from 'uuid';
 import { AuthService } from '@app/auth/auth.service';
-import { MailFactory } from '@wolf/providers';
+import { MailFactory } from '@wolfxlabs/providers';
 import { ProviderEntity } from '@libs/repositories/provider';
 import { BrandRepository } from '@libs/repositories/brand';
 import {
@@ -26,7 +26,7 @@ import {
   decryptApiKey,
   decryptCredentials,
   normalizeEmail,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import { InviteMemberDto, ResendInviteDto, UpdateBrandDto } from './dtos';
 
 const designHtmlInvite =

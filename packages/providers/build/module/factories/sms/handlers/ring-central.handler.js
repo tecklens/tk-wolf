@@ -1,6 +1,6 @@
-import { RingCentralSmsProvider } from '@wolf/ring-central';
+import { RingCentralSmsProvider } from '@wolfxlabs/ring-central';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class RingCentralHandler extends BaseSmsHandler {
     constructor() {
         super('ring-central', ChannelTypeEnum.SMS);

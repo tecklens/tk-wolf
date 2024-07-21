@@ -4,7 +4,7 @@ import {
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export interface ISmsHandler {
   canHandle(providerId: string, channelType: ChannelTypeEnum);

@@ -1,6 +1,6 @@
-import { TelnyxSmsProvider } from '@wolf/telnyx';
+import { TelnyxSmsProvider } from '@wolfxlabs/telnyx';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class TelnyxHandler extends BaseSmsHandler {
     constructor() {
         super('telnyx', ChannelTypeEnum.SMS);

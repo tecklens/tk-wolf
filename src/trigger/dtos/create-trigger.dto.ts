@@ -4,7 +4,7 @@ import {
   IOverridesDataTrigger,
   ITargetTrigger,
   WorkflowId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class CreateTriggerDto {
   @ApiProperty()

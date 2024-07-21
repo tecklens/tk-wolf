@@ -1,4 +1,4 @@
-import { IVariable, VariableId, WorkflowId } from '@wolf/stateless';
+import { IVariable, VariableId, WorkflowId } from '@wolfxlabs/stateless';
 
 export class VariableEntity implements IVariable {
   _id: VariableId;

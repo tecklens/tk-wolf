@@ -1,4 +1,4 @@
-import { ISubscriber, UserId } from '@wolf/stateless';
+import { ISubscriber, UserId } from '@wolfxlabs/stateless';
 
 export class SubscriberEntity implements ISubscriber {
   _id?: string;

@@ -7,7 +7,7 @@ import {
   IEmailOptions,
   IEmailProvider,
   ISendMessageSuccessResponse,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { SESClient, SendRawEmailCommand } from '@aws-sdk/client-ses';
 import { SESConfig } from './ses.config';
 import nodemailer from 'nodemailer';

@@ -1,8 +1,7 @@
 {
-  "npmClient": "pnpm",
+  "npmClient": "npm",
   "packages": [
-    "providers/*",
-    "packages/*"
+    "providers/*"
   ],
   "command": {
     "publish": {

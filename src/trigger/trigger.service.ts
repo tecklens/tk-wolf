@@ -16,7 +16,7 @@ import {
   WorkflowRepository,
 } from '@libs/repositories/workflow';
 import { VariableRepository } from '@libs/repositories/variable';
-import { IJwtPayload, ILogTrigger, INextJob, IVariable } from '@wolf/stateless';
+import { IJwtPayload, ILogTrigger, INextJob, IVariable } from '@wolfxlabs/stateless';
 import {
   CreateBulkTriggerDto,
   CreateTriggerDto,

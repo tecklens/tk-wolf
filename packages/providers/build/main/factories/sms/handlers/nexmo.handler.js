@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NexmoHandler = void 0;
 const base_handler_1 = require("./base.handler");
-const nexmo_1 = require("@wolf/nexmo");
-const stateless_1 = require("@wolf/stateless");
+const nexmo_1 = require("@wolfxlabs/nexmo");
+const stateless_1 = require("@wolfxlabs/stateless");
 class NexmoHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('nexmo', stateless_1.ChannelTypeEnum.SMS);

@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@app/auth/strategy';
 import { PaymentService } from '@app/payment/payment.service';
 import { UserSession } from '@libs/utils/user.session';
-import { ExternalApiAccessible, IJwtPayload } from '@wolf/stateless';
+import { ExternalApiAccessible, IJwtPayload } from '@wolfxlabs/stateless';
 import { CreatePaymentIndentDto } from './dtos';
 
 @Controller('payment')

@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   IPushOptions,
   IPushProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import * as Pushpad from 'pushpad';
 
 export class PushpadPushProvider implements IPushProvider {

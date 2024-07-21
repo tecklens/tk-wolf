@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/azure-sms",
+  "name": "@wolfxlabs/azure-sms",
   "version": "1.0.0",
   "description": "A azure-sms wrapper for wolf",
   "main": "build/main/index.js",
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "@azure/communication-sms": "^1.0.0",
-    "@novu/stateless": "^0.24.1"
+    "@wolfxlabs/stateless": "^1.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "~1.0.1",

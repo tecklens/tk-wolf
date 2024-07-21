@@ -1,6 +1,6 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { SESConfig } from '@wolf/ses/build/module/lib/ses.config';
-import { SESEmailProvider } from '@wolf/ses';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { SESConfig } from '@wolfxlabs/ses/build/module/lib/ses.config';
+import { SESEmailProvider } from '@wolfxlabs/ses';
 import { BaseHandler } from './base.handler';
 
 export class SESHandler extends BaseHandler {

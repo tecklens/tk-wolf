@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { MandrillProvider } from '@wolf/mandrill';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { MandrillProvider } from '@wolfxlabs/mandrill';
 import { BaseHandler } from './base.handler';
 
 export class MandrillHandler extends BaseHandler {

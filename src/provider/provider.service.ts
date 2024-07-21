@@ -14,7 +14,7 @@ import {
   ProviderRepository,
 } from '@libs/repositories/provider';
 import slugify from 'slugify';
-import { MailFactory } from '@wolf/providers';
+import { MailFactory } from '@wolfxlabs/providers';
 import * as shortid from 'shortid';
 import { CacheKey } from '@nestjs/cache-manager';
 import {
@@ -28,7 +28,7 @@ import {
   ChannelTypeEnum,
   InAppProviderIdEnum,
   ICredentials,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 @Injectable()
 export class ProviderService {

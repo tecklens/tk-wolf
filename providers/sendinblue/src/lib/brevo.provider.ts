@@ -9,7 +9,7 @@ import {
   IEmailOptions,
   IEmailProvider,
   ISendMessageSuccessResponse,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 export class BrevoEmailProvider implements IEmailProvider {
   id = 'sendinblue';

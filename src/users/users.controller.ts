@@ -19,7 +19,7 @@ import {
 import { JwtAuthGuard } from '@app/auth/strategy';
 import { UsersService } from '@app/users/users.service';
 import { UserSession } from '@libs/utils/user.session';
-import { ExternalApiAccessible, IJwtPayload } from '@wolf/stateless';
+import { ExternalApiAccessible, IJwtPayload } from '@wolfxlabs/stateless';
 import {
   ChangePassDto,
   ChangeProfileDto,

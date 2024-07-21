@@ -5,7 +5,7 @@ A Slack chat provider library for [@novu/node](https://github.com/tecklens/tk-wo
 ## Usage
 
 ````javascript
-import { SlackProvider } from '@wolf/slack';
+import { SlackProvider } from '@wolfxlabs/slack';
 
 const provider = new SlackProvider({
   applicationId: process.env.APPLICATION_ID,

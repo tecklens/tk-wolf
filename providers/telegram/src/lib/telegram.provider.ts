@@ -2,7 +2,7 @@ import {
   ChannelTypeEnum,
   IChatProvider,
   ISendMessageSuccessResponse,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import axios from 'axios';
 import { IDataTelegram } from './types';
 

@@ -1,4 +1,4 @@
-import { ChannelId, IUserRateLimit } from '@wolf/stateless';
+import { ChannelId, IUserRateLimit } from '@wolfxlabs/stateless';
 
 export class UserRateLimitEntity implements IUserRateLimit {
   _id?: ChannelId;

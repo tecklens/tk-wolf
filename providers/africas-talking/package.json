@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/africas-talking",
+  "name": "@wolfxlabs/africas-talking",
   "version": "1.0.0",
   "description": "An Africa's Talking wrapper for wolf",
   "main": "build/main/index.js",
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "africastalking": "^0.6.2"
   },
   "devDependencies": {

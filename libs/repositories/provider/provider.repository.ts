@@ -5,7 +5,7 @@ import { ProviderDBModel, ProviderEntity } from './provider.entity';
 import { Provider } from './provider.schema';
 
 import { BaseRepository } from '../base-repository';
-import { EnforceEnvOrOrgIds } from '@wolf/stateless';
+import { EnforceEnvOrOrgIds } from '@wolfxlabs/stateless';
 
 export type IntegrationQuery = FilterQuery<ProviderDBModel> &
   EnforceEnvOrOrgIds;

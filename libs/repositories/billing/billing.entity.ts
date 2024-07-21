@@ -1,4 +1,4 @@
-import { IBilling, OrganizationId } from '@wolf/stateless';
+import { IBilling, OrganizationId } from '@wolfxlabs/stateless';
 
 export class BillingEntity implements IBilling {
   _userId?: string;

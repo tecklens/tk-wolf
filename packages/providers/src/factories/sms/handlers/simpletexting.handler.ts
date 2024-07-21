@@ -1,6 +1,6 @@
-import { SimpletextingSmsProvider } from '@wolf/simpletexting';
+import { SimpletextingSmsProvider } from '@wolfxlabs/simpletexting';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class SimpletextingSmsHandler extends BaseSmsHandler {
   constructor() {

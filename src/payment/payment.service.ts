@@ -7,7 +7,7 @@ import { Stripe } from 'stripe';
 import { UserPlan, UserRepository } from '@libs/repositories/user';
 import { BillingRepository } from '@libs/repositories/billing';
 import { LimitService } from '@app/auth/limit.service';
-import { IBilling, IJwtPayload, encryptSecret } from '@wolf/stateless';
+import { IBilling, IJwtPayload, encryptSecret } from '@wolfxlabs/stateless';
 import { CreatePaymentIndentDto } from './dtos';
 
 @Injectable()

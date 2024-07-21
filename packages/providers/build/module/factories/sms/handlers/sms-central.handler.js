@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { SmsCentralSmsProvider } from '@wolf/sms-central';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { SmsCentralSmsProvider } from '@wolfxlabs/sms-central';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class SmsCentralHandler extends BaseSmsHandler {
     constructor() {
         super('sms-central', ChannelTypeEnum.SMS);

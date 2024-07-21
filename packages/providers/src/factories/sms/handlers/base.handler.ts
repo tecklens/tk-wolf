@@ -1,6 +1,6 @@
-import { ISmsOptions, ISmsProvider } from '@novu/stateless';
+import { ISmsOptions, ISmsProvider } from '@wolfxlabs/stateless';
 import { ISmsHandler } from '../interfaces';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export abstract class BaseSmsHandler implements ISmsHandler {
   protected provider: ISmsProvider;

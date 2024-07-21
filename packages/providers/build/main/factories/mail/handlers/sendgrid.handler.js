@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SendgridHandler = void 0;
-const sendgrid_1 = require("@wolf/sendgrid");
+const sendgrid_1 = require("@wolfxlabs/sendgrid");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class SendgridHandler extends base_handler_1.BaseHandler {
     constructor() {
         super('sendgrid', stateless_1.ChannelTypeEnum.EMAIL);

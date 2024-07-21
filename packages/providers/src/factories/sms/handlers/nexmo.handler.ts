@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { NexmoSmsProvider } from '@wolf/nexmo';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { NexmoSmsProvider } from '@wolfxlabs/nexmo';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class NexmoHandler extends BaseSmsHandler {
   constructor() {

@@ -7,7 +7,7 @@ import {
   IJwtPayload,
   PassportStrategyEnum,
   HttpRequestHeaderKeysEnum,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(

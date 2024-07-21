@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { SlackProvider } from '@wolf/slack';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { SlackProvider } from '@wolfxlabs/slack';
 
 import { BaseChatHandler } from './base.handler';
 

@@ -7,7 +7,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailEventBody,
   EmailEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { IEmailBody, IEmailResponse } from 'netcore';
 import axios, { AxiosInstance } from 'axios';
 

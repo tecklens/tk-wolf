@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SlackHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const slack_1 = require("@wolf/slack");
+const stateless_1 = require("@wolfxlabs/stateless");
+const slack_1 = require("@wolfxlabs/slack");
 const base_handler_1 = require("./base.handler");
 class SlackHandler extends base_handler_1.BaseChatHandler {
     constructor() {

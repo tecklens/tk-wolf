@@ -5,7 +5,7 @@ import {
   ISmsOptions,
   ISmsProvider,
   SmsEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import * as plivo from 'plivo';
 

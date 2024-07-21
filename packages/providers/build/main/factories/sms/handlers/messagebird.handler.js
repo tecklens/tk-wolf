@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageBirdHandler = void 0;
-const messagebird_1 = require("@wolf/messagebird");
+const messagebird_1 = require("@wolfxlabs/messagebird");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class MessageBirdHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('messagebird', stateless_1.ChannelTypeEnum.SMS);

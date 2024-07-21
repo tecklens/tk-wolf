@@ -1,6 +1,6 @@
-import { PlivoSmsProvider } from '@wolf/plivo';
+import { PlivoSmsProvider } from '@wolfxlabs/plivo';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class PlivoHandler extends BaseSmsHandler {
   constructor() {

@@ -5,7 +5,7 @@ import {
   IEmailProvider,
   ICheckIntegrationResponse,
   CheckIntegrationResponseEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import crypto from 'crypto';
 import axios from 'axios';

@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { SESEmailProvider } from '@wolf/ses';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { SESEmailProvider } from '@wolfxlabs/ses';
 import { BaseHandler } from './base.handler';
 export class SESHandler extends BaseHandler {
     constructor() {

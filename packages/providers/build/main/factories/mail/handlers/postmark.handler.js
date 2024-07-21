@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostmarkHandler = void 0;
-const stateless_1 = require("@wolf/stateless");
-const postmark_1 = require("@wolf/postmark");
+const stateless_1 = require("@wolfxlabs/stateless");
+const postmark_1 = require("@wolfxlabs/postmark");
 const base_handler_1 = require("./base.handler");
 class PostmarkHandler extends base_handler_1.BaseHandler {
     constructor() {

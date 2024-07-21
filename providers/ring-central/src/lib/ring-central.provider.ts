@@ -5,7 +5,7 @@ import {
   ISmsOptions,
   ISmsProvider,
   SmsEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { SDK } from '@ringcentral/sdk';
 import Platform from '@ringcentral/sdk/lib/platform/Platform';
 

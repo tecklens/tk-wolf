@@ -4,7 +4,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Kafka, Producer, ProducerRecord } from 'kafkajs';
-import { IEventQueue } from '@wolf/stateless';
+import { IEventQueue } from '@wolfxlabs/stateless';
 
 @Injectable()
 export class ProducerService implements OnModuleInit, OnApplicationShutdown {

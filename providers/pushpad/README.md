@@ -5,7 +5,7 @@ A Pushpad push provider library for [@novu/node](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { PushpadPushProvider } from '@wolf/pushpad';
+import { PushpadPushProvider } from '@wolfxlabs/pushpad';
 
 const provider = new PushpadPushProvider({
   apiKey: process.env.PUSHPAD_AUTH_TOKEN,

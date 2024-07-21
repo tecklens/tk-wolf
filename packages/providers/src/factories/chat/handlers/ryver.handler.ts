@@ -1,6 +1,6 @@
-import { RyverChatProvider } from '@wolf/ryver';
+import { RyverChatProvider } from '@wolfxlabs/ryver';
 import { BaseChatHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class RyverHandler extends BaseChatHandler {
   constructor() {

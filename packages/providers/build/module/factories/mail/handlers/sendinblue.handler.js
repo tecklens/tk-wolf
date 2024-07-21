@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { BrevoEmailProvider } from '@wolf/sendinblue';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { BrevoEmailProvider } from '@wolfxlabs/sendinblue';
 import { BaseHandler } from './base.handler';
 export class SendinblueHandler extends BaseHandler {
     constructor() {

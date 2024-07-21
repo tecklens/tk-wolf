@@ -1,6 +1,6 @@
 import fetch from 'jest-fetch-mock';
 import { BrevoSmsProvider } from './brevo-sms.provider';
-import { ISmsOptions, SmsEventStatusEnum } from '@novu/stateless';
+import { ISmsOptions, SmsEventStatusEnum } from '@wolfxlabs/stateless';
 import { objectToEqual } from './objectToEqual';
 import { dateIsValid } from './dateIsValid';
 

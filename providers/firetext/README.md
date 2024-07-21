@@ -5,7 +5,7 @@ A Firetext sms provider library for [@novu/node](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { FiretextSmsProvider } from '@wolf/firetext';
+import { FiretextSmsProvider } from '@wolfxlabs/firetext';
 
 const provider = new FiretextSmsProvider({
   apiKey: process.env.FIRETEXT_API_KEY,

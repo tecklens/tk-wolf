@@ -1,6 +1,6 @@
 import { BaseChatHandler } from './base.handler';
-import { ZulipProvider } from '@wolf/zulip';
-import { ChannelTypeEnum, ChatProviderIdEnum, } from '@wolf/stateless';
+import { ZulipProvider } from '@wolfxlabs/zulip';
+import { ChannelTypeEnum, ChatProviderIdEnum, } from '@wolfxlabs/stateless';
 export class ZulipHandler extends BaseChatHandler {
     constructor() {
         super(ChatProviderIdEnum.Zulip, ChannelTypeEnum.CHAT);

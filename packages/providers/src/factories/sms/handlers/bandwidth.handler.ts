@@ -1,6 +1,6 @@
-import { BandwidthSmsProvider } from '@wolf/bandwidth';
+import { BandwidthSmsProvider } from '@wolfxlabs/bandwidth';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class BandwidthHandler extends BaseSmsHandler {
   constructor() {

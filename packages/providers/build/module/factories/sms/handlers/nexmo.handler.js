@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { NexmoSmsProvider } from '@wolf/nexmo';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { NexmoSmsProvider } from '@wolfxlabs/nexmo';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class NexmoHandler extends BaseSmsHandler {
     constructor() {
         super('nexmo', ChannelTypeEnum.SMS);

@@ -1,7 +1,7 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 import { BaseChatHandler } from './base.handler';
-import { GetstreamChatProvider } from '@wolf/getstream';
+import { GetstreamChatProvider } from '@wolfxlabs/getstream';
 
 export class GetstreamChatHandler extends BaseChatHandler {
   constructor() {

@@ -1,6 +1,6 @@
 import { BaseHandler } from './base.handler';
-import { BrazeEmailProvider } from '@wolf/braze';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { BrazeEmailProvider } from '@wolfxlabs/braze';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class BrazeEmailHandler extends BaseHandler {
     constructor() {
         super('braze', ChannelTypeEnum.EMAIL);

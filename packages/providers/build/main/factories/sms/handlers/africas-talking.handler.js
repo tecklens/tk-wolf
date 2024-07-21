@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AfricasTalkingSmsHandler = void 0;
-const africas_talking_1 = require("@wolf/africas-talking");
+const africas_talking_1 = require("@wolfxlabs/africas-talking");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class AfricasTalkingSmsHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('africas-talking', stateless_1.ChannelTypeEnum.SMS);

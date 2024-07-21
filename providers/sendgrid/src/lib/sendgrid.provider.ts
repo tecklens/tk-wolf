@@ -8,7 +8,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailEventBody,
   IAttachmentOptions,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import { MailDataRequired, MailService } from '@sendgrid/mail';
 

@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { PostmarkEmailProvider } from '@wolf/postmark';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { PostmarkEmailProvider } from '@wolfxlabs/postmark';
 import { BaseHandler } from './base.handler';
 
 export class PostmarkHandler extends BaseHandler {

@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { FiretextSmsProvider } from '@wolf/firetext';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { FiretextSmsProvider } from '@wolfxlabs/firetext';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class FiretextSmsHandler extends BaseSmsHandler {
     constructor() {
         super('firetext', ChannelTypeEnum.SMS);

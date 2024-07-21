@@ -1,6 +1,6 @@
-import { PushpadPushProvider } from '@wolf/pushpad';
+import { PushpadPushProvider } from '@wolfxlabs/pushpad';
 import { BasePushHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class PushpadHandler extends BasePushHandler {
     constructor() {
         super('pushpad', ChannelTypeEnum.PUSH);

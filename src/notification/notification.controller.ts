@@ -13,7 +13,7 @@ import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { NotificationService } from '@app/notification/notification.service';
 import { UserSession } from '@libs/utils/user.session';
 import { NotificationsRequestDto } from './dtos';
-import { IJwtPayload } from '@wolf/stateless';
+import { IJwtPayload } from '@wolfxlabs/stateless';
 
 @ApiBearerAuth()
 @Controller('notification')

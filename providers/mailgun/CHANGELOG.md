@@ -8,7 +8,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.2.4](https://github.com/wolfhq/mailgun/compare/v0.2.3...v0.2.4) (2021-10-30)
 
-**Note:** Version bump only for package @notifire/mailgun (now @wolf/mailgun)
+**Note:** Version bump only for package @notifire/mailgun (now @wolfxlabs/mailgun)
 
 
 

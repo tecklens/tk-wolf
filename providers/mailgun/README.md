@@ -5,7 +5,7 @@ A mailgun email provider library for [@novu/stateless](https://github.com/teckle
 ## Usage
 
 ```javascript
-import { MailgunEmailProvider } from '@wolf/mailgun';
+import { MailgunEmailProvider } from '@wolfxlabs/mailgun';
 
 const provider = new MailgunEmailProvider({
   apiKey: process.env.MAILGUN_API_KEY,

@@ -5,7 +5,7 @@ A Braze email provider library for [@novu/node](https://github.com/tecklens/tk-w
 ## Usage
 
 ```javascript
-import { BrazeEmailProvider } from '@wolf/braze';
+import { BrazeEmailProvider } from '@wolfxlabs/braze';
 const provider = new BrazeEmailProvider({
     apiKey: process.env.BRAZE_API_KEY,
     apiURL: process.env.BRAZE_API_URL,

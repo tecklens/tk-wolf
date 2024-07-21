@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/plivo",
+  "name": "@wolfxlabs/plivo",
   "version": "1.0.0",
   "description": "A plivo wrapper for wolf",
   "main": "build/main/index.js",
@@ -44,7 +44,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "plivo": "^4.68.0"
   },
   "devDependencies": {

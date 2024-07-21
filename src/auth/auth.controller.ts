@@ -22,7 +22,7 @@ import {
   IJwtPayload,
   buildGoogleOauthRedirectUrl,
   buildOauthRedirectUrl,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import { GitHubAuthGuard, GoogleOAuthGuard, JwtAuthGuard } from './strategy';
 import {
   LoginBodyDto,

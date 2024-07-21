@@ -5,7 +5,7 @@ import {
   IEmailOptions,
   IEmailProvider,
   ISendMessageSuccessResponse,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export interface IMailHandler {
   canHandle(providerId: string, channelType: ChannelTypeEnum);

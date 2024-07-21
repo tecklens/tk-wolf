@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { TelegramProvider } from '@wolf/telegram';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { TelegramProvider } from '@wolfxlabs/telegram';
 import { BaseChatHandler } from './base.handler';
 export class TelegramHandler extends BaseChatHandler {
     constructor() {

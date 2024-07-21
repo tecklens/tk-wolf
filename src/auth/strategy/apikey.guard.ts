@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard, IAuthModuleOptions } from '@nestjs/passport';
-import { PassportStrategyEnum } from '@wolf/stateless';
+import { PassportStrategyEnum } from '@wolfxlabs/stateless';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 

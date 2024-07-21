@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
 import { EnvironmentDBModel } from './environment.entity';
-import { ApiRateLimitCategoryEnum } from '@wolf/stateless';
+import { ApiRateLimitCategoryEnum } from '@wolfxlabs/stateless';
 
 const environmentSchema = new Schema<EnvironmentDBModel>(
   {

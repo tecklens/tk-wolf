@@ -7,7 +7,7 @@ import {
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import { Infobip, AuthType } from '@infobip-api/sdk';
 
 const getProviderId = (channelType) => {

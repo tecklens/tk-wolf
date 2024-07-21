@@ -1,6 +1,6 @@
-import { SNSSmsProvider } from '@wolf/sns';
+import { SNSSmsProvider } from '@wolfxlabs/sns';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class SnsHandler extends BaseSmsHandler {
     constructor() {
         super('sns', ChannelTypeEnum.SMS);

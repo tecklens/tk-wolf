@@ -5,7 +5,7 @@ A Resend email provider library for [@novu/node](https://github.com/tecklens/tk-
 ## Usage
 
 ```javascript
-import { ResendEmailProvider } from '@wolf/resend';
+import { ResendEmailProvider } from '@wolfxlabs/resend';
 
 const provider = new ResendEmailProvider({
   apiKey: process.env.RESEND_API_KEY

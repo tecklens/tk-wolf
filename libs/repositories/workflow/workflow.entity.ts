@@ -4,7 +4,7 @@ import {
   OrganizationId,
   UserId,
   WorkflowId,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class WorkflowEntity implements IWorkflow {
   _id?: WorkflowId;

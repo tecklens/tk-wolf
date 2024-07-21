@@ -1,4 +1,4 @@
-import { ChannelTypeEnum, IChatOptions, ICredentials, IProvider, ISendMessageSuccessResponse } from '@wolf/stateless';
+import { ChannelTypeEnum, IChatOptions, ICredentials, IProvider, ISendMessageSuccessResponse } from '@wolfxlabs/stateless';
 export interface IChatHandler {
     canHandle(providerId: string, channelType: ChannelTypeEnum): any;
     buildProvider(credentials: ICredentials): any;

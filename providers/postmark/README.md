@@ -5,7 +5,7 @@ A postmark email provider library for [@novu/stateless](https://github.com/teckl
 ## Usage
 
 ```javascript
-import { PostmarkEmailProvider } from '@wolf/postmark';
+import { PostmarkEmailProvider } from '@wolfxlabs/postmark';
 
 const provider = new PostmarkEmailProvider({
   apiKey: process.env.POSTMARK_API_KEY

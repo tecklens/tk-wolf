@@ -1,6 +1,6 @@
-import { InfobipEmailProvider } from '@wolf/infobip';
+import { InfobipEmailProvider } from '@wolfxlabs/infobip';
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class InfobipEmailHandler extends BaseHandler {
     constructor() {
         super('infobip', ChannelTypeEnum.EMAIL);

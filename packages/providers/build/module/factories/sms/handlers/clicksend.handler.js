@@ -1,6 +1,6 @@
-import { ClicksendSmsProvider } from '@wolf/clicksend';
+import { ClicksendSmsProvider } from '@wolfxlabs/clicksend';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class ClicksendSmsHandler extends BaseSmsHandler {
     constructor() {
         super('clicksend', ChannelTypeEnum.SMS);

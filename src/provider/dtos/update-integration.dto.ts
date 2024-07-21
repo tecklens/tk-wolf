@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { CredentialsDto } from './credentials.dto';
 import { Type } from 'class-transformer';
-import { IConstructIntegrationDto } from '@wolf/stateless';
+import { IConstructIntegrationDto } from '@wolfxlabs/stateless';
 
 export class UpdateIntegrationRequestDto implements IConstructIntegrationDto {
   @ApiPropertyOptional({ type: String })

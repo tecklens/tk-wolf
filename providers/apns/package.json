@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/apns",
+  "name": "@wolfxlabs/apns",
   "version": "1.0.0",
   "description": "A apns wrapper for wolf",
   "main": "build/main/index.js",
@@ -36,7 +36,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "@parse/node-apn": "^5.2.3"
   },
   "devDependencies": {

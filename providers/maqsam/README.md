@@ -5,7 +5,7 @@ A Maqsam SMS provider library for [@novu/node](https://github.com/tecklens/tk-wo
 ## Usage
 
 ```javascript
-import { MaqsamSmsProvider } from '@wolf/maqsam';
+import { MaqsamSmsProvider } from '@wolfxlabs/maqsam';
 
 const provider = new MaqsamSmsProvider({
   accessKeyId: process.env.MAQSAM_ACCESS_KEY_ID,

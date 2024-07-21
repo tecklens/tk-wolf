@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/mandrill",
+  "name": "@wolfxlabs/mandrill",
   "version": "1.0.0",
   "description": "A mandrill wrapper for wolf",
   "main": "build/main/index.js",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@mailchimp/mailchimp_transactional": "^1.0.50",
-    "@novu/stateless": "^0.24.1"
+    "@wolfxlabs/stateless": "^1.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "1.0.2",

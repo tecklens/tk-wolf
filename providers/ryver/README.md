@@ -5,7 +5,7 @@ A Ryver chat provider library for [@novu/node](https://github.com/tecklens/tk-wo
 ## Usage
 
 ````javascript
-import { RyverProvider } from '@wolf/ryver';
+import { RyverProvider } from '@wolfxlabs/ryver';
 
 const provider = new RyverProvider();
 ````

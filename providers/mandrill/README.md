@@ -5,7 +5,7 @@ A mandrill email provider library for [@novu/stateless](https://github.com/teckl
 ## Usage
 
 ```javascript
-import { MandrillProvider } from '@wolf/mandrill';
+import { MandrillProvider } from '@wolfxlabs/mandrill';
 
 const provider = new MandrillProvider({
   apiKey: process.env.API_KEY,

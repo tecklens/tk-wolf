@@ -5,7 +5,7 @@ A sms77 sms provider library for [@novu/stateless](https://github.com/tecklens/t
 ## Usage
 
 ```javascript
-import { Sms77SmsProvider } from '@wolf/sms77';
+import { Sms77SmsProvider } from '@wolfxlabs/sms77';
 
 const provider = new Sms77SmsProvider({
     apiKey: process.env.SMS77_API_KEY,

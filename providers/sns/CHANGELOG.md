@@ -5,4 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [0.2.5](https://github.com/tecklens/tk-wolf//compare/v0.2.4...v0.2.5) (2021-11-05)
 
-**Note:** Version bump only for package @notifire/sns (now @wolf/sns)
+**Note:** Version bump only for package @notifire/sns (now @wolfxlabs/sns)

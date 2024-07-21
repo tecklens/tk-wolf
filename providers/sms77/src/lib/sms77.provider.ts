@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   ISmsOptions,
   ISmsProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import Sms77Client, { SmsJsonResponse, SmsParams } from 'sms77-client';
 

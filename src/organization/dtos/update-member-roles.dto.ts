@@ -1,5 +1,5 @@
 import { IsEnum } from 'class-validator';
-import { MemberRoleEnum } from '@wolf/stateless';
+import { MemberRoleEnum } from '@wolfxlabs/stateless';
 
 export class UpdateMemberRolesDto {
   @IsEnum(MemberRoleEnum)

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmsCentralHandler = void 0;
 const base_handler_1 = require("./base.handler");
-const sms_central_1 = require("@wolf/sms-central");
-const stateless_1 = require("@wolf/stateless");
+const sms_central_1 = require("@wolfxlabs/sms-central");
+const stateless_1 = require("@wolfxlabs/stateless");
 class SmsCentralHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('sms-central', stateless_1.ChannelTypeEnum.SMS);

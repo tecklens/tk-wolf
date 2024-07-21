@@ -17,7 +17,7 @@ import {
   decryptApiKey,
   encryptApiKey,
   ApiException,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 import { CreateEnvironmentRequestDto, EnvironmentResponseDto } from './dtos';
 
 const API_KEY_GENERATION_MAX_RETRIES = 5;

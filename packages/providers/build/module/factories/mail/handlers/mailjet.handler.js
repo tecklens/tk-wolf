@@ -1,5 +1,5 @@
-import { ChannelTypeEnum } from '@wolf/stateless';
-import { MailjetEmailProvider } from '@wolf/mailjet';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
+import { MailjetEmailProvider } from '@wolfxlabs/mailjet';
 import { BaseHandler } from './base.handler';
 export class MailjetHandler extends BaseHandler {
     constructor() {

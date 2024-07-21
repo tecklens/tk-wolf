@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/one-signal",
+  "name": "@wolfxlabs/one-signal",
   "version": "1.0.0",
   "description": "A OneSignal wrapper for wolf",
   "main": "build/main/index.js",
@@ -30,7 +30,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "axios": "^1.6.0"
   },
   "devDependencies": {

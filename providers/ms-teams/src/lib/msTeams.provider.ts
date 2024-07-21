@@ -3,7 +3,7 @@ import {
   ISendMessageSuccessResponse,
   IChatOptions,
   IChatProvider,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import axios from 'axios';
 
 export class MsTeamsProvider implements IChatProvider {

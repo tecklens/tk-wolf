@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlivoHandler = void 0;
-const plivo_1 = require("@wolf/plivo");
+const plivo_1 = require("@wolfxlabs/plivo");
 const base_handler_1 = require("./base.handler");
-const stateless_1 = require("@wolf/stateless");
+const stateless_1 = require("@wolfxlabs/stateless");
 class PlivoHandler extends base_handler_1.BaseSmsHandler {
     constructor() {
         super('plivo', stateless_1.ChannelTypeEnum.SMS);

@@ -4,7 +4,7 @@ import {
   ICredentials,
   IProvider,
   ISendMessageSuccessResponse,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export interface IChatHandler {
   canHandle(providerId: string, channelType: ChannelTypeEnum);

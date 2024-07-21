@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ProducerService } from '@app/kafka/producer/producer.service';
 import { TaskRepository } from '@libs/repositories/task';
-import { ITaskTimeline } from '@wolf/stateless';
+import { ITaskTimeline } from '@wolfxlabs/stateless';
 import { EmailEventTrackingDto } from './dtos';
 
 @Injectable()

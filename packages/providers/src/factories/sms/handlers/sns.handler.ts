@@ -1,6 +1,6 @@
-import { SNSSmsProvider } from '@wolf/sns';
+import { SNSSmsProvider } from '@wolfxlabs/sns';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class SnsHandler extends BaseSmsHandler {
   constructor() {

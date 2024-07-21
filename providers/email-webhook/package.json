@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/email-webhook",
+  "name": "@wolfxlabs/email-webhook",
   "version": "1.0.0",
   "description": "An email channel webhook provider wrapper for wolf",
   "main": "build/main/index.js",
@@ -38,7 +38,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "axios": "^1.6.2"
   },
   "devDependencies": {

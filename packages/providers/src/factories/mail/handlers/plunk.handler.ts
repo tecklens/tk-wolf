@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
-import { PlunkEmailProvider } from '@wolf/plunk';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
+import { PlunkEmailProvider } from '@wolfxlabs/plunk';
 import { BaseHandler } from './base.handler';
 
 export class PlunkHandler extends BaseHandler {

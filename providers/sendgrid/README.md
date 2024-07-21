@@ -5,7 +5,7 @@ A sendgrid email provider library for [@novu/stateless](https://github.com/teckl
 ## Usage
 
 ```javascript
-import { SendgridEmailProvider } from '@wolf/sendgrid';
+import { SendgridEmailProvider } from '@wolfxlabs/sendgrid';
 
 const provider = new SendgridEmailProvider({
   apiKey: process.env.SENDGRID_API_KEY

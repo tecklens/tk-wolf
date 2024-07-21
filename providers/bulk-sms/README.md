@@ -5,7 +5,7 @@ A BulkSms sms provider library for [@novu/node](https://github.com/tecklens/tk-w
 ## Usage
 
 ```javascript
-import { BulkSmsProvider } from '@wolf/bulk-sms';
+import { BulkSmsProvider } from '@wolfxlabs/bulk-sms';
 
 const provider = new BulkSmsProvider({
     apiToken = process.env.BULKSMS_API_TOKEN,

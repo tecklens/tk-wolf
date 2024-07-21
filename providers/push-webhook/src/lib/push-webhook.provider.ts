@@ -3,7 +3,7 @@ import {
   IPushOptions,
   IPushProvider,
   ISendMessageSuccessResponse,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import crypto from 'crypto';
 import axios from 'axios';
 

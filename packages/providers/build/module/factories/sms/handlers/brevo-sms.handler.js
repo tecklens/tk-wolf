@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { BrevoSmsProvider } from '@wolf/brevo-sms';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { BrevoSmsProvider } from '@wolfxlabs/brevo-sms';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class BrevoSmsHandler extends BaseSmsHandler {
     constructor() {
         super('brevo-sms', ChannelTypeEnum.SMS);

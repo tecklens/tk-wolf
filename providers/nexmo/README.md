@@ -5,7 +5,7 @@ A Nexmo SMS provider library for [@novu/stateless](https://github.com/tecklens/t
 ## Usage
 
 ```javascript
-import { NexmoSmsProvider } from '@wolf/nexmo';
+import { NexmoSmsProvider } from '@wolfxlabs/nexmo';
 
 const provider = new NexmoSmsProvider({
   apiKey: process.env.VONAGE_API_KEY,

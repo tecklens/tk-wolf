@@ -5,7 +5,7 @@ import {
   ISmsProvider,
   SmsEventStatusEnum,
   ISMSEventBody,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 
 import Telnyx from 'telnyx';
 

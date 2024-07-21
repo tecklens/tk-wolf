@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/postmark",
+  "name": "@wolfxlabs/postmark",
   "version": "1.0.0",
   "description": "A postmark wrapper for wolf",
   "main": "build/main/index.js",
@@ -45,7 +45,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "axios": "^1.6.2",
     "postmark": "^4.0.2"
   },

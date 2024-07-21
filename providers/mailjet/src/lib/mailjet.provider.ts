@@ -7,7 +7,7 @@ import {
   CheckIntegrationResponseEnum,
   IEmailEventBody,
   EmailEventStatusEnum,
-} from '@novu/stateless';
+} from '@wolfxlabs/stateless';
 import * as Mailjet from 'node-mailjet';
 
 const MAILJET_API_VERSION = 'v3.1';

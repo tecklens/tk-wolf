@@ -2,7 +2,7 @@ import { createHash } from 'crypto';
 import { BaseRepository } from '../base-repository';
 import { IUserResetTokenCount, UserEntity, UserDBModel } from './user.entity';
 import { User } from './user.schema';
-import { AuthProviderEnum } from '@wolf/stateless';
+import { AuthProviderEnum } from '@wolfxlabs/stateless';
 
 export class UserRepository extends BaseRepository<
   UserDBModel,

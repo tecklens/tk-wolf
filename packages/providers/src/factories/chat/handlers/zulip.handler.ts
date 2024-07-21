@@ -1,11 +1,11 @@
 import { BaseChatHandler } from './base.handler';
 // @ts-ignore
-import { ZulipProvider } from '@wolf/zulip';
+import { ZulipProvider } from '@wolfxlabs/zulip';
 import {
   ChannelTypeEnum,
   ChatProviderIdEnum,
   ICredentials,
-} from '@wolf/stateless';
+} from '@wolfxlabs/stateless';
 
 export class ZulipHandler extends BaseChatHandler {
   constructor() {

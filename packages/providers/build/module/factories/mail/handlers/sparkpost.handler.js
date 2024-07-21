@@ -1,6 +1,6 @@
-import { SparkPostEmailProvider } from '@wolf/sparkpost';
+import { SparkPostEmailProvider } from '@wolfxlabs/sparkpost';
 import { BaseHandler } from './base.handler';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class SparkPostHandler extends BaseHandler {
     constructor() {
         super('sparkpost', ChannelTypeEnum.EMAIL);

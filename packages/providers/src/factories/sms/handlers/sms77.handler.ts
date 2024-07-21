@@ -1,6 +1,6 @@
-import { Sms77SmsProvider } from '@wolf/sms77';
+import { Sms77SmsProvider } from '@wolfxlabs/sms77';
 import { BaseSmsHandler } from './base.handler';
-import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';
+import { ChannelTypeEnum, ICredentials } from '@wolfxlabs/stateless';
 
 export class Sms77Handler extends BaseSmsHandler {
   constructor() {

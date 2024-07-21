@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/twilio",
+  "name": "@wolfxlabs/twilio",
   "version": "1.0.0",
   "description": "A twilio wrapper for wolf",
   "main": "build/main/index.js",
@@ -44,7 +44,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "twilio": "^4.19.3"
   },
   "devDependencies": {

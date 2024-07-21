@@ -1,5 +1,5 @@
 {
-  "name": "@wolf/sendgrid",
+  "name": "@wolfxlabs/sendgrid",
   "version": "1.0.0",
   "description": "A sendgrid wrapper for wolf",
   "main": "build/main/index.js",
@@ -45,7 +45,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@novu/stateless": "^0.24.1",
+    "@wolfxlabs/stateless": "^1.0.0",
     "@sendgrid/mail": "^8.1.0"
   },
   "devDependencies": {

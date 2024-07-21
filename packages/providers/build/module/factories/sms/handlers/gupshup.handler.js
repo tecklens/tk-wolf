@@ -1,6 +1,6 @@
 import { BaseSmsHandler } from './base.handler';
-import { GupshupSmsProvider } from '@wolf/gupshup';
-import { ChannelTypeEnum } from '@wolf/stateless';
+import { GupshupSmsProvider } from '@wolfxlabs/gupshup';
+import { ChannelTypeEnum } from '@wolfxlabs/stateless';
 export class GupshupSmsHandler extends BaseSmsHandler {
     constructor() {
         super('gupshup', ChannelTypeEnum.SMS);

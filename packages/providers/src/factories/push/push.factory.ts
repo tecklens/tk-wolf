@@ -8,7 +8,7 @@ import {
   PushWebhookHandler,
 } from './handlers';
 import { IPushFactory, IPushHandler } from './interfaces';
-import { IProvider } from '@wolf/stateless';
+import { IProvider } from '@wolfxlabs/stateless';
 
 export class PushFactory implements IPushFactory {
   handlers: IPushHandler[] = [

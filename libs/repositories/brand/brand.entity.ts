@@ -1,4 +1,4 @@
-import { IBrand, BrandId, UserId, OrganizationId } from '@wolf/stateless';
+import { IBrand, BrandId, UserId, OrganizationId } from '@wolfxlabs/stateless';
 
 export class BrandEntity implements IBrand {
   _id: BrandId;

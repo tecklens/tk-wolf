@@ -1,4 +1,4 @@
-import { ICredentials } from '@wolf/stateless';
+import { ICredentials } from '@wolfxlabs/stateless';
 import { BaseChatHandler } from './base.handler';
 export declare class DiscordHandler extends BaseChatHandler {
     constructor();
