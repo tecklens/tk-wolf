@@ -36,8 +36,8 @@
     "node": ">=10"
   },
   "dependencies": {
-    "@wolfxlabs/stateless": "^1.0.0",
-    "@parse/node-apn": "^5.2.3"
+    "@parse/node-apn": "^5.2.3",
+    "@wolfxlabs/stateless": "^1.0.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",

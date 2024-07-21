@@ -1,8 +1,6 @@
 {
   "npmClient": "npm",
-  "packages": [
-    "providers/*"
-  ],
+  "packages": ["providers/*"],
   "command": {
     "publish": {
       "message": "chore(release): publish - ci skip"
