@@ -71,10 +71,7 @@ export class WorkflowRepository extends BaseRepository<
     );
   }
 
-  async getActive(
-    environmentId: string,
-    organizationId: string,
-  ) {
+  async getActive(environmentId: string, organizationId: string) {
     return await this.findOne({
       _environmentId: environmentId,
       _organizationId: organizationId,

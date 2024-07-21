@@ -1,6 +1,6 @@
 import { apnsConfig, expoConfig, fcmConfig, oneSignalConfig, pusherBeamsConfig, pushpadConfig, pushWebhookConfig, } from '../credentials';
 import { PushProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM } from '../provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../../entities';
 export const pushProviders = [
     {
         id: PushProviderIdEnum.OneSignal,

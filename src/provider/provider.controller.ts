@@ -17,16 +17,20 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { CreateProviderRequestDto } from '@app/provider/dtos/create-provider-request.dto';
-import { ProviderResponseDto } from '@app/provider/dtos/provider-response.dto';
+import { JwtAuthGuard } from '@app/auth/strategy';
 import { ProviderService } from '@app/provider/provider.service';
 import { ProviderEntity } from '@libs/repositories/provider';
-import { GetProviderRequestDto } from '@app/provider/dtos/get-provider-request.dto';
+import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IJwtPayload,
+} from '@wolf/stateless';
+import {
+  CreateProviderRequestDto,
+  GetProviderRequestDto,
+  ProviderResponseDto,
+} from './dtos';
 
 @Controller('provider')
 @ApiBearerAuth()

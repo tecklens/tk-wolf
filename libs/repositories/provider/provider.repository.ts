@@ -3,10 +3,9 @@ import { SoftDeleteModel } from 'mongoose-delete';
 
 import { ProviderDBModel, ProviderEntity } from './provider.entity';
 import { Provider } from './provider.schema';
-import type { EnforceEnvOrOrgIds } from '@tps/enforce';
 
 import { BaseRepository } from '../base-repository';
-import { WOLF_PROVIDERS } from '@libs/shared/consts';
+import { EnforceEnvOrOrgIds } from '@wolf/stateless';
 
 export type IntegrationQuery = FilterQuery<ProviderDBModel> &
   EnforceEnvOrOrgIds;

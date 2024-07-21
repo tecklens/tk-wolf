@@ -1,6 +1,6 @@
 import { brazeEmailConfig, emailWebhookConfig, infobipEmailConfig, mailerSendConfig, mailgunConfig, mailjetConfig, mailtrapConfig, mandrillConfig, netCoreConfig, nodemailerConfig, outlook365Config, plunkConfig, postmarkConfig, resendConfig, sendgridConfig, sendinblueConfig, sesConfig, sparkpostConfig, } from '../credentials';
 import { EmailProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM, } from '../provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../../entities';
 export const emailProviders = [
     {
         id: EmailProviderIdEnum.Novu,

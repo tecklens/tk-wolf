@@ -1,9 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { EmailEventTrackingDto } from '@app/events/dtos/email-event-tracking.dto';
 import { ProducerService } from '@app/kafka/producer/producer.service';
-import { ITaskTimeline } from '@libs/shared/entities/workflow/task.interface';
-import { EventTypes } from '@libs/shared/types/events/event-types';
-import { TaskRepository } from '@libs/repositories/task/task.repository';
+import { TaskRepository } from '@libs/repositories/task';
+import { ITaskTimeline } from '@wolf/stateless';
+import { EmailEventTrackingDto } from './dtos';
 
 @Injectable()
 export class EventsService {

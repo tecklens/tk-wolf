@@ -1,10 +1,10 @@
-import { ChannelTypeEnum, ICredentials } from '@stateless/lib/entities';
+import { ChannelTypeEnum, ICredentials } from '../../entities';
 import {
   BuilderFieldType,
   BuilderGroupValues,
   EnvironmentId,
   FilterParts,
-} from '@stateless/lib/types';
+} from '../../types';
 
 export interface ICreateProviderDto extends IConstructIntegrationDto {
   providerId: string;

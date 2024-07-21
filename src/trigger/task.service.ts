@@ -6,43 +6,40 @@ import {
   PreconditionFailedException,
 } from '@nestjs/common';
 import { ProducerService } from '@app/kafka/producer/producer.service';
-import { NodeRepository } from '@libs/repositories/node/node.repository';
-import { WfNodeType } from '@libs/shared/entities/workflow/node.interface';
-import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
-import { INextJob, IWebhookData } from '@libs/shared/entities/workflow';
-import { TaskRepository } from '@libs/repositories/task/task.repository';
+import { NodeRepository, NodeEntity } from '@libs/repositories/node';
+import { EdgeRepository } from '@libs/repositories/edge';
+import { TaskRepository } from '@libs/repositories/task';
 import { KafkaMessage } from 'kafkajs';
 import {
   ProviderEntity,
   ProviderRepository,
 } from '@libs/repositories/provider';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import {
-  ChatFactory,
-  IContent,
-  MailFactory,
-  SmsFactory,
-} from '@app/provider/factories';
-import { NodeEntity } from '@libs/repositories/node/node.entity';
-import { INodeData } from '@tps/i-node.data';
+import { ChatFactory, MailFactory, SmsFactory } from '@wolf/providers';
 import { makeid, transformContent } from '@libs/utils';
-import { TaskStatus } from '@tps/task.interface';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
-import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
-import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
 import { HttpService } from '@nestjs/axios';
-import { PlatformException } from '@pak/utils/exceptions';
 import { get } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { VariableEntity } from '@libs/repositories/variable/variable.entity';
-import { decryptCredentials } from '@libs/shared/encryptions/encrypt-provider';
-import { IEventQueue, IJwtPayload, INextJobProps } from '@libs/shared/types';
 import { NotificationService } from '@app/notification/notification.service';
-import { ConsumerService } from '@app/kafka/consumer/consumer.service';
-import { TaskTimelineRepository } from '@libs/repositories/task-timeline/task-timeline.repository';
-import { ITaskTimeline } from '@libs/shared/entities/workflow/task.interface';
-import { EventTypes } from '@libs/shared/types/events/event-types';
+import { TaskTimelineRepository } from '@libs/repositories/task-timeline';
+import {
+  ChannelTypeEnum,
+  decryptCredentials,
+  EventTypes,
+  IContent,
+  IEventQueue,
+  IJwtPayload,
+  INextJob,
+  INodeData,
+  ITaskTimeline,
+  IWebhookData,
+  PlatformException,
+  TaskStatus,
+  WfNodeType,
+} from '@wolf/stateless';
+import { GetTaskRequestDto, TaskResponseDto } from './dtos';
 
 @Injectable()
 export class TaskService {
@@ -88,7 +85,7 @@ export class TaskService {
     type,
     previousNodeId,
     transactionId,
-  }: INextJobProps) {
+  }: any) {
     let node: NodeEntity;
     if (type === 'starter') {
       node = await this.nodeRepository.findOneByWorkflowIdAndType(
@@ -121,7 +118,7 @@ export class TaskService {
           transactionId: transactionId,
         };
 
-        this.sender.produce({
+        await this.sender.produce({
           messages: [
             {
               key: userId,

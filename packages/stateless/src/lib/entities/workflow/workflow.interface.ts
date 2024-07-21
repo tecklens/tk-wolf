@@ -1,9 +1,4 @@
-import {
-  EnvironmentId,
-  OrganizationId,
-  UserId,
-  WorkflowId,
-} from '@stateless/lib/types';
+import { EnvironmentId, OrganizationId, UserId, WorkflowId } from '../../types';
 import { NodeId } from './node.interface';
 export interface IWorkflow {
   _id?: WorkflowId;

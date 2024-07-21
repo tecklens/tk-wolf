@@ -1,24 +1,22 @@
+import { GetSubscribersResponse } from '@app/subscription/dtos';
 import { BaseRepository } from '../base-repository';
-import { SubscriptionDBModel, SubscriptionEntity } from './subscription.entity';
-import { SubscriptionSchema } from '@libs/repositories/subscription/subscription.schema';
-import { Types } from 'mongoose';
-import { GetSubscriptionResponse } from '@app/subscription/dtos/get-subscription.response';
-import { GetSubscriptionsResponse } from '@app/subscription/dtos/get-subscriptions.response';
+import { SubscriberDBModel, SubscriberEntity } from './subscriber.entity';
+import { SubscriberSchema } from './subscriber.schema';
 
-export class SubscriptionRepository extends BaseRepository<
-  SubscriptionDBModel,
-  SubscriptionEntity,
+export class SubscriberRepository extends BaseRepository<
+  SubscriberDBModel,
+  SubscriberEntity,
   object
 > {
   constructor() {
-    super(SubscriptionSchema, SubscriptionEntity);
+    super(SubscriberSchema, SubscriberEntity);
   }
 
-  async findAllSubscriptions(
+  async findAllSubscribers(
     userId: string,
     skip: number,
     limit: number,
-  ): Promise<GetSubscriptionsResponse> {
+  ): Promise<GetSubscribersResponse> {
     const query = [
       {
         $lookup: {
@@ -77,12 +75,12 @@ export class SubscriptionRepository extends BaseRepository<
     }
   }
 
-  async findSubscriptionsByChannel(
+  async findSubscribersByChannel(
     userId: string,
     channelId: string,
     skip: number,
     limit: number,
-  ): Promise<GetSubscriptionsResponse> {
+  ): Promise<GetSubscribersResponse> {
     const query = [
       {
         $lookup: {

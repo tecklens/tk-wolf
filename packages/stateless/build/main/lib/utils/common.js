@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDateDataTimeout = exports.transformContent = exports.makeid = void 0;
-const entities_1 = require("@stateless/lib/entities");
+const entities_1 = require("../entities");
 const lodash_1 = require("lodash");
 function makeid(length) {
     let result = '';

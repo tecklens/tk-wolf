@@ -8,12 +8,6 @@ import {
 import { UsersService } from '@app/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import {
-  ApiServiceLevelEnum,
-  IJwtPayload,
-  JobTitleEnum,
-  SignUpOriginEnum,
-} from '@libs/shared/types';
-import {
   Cache,
   CACHE_MANAGER,
   CacheKey,
@@ -30,20 +24,12 @@ import {
   UserPlan,
   UserRepository,
 } from '@libs/repositories/user';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
-import { AuthProviderEnum } from '@libs/shared/entities/user';
-import { normalizeEmail } from '@pak/utils/email-normalization';
-import { ApiException } from '@pak/utils/exceptions';
-import { UserRegistrationBodyDto } from '@app/auth/dtos/user-registration.dto';
 import * as bcrypt from 'bcrypt';
 import {
   OrganizationEntity,
   OrganizationRepository,
 } from '@libs/repositories/organization';
-import { ICreateOrganizationDto } from '@libs/shared/dto';
-import { createHash as createHashHmac } from '@pak/utils/hmac';
 import { createHash } from 'crypto';
-import { buildUserKey } from '@libs/shared/entities/key-builder';
 import {
   differenceInHours,
   differenceInMinutes,
@@ -52,22 +38,36 @@ import {
   parseISO,
   subDays,
 } from 'date-fns';
-import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
-import { LoginBodyDto } from '@app/auth/dtos/login.dto';
-import { Novu } from '@novu/node';
 import { EnvironmentService } from '@app/environment/environment.service';
 import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
-import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
 import { LimitService } from '@app/auth/limit.service';
 import { Types } from 'mongoose';
-import { MailFactory } from '@app/provider/factories';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { MailFactory } from '@wolf/providers';
+import { ProviderEntity } from '@libs/repositories/provider';
 import {
+  ApiException,
+  AuthProviderEnum,
+  IJwtPayload,
+  JobTitleEnum,
+  MemberRoleEnum,
+  SignUpOriginEnum,
+  normalizeEmail,
+  createHash as createHashHmac,
+  buildUserKey,
+  ICreateOrganizationDto,
+  ApiServiceLevelEnum,
+  MemberStatusEnum,
+  ChannelTypeEnum,
   decryptApiKey,
   decryptCredentials,
-} from '@libs/shared/encryptions/encrypt-provider';
-import { ProviderEntity } from '@libs/repositories/provider';
+} from '@wolf/stateless';
+import {
+  LoginBodyDto,
+  PasswordResetBodyDto,
+  UserRegistrationBodyDto,
+} from './dtos';
+import { Novu } from '@novu/node';
 
 @Injectable()
 export class AuthService {

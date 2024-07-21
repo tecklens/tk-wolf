@@ -1,6 +1,6 @@
 import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ICreateWorkflowDto } from '@libs/shared/dto';
+import { ICreateWorkflowDto } from '@wolf/stateless';
 
 export class AddNodeWorkflowRequestDto implements ICreateWorkflowDto {
   @ApiProperty()

@@ -1,5 +1,5 @@
-import { ChannelTypeEnum, ICredentials } from '@stateless/lib/entities';
-import { BuilderFieldType, BuilderGroupValues, EnvironmentId, FilterParts } from '@stateless/lib/types';
+import { ChannelTypeEnum, ICredentials } from '../../entities';
+import { BuilderFieldType, BuilderGroupValues, EnvironmentId, FilterParts } from '../../types';
 export interface ICreateProviderDto extends IConstructIntegrationDto {
     providerId: string;
     channel: ChannelTypeEnum;

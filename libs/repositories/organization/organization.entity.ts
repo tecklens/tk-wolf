@@ -1,7 +1,6 @@
-import { ApiServiceLevelEnum } from '@libs/shared/types';
-import { IOrganizationEntity } from '@libs/repositories/organization/organization.interface';
+import { ApiServiceLevelEnum, IOrganization } from '@wolf/stateless';
 
-export class OrganizationEntity implements IOrganizationEntity {
+export class OrganizationEntity implements IOrganization {
   _id: string;
 
   name: string;

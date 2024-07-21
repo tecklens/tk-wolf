@@ -1,10 +1,5 @@
-import {
-  EnvironmentId,
-  OrganizationId,
-  UserId,
-  WorkflowId,
-} from '@stateless/lib/types';
-import { EventTypes, NodeId, ProviderId } from '@stateless/lib/entities';
+import { EnvironmentId, OrganizationId, UserId, WorkflowId } from '../../types';
+import { EventTypes, NodeId, ProviderId } from '../../entities';
 
 export type TaskId = string;
 

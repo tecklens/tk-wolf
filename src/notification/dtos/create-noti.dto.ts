@@ -1,4 +1,4 @@
-import { EnvironmentId, OrganizationId } from '@libs/shared/types';
+import { EnvironmentId, OrganizationId } from '@wolf/stateless';
 
 export class CreateNotiDto {
   title: string;

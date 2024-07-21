@@ -1,7 +1,9 @@
 type CloudflareEnv = { env: Record<string, string> };
 
 // https://remix.run/blog/remix-vite-stable#cloudflare-pages-support
-const hasCloudflareProxyContext = (context: any): context is { cloudflare: CloudflareEnv } => {
+const hasCloudflareProxyContext = (
+  context: any,
+): context is { cloudflare: CloudflareEnv } => {
   return !!context?.cloudflare?.env;
 };
 
@@ -18,7 +20,11 @@ const hasCloudflareContext = (context: any): context is CloudflareEnv => {
  */
 export const getEnvVariable = (name: string, context?: any): string => {
   // Node envs
-  if (typeof process !== 'undefined' && process.env && typeof process.env[name] === 'string') {
+  if (
+    typeof process !== 'undefined' &&
+    process.env &&
+    typeof process.env[name] === 'string'
+  ) {
     return process.env[name] as string;
   }
 

@@ -1,5 +1,3 @@
-import { ApiHeaderOptions } from '@nestjs/swagger';
-
 export enum HttpRequestHeaderKeysEnum {
   AUTHORIZATION = 'Authorization',
   USER_AGENT = 'User-Agent',

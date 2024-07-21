@@ -1,4 +1,4 @@
-import { UserPlan } from '@stateless/lib/entities';
+import { UserPlan } from '../../entities';
 export var UserRateLimitPolicy;
 (function (UserRateLimitPolicy) {
     UserRateLimitPolicy["CHANNEL"] = "channel";

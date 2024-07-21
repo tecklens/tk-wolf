@@ -1,4 +1,4 @@
-import { VariableId, WorkflowId } from '@stateless/lib/types';
+import { VariableId, WorkflowId } from '../../types';
 export interface IVariable {
     _id?: VariableId;
     _workflowId?: WorkflowId;

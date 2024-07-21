@@ -3,12 +3,10 @@ import {
   ClassSerializerInterceptor,
   Controller,
   Get,
-  Header,
   Logger,
   Param,
   Post,
   Put,
-  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -18,19 +16,19 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
+import { JwtAuthGuard } from '@app/auth/strategy';
 import { UsersService } from '@app/users/users.service';
-import { IJwtPayload } from '@libs/shared/types';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
-import { UserResponseDto } from '@app/users/dtos/user-response.dto';
-import { ChangeProfileEmailDto } from '@app/users/dtos/change-profile-email.dto';
 import { UserSession } from '@libs/utils/user.session';
-import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
-import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
-import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
-import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
-import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
-import { HttpService } from '@nestjs/axios';
+import { ExternalApiAccessible, IJwtPayload } from '@wolf/stateless';
+import {
+  ChangePassDto,
+  ChangeProfileDto,
+  ChangeProfileEmailDto,
+  SubmitBugRequestDto,
+  UserOnboardingRequestDto,
+  UserOnboardingTourRequestDto,
+  UserResponseDto,
+} from './dtos';
 
 @ApiBearerAuth()
 @Controller('user')

@@ -1,4 +1,7 @@
-import { ApiRateLimitConfigEnum, ApiRateLimitEnvVarNamespace } from './config.types';
+import {
+  ApiRateLimitConfigEnum,
+  ApiRateLimitEnvVarNamespace,
+} from './config.types';
 
 export enum ApiRateLimitAlgorithmEnum {
   BURST_ALLOWANCE = 'burst_allowance',
@@ -8,7 +11,9 @@ export enum ApiRateLimitAlgorithmEnum {
 /**
  * The configuration options for the rate limit algorithm.
  */
-export class IApiRateLimitAlgorithm implements Record<ApiRateLimitAlgorithmEnum, unknown> {
+export class IApiRateLimitAlgorithm
+  implements Record<ApiRateLimitAlgorithmEnum, unknown>
+{
   /**
    * A decimal x >= 0 determining the proportion of base requests that are allowed in excess of the rate limit.
    *

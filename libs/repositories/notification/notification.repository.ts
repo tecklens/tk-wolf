@@ -4,10 +4,12 @@ import { subMonths, subWeeks } from 'date-fns';
 import { BaseRepository } from '../base-repository';
 import { NotificationEntity, NotificationDBModel } from './notification.entity';
 import { Notification } from './notification.schema';
-import type { EnforceEnvOrOrgIds } from '@tps/enforce';
-import { EnvironmentId } from '../environment';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { StepTypeEnum } from '@libs/shared/types';
+import {
+  ChannelTypeEnum,
+  EnforceEnvOrOrgIds,
+  EnvironmentId,
+  StepTypeEnum,
+} from '@wolf/stateless';
 
 export class NotificationRepository extends BaseRepository<
   NotificationDBModel,

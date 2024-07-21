@@ -1,4 +1,4 @@
-import { IGetWorkflowOverrideResponseDto } from '@stateless/lib/dto';
+import { IGetWorkflowOverrideResponseDto } from '../../dto';
 
 export interface IGetWorkflowOverridesResponseDto {
   hasMore: boolean;

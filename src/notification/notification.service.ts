@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { NotificationRepository } from '@libs/repositories/notification';
-import { CreateNotiDto } from '@app/notification/dtos/create-noti.dto';
 import { EventsGateway } from '@app/events/events.gateway';
-import { IJwtPayload } from '@libs/shared/types';
-import { ListNotificationDto } from '@app/notification/dtos/list-notification.dto';
-import { IEvent } from '@tps/event.interface';
-import { NotificationsRequestDto } from '@app/notification/dtos/notification-request.dto';
+import {
+  CreateNotiDto,
+  ListNotificationDto,
+  NotificationsRequestDto,
+} from './dtos';
+import { IEvent, IJwtPayload } from '@wolf/stateless';
 
 @Injectable()
 export class NotificationService {

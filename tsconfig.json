@@ -4,12 +4,9 @@
     "paths": {
       "@app/*": ["src/*"],
       "@config/*": ["src/config/*"],
-      "@fw/*": ["src/framework/*"],
       "@helpers/*": ["src/helpers/*"],
       "@libs/*": ["libs/*"],
-      "@pak/*": ["src/packages/*"],
       "@shared/*": ["src/shared/*"],
-      "@tps/*": ["types/*"]
     },
     "module": "commonjs",
     "declaration": true,

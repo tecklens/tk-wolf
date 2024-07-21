@@ -1,5 +1,5 @@
 import { JobTitleEnum, UserId, UserRateLimitId } from '../../types';
-import { UserPlan } from '@stateless/lib/entities';
+import { UserPlan } from '../../entities';
 export interface IServicesHashes {
     intercom?: string;
 }

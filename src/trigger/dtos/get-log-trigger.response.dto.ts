@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { LogEntity } from '@libs/repositories/log/log.entity';
+import { LogEntity } from '@libs/repositories/log';
 
 export class GetLogTriggerResponseDto {
   @ApiProperty()

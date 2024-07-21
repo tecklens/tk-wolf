@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRateLimitThresh = exports.UserRateLimitPolicy = void 0;
-const entities_1 = require("@stateless/lib/entities");
+const entities_1 = require("../../entities");
 var UserRateLimitPolicy;
 (function (UserRateLimitPolicy) {
     UserRateLimitPolicy["CHANNEL"] = "channel";

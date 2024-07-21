@@ -9,10 +9,9 @@ import {
 } from 'class-validator';
 import { CredentialsDto } from './credentials.dto';
 import { Type } from 'class-transformer';
-import { StepFilter } from '@libs/shared/dto/step-filter';
-import { IUpdateIntegrationBodyDto } from '@libs/shared/dto';
+import { IConstructIntegrationDto } from '@wolf/stateless';
 
-export class UpdateIntegrationRequestDto implements IUpdateIntegrationBodyDto {
+export class UpdateIntegrationRequestDto implements IConstructIntegrationDto {
   @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsString()
@@ -49,12 +48,12 @@ export class UpdateIntegrationRequestDto implements IUpdateIntegrationBodyDto {
   @IsOptional()
   @IsBoolean()
   check?: boolean;
-
-  @ApiPropertyOptional({
-    type: [StepFilter],
-  })
-  @IsArray()
-  @IsOptional()
-  @ValidateNested({ each: true })
-  conditions?: StepFilter[];
+  //
+  // @ApiPropertyOptional({
+  //   type: [StepFilter],
+  // })
+  // @IsArray()
+  // @IsOptional()
+  // @ValidateNested({ each: true })
+  // conditions?: StepFilter[];
 }

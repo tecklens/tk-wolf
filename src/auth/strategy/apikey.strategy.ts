@@ -6,8 +6,8 @@ import {
   ApiAuthSchemeEnum,
   IJwtPayload,
   PassportStrategyEnum,
-} from '@libs/shared/types';
-import { HttpRequestHeaderKeysEnum } from '@tps/headers.types';
+  HttpRequestHeaderKeysEnum,
+} from '@wolf/stateless';
 
 @Injectable()
 export class ApiKeyStrategy extends PassportStrategy(

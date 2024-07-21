@@ -17,30 +17,32 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { UserSession } from '@libs/utils/user.session';
-import { WorkflowsResponseDto } from '@app/workflow/dto/workflows.response.dto';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
-import { IJwtPayload } from '@libs/shared/types';
-import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
 import { WorkflowService } from '@app/workflow/workflow.service';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
+import { JwtAuthGuard } from '@app/auth/strategy';
 import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IEmailTemplate,
+  IJwtPayload,
+} from '@wolf/stateless';
+import {
+  AddEdgeWorkflowRequestDto,
+  AddNodeWorkflowRequestDto,
+  ChangeVariablesWorkflowRequestDto,
+  CreateEmailTemplateDto,
   CreateWorkflowRequestDto,
+  DelEleWorkflowRequestDto,
+  SetProviderNodeWorkflowRequestDto,
+  UpdateActiveWorkflowRequestDto,
+  UpdateNodeWorkflowRequestDto,
+  UpdateViewPortWorkflowRequestDto,
   UpdateWorkflowRequestDto,
-} from '@app/workflow/dto';
-import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
-import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
-import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
-import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
-import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
-import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
-import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
-import { EmailTemplateEntity } from '@libs/repositories/email-templates/email-template.entity';
-import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
-import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
-import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
-import { UpdateViewPortWorkflowRequestDto } from '@app/workflow/dto/update-viewport-workflow.request.dto';
+  WorkflowResponse,
+  WorkflowsRequestDto,
+  WorkflowsResponseDto,
+} from './dtos';
+import { WorkflowEntity } from '@libs/repositories/workflow';
 
 @ApiBearerAuth()
 @Controller('wf')
@@ -198,7 +200,7 @@ export class WorkflowController {
   getEmailTemplates(
     @Query('skip') skip: number,
     @Query('limit') limit: number,
-  ): Promise<EmailTemplateEntity[]> {
+  ): Promise<IEmailTemplate[]> {
     return this.workflowService.getEmailTemplates(skip, limit);
   }
 

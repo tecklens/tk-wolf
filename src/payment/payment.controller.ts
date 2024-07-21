@@ -8,13 +8,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '@app/auth/strategy';
 import { PaymentService } from '@app/payment/payment.service';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { CreatePaymentIndentDto } from '@app/payment/dtos/create-payment-indent.dto';
+import { ExternalApiAccessible, IJwtPayload } from '@wolf/stateless';
+import { CreatePaymentIndentDto } from './dtos';
 
 @Controller('payment')
 @ApiBearerAuth()

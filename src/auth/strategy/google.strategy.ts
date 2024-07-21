@@ -1,8 +1,7 @@
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
-import { PassportStrategyEnum } from '@libs/shared/types';
-import { AuthProviderEnum } from '@libs/shared/entities/user';
+import { PassportStrategyEnum, AuthProviderEnum } from '@wolf/stateless';
 import { AuthService } from '@app/auth/auth.service';
 
 @Injectable()

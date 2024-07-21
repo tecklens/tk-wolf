@@ -1,6 +1,6 @@
-import { ISubscriber } from '@wolf/stateless';
+import { ISubscriber, UserId } from '@wolf/stateless';
 
-export class SubscriptionEntity implements ISubscriber {
+export class SubscriberEntity implements ISubscriber {
   _id?: string;
   channelId: string;
   _userId: UserId;
@@ -14,8 +14,7 @@ export class SubscriptionEntity implements ISubscriber {
   isOnline?: boolean;
 
   createdBy?: string;
-
   createdAt: Date;
 }
 
-export type SubscriptionDBModel = SubscriptionEntity;
+export type SubscriberDBModel = SubscriberEntity;

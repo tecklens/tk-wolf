@@ -3,7 +3,7 @@ import {
   UserRateLimitDBModel,
   UserRateLimitEntity,
 } from './user-rate-limit.entity';
-import { UserRateLimitSchema } from '@libs/repositories/user-rate-limit/user-rate-limit.schema';
+import { UserRateLimitSchema } from './user-rate-limit.schema';
 
 export class UserRateLimitRepository extends BaseRepository<
   UserRateLimitDBModel,

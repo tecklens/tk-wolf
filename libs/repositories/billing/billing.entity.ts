@@ -1,5 +1,4 @@
-import { OrganizationId } from '@libs/shared/types';
-import { IBilling } from './types';
+import { IBilling, OrganizationId } from '@wolf/stateless';
 
 export class BillingEntity implements IBilling {
   _userId?: string;

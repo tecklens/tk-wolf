@@ -1,6 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsString } from 'class-validator';
-import { CreateSubscriptionRequest } from '@app/subscription/dtos/create-subscription.request';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class DelSubscriptionRequest {
   @ApiProperty()

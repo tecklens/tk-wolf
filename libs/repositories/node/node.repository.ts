@@ -1,7 +1,7 @@
 import { BaseRepository } from '../base-repository';
 import { NodeDBModel, NodeEntity } from './node.entity';
 import { NodeSchema } from '@libs/repositories/node/node.schema';
-import { WfNodeType } from '@libs/shared/entities/workflow/node.interface';
+import { WfNodeType } from '@wolf/stateless';
 
 export class NodeRepository extends BaseRepository<
   NodeDBModel,

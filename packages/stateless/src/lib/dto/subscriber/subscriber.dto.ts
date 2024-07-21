@@ -1,5 +1,10 @@
 import { ChatProviderIdEnum, PushProviderIdEnum } from '../../consts';
-import { EnvironmentId, ExternalSubscriberId, OrganizationId, SubscriberCustomData } from '../../types';
+import {
+  EnvironmentId,
+  ExternalSubscriberId,
+  OrganizationId,
+  SubscriberCustomData,
+} from '../../types';
 
 interface IChannelCredentials {
   webhookUrl?: string;

@@ -1,5 +1,5 @@
-import { IsDefined, IsEmail, IsString } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsDefined, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ChangePassDto {
   @IsDefined()

@@ -17,21 +17,23 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TriggerService } from '@app/trigger/trigger.service';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
-import { CreateTriggerDto } from '@app/trigger/dtos/create-trigger.dto';
-import { CreateTriggerResponse } from '@app/trigger/dtos/create-trigger.response';
-import { ApiKeyAuthGuard } from '@app/auth/strategy/apikey.guard';
+import { ApiKeyAuthGuard, JwtAuthGuard } from '@app/auth/strategy';
 import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
-import { TaskEntity } from '@libs/repositories/task/task.entity';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { TaskService } from '@app/trigger/task.service';
-import { TaskResponseDto } from '@app/trigger/dtos/get-task.response.dto';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
-import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
-import { CreateBulkTriggerDto } from "@app/trigger/dtos/create-bulk-trigger.dto";
+import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IJwtPayload,
+} from '@wolf/stateless';
+import {
+  CreateBulkTriggerDto,
+  CreateTriggerDto,
+  CreateTriggerResponse,
+  GetLogTriggerRequestDto,
+  GetLogTriggerResponseDto,
+  TaskResponseDto,
+} from './dtos';
 
 @ApiBearerAuth()
 @Controller('trigger')

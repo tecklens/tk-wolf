@@ -9,28 +9,25 @@ import {
   MemberEntity,
   MemberRepository,
 } from '@libs/repositories/member';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
-import { IJwtPayload } from '@libs/shared/types';
-import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
-import { ApiException } from '@pak/utils/exceptions';
 import { OrganizationRepository } from '@libs/repositories/organization';
-import { InviteMemberDto } from '@app/organization/dtos/invite-member.dto';
 import { UserEntity, UserRepository } from '@libs/repositories/user';
 
 import { v1 as uuidv1 } from 'uuid';
-import { ResendInviteDto } from '@app/organization/dtos/resend-invite.dto';
-import { normalizeEmail } from '@pak/utils/email-normalization';
-import { capitalize } from 'lodash';
 import { AuthService } from '@app/auth/auth.service';
-import { MailFactory } from '@app/provider/factories';
+import { MailFactory } from '@wolf/providers';
 import { ProviderEntity } from '@libs/repositories/provider';
+import { BrandRepository } from '@libs/repositories/brand';
 import {
+  ApiException,
+  ChannelTypeEnum,
+  IJwtPayload,
+  MemberRoleEnum,
+  MemberStatusEnum,
   decryptApiKey,
   decryptCredentials,
-} from '@libs/shared/encryptions/encrypt-provider';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { UpdateBrandDto } from './dtos/update-brand.dto';
-import { BrandRepository } from '@libs/repositories/brand/brand.repository';
+  normalizeEmail,
+} from '@wolf/stateless';
+import { InviteMemberDto, ResendInviteDto, UpdateBrandDto } from './dtos';
 
 const designHtmlInvite =
   '<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n' +

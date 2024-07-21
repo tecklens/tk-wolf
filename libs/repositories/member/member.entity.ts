@@ -1,13 +1,13 @@
 import { Types } from 'mongoose';
 
 import { UserEntity } from '../user';
-import type { OrganizationId } from '../organization';
-import { ChangePropsValueType } from '@tps/helpers';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
 import {
+  ChangePropsValueType,
   IMemberInvite,
+  MemberRoleEnum,
   MemberStatusEnum,
-} from '@libs/shared/entities/user/member.interface';
+  OrganizationId,
+} from '@wolf/stateless';
 
 export class MemberEntity {
   _id: string;

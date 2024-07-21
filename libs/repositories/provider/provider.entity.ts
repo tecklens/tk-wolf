@@ -1,10 +1,11 @@
-import type { EnvironmentId } from '../environment';
-import type { OrganizationId } from '../organization';
-import { StepFilter } from '@libs/shared/dto/step-filter';
-import { ChangePropsValueType } from '@tps/helpers';
-import { ProviderId } from '@libs/repositories/provider/types';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { ICredentials } from '@libs/shared/entities/integration';
+import {
+  ChangePropsValueType,
+  ChannelTypeEnum,
+  EnvironmentId,
+  ICredentials,
+  OrganizationId,
+  ProviderId,
+} from '@wolf/stateless';
 
 export class ProviderEntity {
   _id?: ProviderId;
@@ -34,8 +35,6 @@ export class ProviderEntity {
   deletedAt?: string;
 
   deletedBy?: string;
-
-  conditions?: StepFilter[];
 }
 
 export type ICredentialsEntity = ICredentials;

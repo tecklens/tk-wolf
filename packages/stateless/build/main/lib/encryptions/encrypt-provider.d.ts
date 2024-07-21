@@ -1,5 +1,5 @@
-import { EncryptedSecret } from '@stateless/lib/types';
-import { ICredentials } from '@stateless/lib/entities';
+import { EncryptedSecret } from '../types';
+import { ICredentials } from '../entities';
 export declare function encryptSecret(text: string): EncryptedSecret;
 export declare function decryptSecret(text: string | EncryptedSecret): string;
 export declare function encryptCredentials(credentials: ICredentials): ICredentials;

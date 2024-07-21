@@ -1,4 +1,5 @@
 import { BaseChatHandler } from './base.handler';
+// @ts-ignore
 import { ZulipProvider } from '@wolf/zulip';
 import {
   ChannelTypeEnum,

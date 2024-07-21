@@ -1,5 +1,4 @@
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { IVariable, VariableId } from '@libs/repositories/variable/types';
+import { IVariable, VariableId, WorkflowId } from '@wolf/stateless';
 
 export class VariableEntity implements IVariable {
   _id: VariableId;

@@ -1,6 +1,5 @@
-import { IVariable } from "@libs/repositories/variable/types";
-import { find, get } from "lodash";
-import { UserPlan } from "@libs/repositories/user";
+import { find, get } from 'lodash';
+import { IVariable, UserPlan } from '@wolf/stateless';
 
 function makeid(length: number) {
   let result = '';

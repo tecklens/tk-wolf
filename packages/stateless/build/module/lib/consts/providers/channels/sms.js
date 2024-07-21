@@ -1,6 +1,6 @@
 import { africasTalkingConfig, azureSmsConfig, bandwidthConfig, brevoSmsConfig, bulkSmsConfig, burstSmsConfig, clickatellConfig, clickSendConfig, firetextConfig, fortySixElksConfig, genericSmsConfig, gupshupConfig, infobipSMSConfig, iSendSmsConfig, kannelConfig, maqsamConfig, messagebirdConfig, nexmoConfig, plivoConfig, ringCentralConfig, sendchampConfig, simpleTextingConfig, sms77Config, smsCentralConfig, snsConfig, telnyxConfig, termiiConfig, twilioConfig, } from '../credentials';
 import { SmsProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM } from '../provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../../entities';
 export const smsProviders = [
     {
         id: SmsProviderIdEnum.Novu,

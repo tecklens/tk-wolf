@@ -1,17 +1,16 @@
 import * as WebSocket from 'ws';
 import {
-  WebSocketAdapter,
   INestApplicationContext,
   Logger,
+  WebSocketAdapter,
 } from '@nestjs/common';
 import { MessageMappingProperties } from '@nestjs/websockets';
-import { Observable, fromEvent, EMPTY } from 'rxjs';
-import { mergeMap, filter } from 'rxjs/operators';
+import { EMPTY, fromEvent, Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
 import { CLOSE_EVENT, CONNECTION_EVENT } from '@nestjs/websockets/constants';
 import * as url from 'url';
 import { jwtDecode } from 'jwt-decode';
-import { get } from 'lodash';
-import { IEvent } from '@tps/event.interface';
+import { IEvent } from '@wolf/stateless';
 
 export class WsAdapter implements WebSocketAdapter {
   constructor(private app: INestApplicationContext) {}
@@ -68,8 +67,7 @@ export class WsAdapter implements WebSocketAdapter {
         }
 
         if (!decoded?._id) return;
-        const listener = (data: IEvent) =>
-          client.send(JSON.stringify(data));
+        const listener = (data: IEvent) => client.send(JSON.stringify(data));
         server.on('event', listener);
         server.on(`event_${decoded?._id}`, listener);
         this.clientData.set(client, { server, listener });

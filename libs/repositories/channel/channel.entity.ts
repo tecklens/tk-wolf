@@ -1,5 +1,4 @@
-import { UserId } from '@libs/shared/types';
-import { ChannelId, IChannel } from '@libs/repositories/channel/types';
+import { UserId, IChannel, ChannelId } from '@wolf/stateless';
 
 export class ChannelEntity implements IChannel {
   _id?: ChannelId;

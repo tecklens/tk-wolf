@@ -3,12 +3,12 @@ import { FilterQuery } from 'mongoose';
 import { MemberEntity, MemberDBModel } from './member.entity';
 import { BaseRepository } from '../base-repository';
 import { Member } from './member.schema';
-import type { EnforceOrgId } from '@tps/enforce';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
+import type { EnforceOrgId } from '@wolf/stateless';
 import {
   IMemberInvite,
+  MemberRoleEnum,
   MemberStatusEnum,
-} from '@libs/shared/entities/user/member.interface';
+} from '@wolf/stateless';
 
 export interface IAddMemberData {
   _userId?: string;

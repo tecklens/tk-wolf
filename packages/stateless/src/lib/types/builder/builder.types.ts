@@ -21,9 +21,19 @@ export enum FieldLogicalOperatorEnum {
   OR = 'OR',
 }
 
-export type BuilderGroupValues = FieldLogicalOperatorEnum.AND | FieldLogicalOperatorEnum.OR;
+export type BuilderGroupValues =
+  | FieldLogicalOperatorEnum.AND
+  | FieldLogicalOperatorEnum.OR;
 
-export type BuilderFieldType = 'BOOLEAN' | 'TEXT' | 'DATE' | 'NUMBER' | 'STATEMENT' | 'LIST' | 'MULTI_LIST' | 'GROUP';
+export type BuilderFieldType =
+  | 'BOOLEAN'
+  | 'TEXT'
+  | 'DATE'
+  | 'NUMBER'
+  | 'STATEMENT'
+  | 'LIST'
+  | 'MULTI_LIST'
+  | 'GROUP';
 
 export type BuilderFieldOperator =
   | FieldOperatorEnum.LARGER

@@ -1,4 +1,4 @@
-import { BugReportId, UserId } from '@stateless/lib/types';
+import { BugReportId, UserId } from '../../types';
 
 export interface IBugReport {
   id?: BugReportId;

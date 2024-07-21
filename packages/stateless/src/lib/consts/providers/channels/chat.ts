@@ -7,7 +7,7 @@ import {
 
 import { ChatProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM } from '../provider.enum';
 import { ChannelTypeEnum } from '../../../entities';
-import { IConfigCredentials, IProviderConfig } from '@stateless/lib/consts';
+import { IConfigCredentials, IProviderConfig } from '../../../consts';
 
 export const chatProviders: IProviderConfig[] = [
   {

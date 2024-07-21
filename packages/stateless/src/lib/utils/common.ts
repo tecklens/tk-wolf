@@ -1,4 +1,4 @@
-import { IVariable, UserPlan } from '@stateless/lib/entities';
+import { IVariable, UserPlan } from '../entities';
 import { find, get } from 'lodash';
 
 export function makeid(length: number) {

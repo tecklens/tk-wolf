@@ -1,5 +1,5 @@
-import { IUser, MemberRoleEnum } from '@stateless/lib/entities';
-import { OrganizationId } from '@stateless/lib/types';
+import { IUser, MemberRoleEnum } from '../../entities';
+import { OrganizationId } from '../../types';
 export declare enum MemberStatusEnum {
     NEW = "new",
     ACTIVE = "active",

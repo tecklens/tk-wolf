@@ -8,7 +8,9 @@ const hasCloudflareContext = (context) => {
     return !!context?.env;
 };
 const getEnvVariable = (name, context) => {
-    if (typeof process !== 'undefined' && process.env && typeof process.env[name] === 'string') {
+    if (typeof process !== 'undefined' &&
+        process.env &&
+        typeof process.env[name] === 'string') {
         return process.env[name];
     }
     if (hasCloudflareProxyContext(context)) {

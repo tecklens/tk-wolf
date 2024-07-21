@@ -3,7 +3,6 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import {
   EnvironmentEntity,
@@ -13,14 +12,13 @@ import {
 import { createHash } from 'crypto';
 import hat from 'hat';
 import { v4 as uuidv4 } from 'uuid';
-import { ApiException } from '@pak/utils/exceptions';
-import { IJwtPayload } from '@libs/shared/types';
 import {
+  IJwtPayload,
   decryptApiKey,
   encryptApiKey,
-} from '@libs/shared/encryptions/encrypt-provider';
-import { CreateEnvironmentRequestDto } from '@app/environment/dtos/create-environment-request.dto';
-import { EnvironmentResponseDto } from '@app/environment/dtos/environment-response.dto';
+  ApiException,
+} from '@wolf/stateless';
+import { CreateEnvironmentRequestDto, EnvironmentResponseDto } from './dtos';
 
 const API_KEY_GENERATION_MAX_RETRIES = 5;
 

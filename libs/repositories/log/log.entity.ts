@@ -1,5 +1,4 @@
-import { ILogTrigger } from '@libs/repositories/log/types';
-import { WorkflowId } from '@libs/repositories/workflow/types';
+import { ILogTrigger, WorkflowId } from '@wolf/stateless';
 
 export class LogEntity implements ILogTrigger {
   _id: string;

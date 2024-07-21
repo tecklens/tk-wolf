@@ -12,8 +12,8 @@ import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { NotificationService } from '@app/notification/notification.service';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { NotificationsRequestDto } from '@app/notification/dtos/notification-request.dto';
+import { NotificationsRequestDto } from './dtos';
+import { IJwtPayload } from '@wolf/stateless';
 
 @ApiBearerAuth()
 @Controller('notification')

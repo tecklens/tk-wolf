@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
-import { PaginationRequestDto } from '@stateless/lib/dto/pagination-request';
+import { PaginationRequestDto } from '../dto';
 export function PaginationWithFiltersRequestDto({ defaultLimit = 10, maxLimit = 100, queryDescription, }) {
     class PaginationWithFiltersRequest extends PaginationRequestDto(defaultLimit, maxLimit) {
         query;

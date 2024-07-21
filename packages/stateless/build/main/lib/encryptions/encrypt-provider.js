@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decryptApiKey = exports.encryptApiKey = exports.decryptCredentials = exports.encryptCredentials = exports.decryptSecret = exports.encryptSecret = void 0;
 const cipher_1 = require("./cipher");
-const types_1 = require("@stateless/lib/types");
-const consts_1 = require("@stateless/lib/consts");
+const types_1 = require("../types");
+const consts_1 = require("../consts");
 function encryptSecret(text) {
     const encrypted = (0, cipher_1.encrypt)(text);
     return `${types_1.WOLF_ENCRYPTION_SUB_MASK}${encrypted}`;

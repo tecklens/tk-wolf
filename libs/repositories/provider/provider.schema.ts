@@ -75,25 +75,8 @@ const providerSchema = new Schema<ProviderDBModel>(
       type: Schema.Types.Boolean,
       default: false,
     },
-    conditions: [
-      {
-        isNegated: Schema.Types.Boolean,
-        type: {
-          type: Schema.Types.String,
-        },
-        value: Schema.Types.String,
-        children: [
-          {
-            field: Schema.Types.String,
-            value: Schema.Types.Mixed,
-            operator: Schema.Types.String,
-            on: Schema.Types.String,
-          },
-        ],
-      },
-    ],
   },
-  schemaOptions
+  schemaOptions,
 );
 
 providerSchema.index({
@@ -101,7 +84,11 @@ providerSchema.index({
   active: 1,
 });
 
-providerSchema.plugin(mongooseDelete, { deletedAt: true, deletedBy: true, overrideMethods: 'all' });
+providerSchema.plugin(mongooseDelete, {
+  deletedAt: true,
+  deletedBy: true,
+  overrideMethods: 'all',
+});
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const Provider =

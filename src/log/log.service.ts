@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { LogRepository } from '@libs/repositories/log/log.repository';
-import { IJwtPayload } from '@libs/shared/types';
-import { FilterLogDto } from '@app/log/dtos/filter-log.dto';
-import { FilterLogResponse } from '@app/log/dtos/filter-log.response';
+import { LogRepository } from '@libs/repositories/log';
+import {
+  FilterLogDto,
+  FilterLogResponse,
+  DashboardInfoDto,
+} from '@app/log/dtos';
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
-import { DashboardInfoDto } from '@app/log/dtos/dashboard-info.dto';
-import { TaskRepository } from '@libs/repositories/task/task.repository';
-import { TaskStatus } from '@tps/task.interface';
-import { SubscriptionRepository } from '@libs/repositories/subscription/subscription.repository';
+import { TaskRepository } from '@libs/repositories/task';
+import { SubscriberRepository } from '@libs/repositories/subscriber';
 import moment from 'moment';
 import { find } from 'lodash';
-import { BillingRepository } from '@libs/repositories/billing/billing.repository';
+import { BillingRepository } from '@libs/repositories/billing';
+import { IJwtPayload, TaskStatus } from '@wolf/stateless';
 
 @Injectable()
 export class LogService {
@@ -18,7 +19,7 @@ export class LogService {
     private readonly logRepository: LogRepository,
     private readonly taskRepository: TaskRepository,
     private readonly billingRepository: BillingRepository,
-    private readonly subscriptionRepository: SubscriptionRepository,
+    private readonly subscriptionRepository: SubscriberRepository,
   ) {}
 
   @CacheKey('log:analyse')

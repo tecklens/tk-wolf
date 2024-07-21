@@ -1,9 +1,9 @@
-import { IPageResponse } from '@tps/index';
-import { GetSubscriptionResponse } from '@app/subscription/dtos/get-subscription.response';
+import { GetSubscriberResponse } from '@app/subscription/dtos/get-subscriber.response';
+import { IPageResponse } from '@wolf/stateless';
 
-export class GetSubscriptionsResponse
-  implements IPageResponse<GetSubscriptionResponse>
+export class GetSubscribersResponse
+  implements IPageResponse<GetSubscriberResponse>
 {
-  data: GetSubscriptionResponse[];
+  data: GetSubscriberResponse[];
   total: number;
 }

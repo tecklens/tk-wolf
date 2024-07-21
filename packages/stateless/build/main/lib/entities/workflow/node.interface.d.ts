@@ -1,6 +1,6 @@
 import { Position, XYPosition } from './position.interface';
-import { ProviderId } from '@stateless/lib/entities';
-import { WorkflowId } from '@stateless/lib/types';
+import { ProviderId } from '../provider';
+import { WorkflowId } from '../../types';
 export type NodeId = string;
 export interface INodeEntity {
     _id?: NodeId;

@@ -1,7 +1,7 @@
 import { BaseRepository } from '../base-repository';
 import { TaskDBModel, TaskEntity } from './task.entity';
 import { Task } from '@libs/repositories/task/task.schema';
-import { TaskStatus } from '@tps/task.interface';
+import { TaskStatus } from '@wolf/stateless';
 
 export class TaskRepository extends BaseRepository<
   TaskDBModel,
@@ -28,7 +28,7 @@ export class TaskRepository extends BaseRepository<
   }
 
   async delByIds(ids: string[]) {
-    this.delete({
+    await this.delete({
       _id: {
         $in: ids,
       },
@@ -41,7 +41,7 @@ export class TaskRepository extends BaseRepository<
     errorDetail: any,
     bodyWebhook: any | undefined,
   ) {
-    this.updateOne(
+    await this.updateOne(
       {
         _id: taskId,
       },

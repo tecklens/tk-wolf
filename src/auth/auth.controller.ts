@@ -16,20 +16,19 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '@app/auth/auth.service';
 import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
-import { ApiException } from '@app/packages/utils/exceptions';
-import { GitHubAuthGuard } from '@app/auth/strategy/github-auth.guard';
-import { IJwtPayload } from '@libs/shared/types';
+import { UserSession } from '@libs/utils/user.session';
 import {
+  ApiException,
+  IJwtPayload,
   buildGoogleOauthRedirectUrl,
   buildOauthRedirectUrl,
-} from '@libs/shared/services/oauth-redirect';
-import { UserRegistrationBodyDto } from '@app/auth/dtos/user-registration.dto';
-import { PasswordResetBodyDto } from '@app/auth/dtos/password-reset.dto';
-import { LoginBodyDto } from '@app/auth/dtos/login.dto';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { UserSession } from '@libs/utils/user.session';
-import { GoogleOAuthGuard } from '@app/auth/strategy/google-auth.guard';
-import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
+} from '@wolf/stateless';
+import { GitHubAuthGuard, GoogleOAuthGuard, JwtAuthGuard } from './strategy';
+import {
+  LoginBodyDto,
+  PasswordResetBodyDto,
+  UserRegistrationBodyDto,
+} from './dtos';
 
 @ApiBearerAuth()
 @Controller('auth')

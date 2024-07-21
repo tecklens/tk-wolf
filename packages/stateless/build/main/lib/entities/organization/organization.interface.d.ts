@@ -1,4 +1,4 @@
-import { ApiServiceLevelEnum } from '@stateless/lib/types';
+import { ApiServiceLevelEnum } from '../../types';
 export interface IOrganization {
     _id: string;
     name: string;

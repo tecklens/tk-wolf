@@ -1,5 +1,4 @@
-import { IBrand } from '@libs/repositories/brand/types';
-import { BrandId, OrganizationId, UserId } from '@libs/shared/types';
+import { IBrand, BrandId, UserId, OrganizationId } from '@wolf/stateless';
 
 export class BrandEntity implements IBrand {
   _id: BrandId;

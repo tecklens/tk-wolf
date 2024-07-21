@@ -12,11 +12,9 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { CredentialsDto } from './credentials.dto';
-import { ICreateProviderBodyDto } from '@libs/shared/dto';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { StepFilter } from '@libs/shared/dto/step-filter';
+import { ChannelTypeEnum, ICreateProviderDto } from '@wolf/stateless';
 
-export class CreateProviderRequestDto implements ICreateProviderBodyDto {
+export class CreateProviderRequestDto implements ICreateProviderDto {
   @ApiPropertyOptional({ type: String })
   @IsOptional()
   @IsString()
@@ -66,11 +64,11 @@ export class CreateProviderRequestDto implements ICreateProviderBodyDto {
   @IsBoolean()
   check?: boolean;
 
-  @ApiPropertyOptional({
-    type: [StepFilter],
-  })
-  @IsArray()
-  @IsOptional()
-  @ValidateNested({ each: true })
-  conditions?: StepFilter[];
+  // @ApiPropertyOptional({
+  //   type: [StepFilter],
+  // })
+  // @IsArray()
+  // @IsOptional()
+  // @ValidateNested({ each: true })
+  // conditions?: StepFilter[];
 }

@@ -1,7 +1,7 @@
 import { BaseRepository } from '../base-repository';
 import { BrandDBModel, BrandEntity } from './brand.entity';
 import { Brand } from './brand.schema';
-import { OrganizationId, UserId } from '@libs/shared/types';
+import { OrganizationId, UserId } from '@wolf/stateless';
 
 export class BrandRepository extends BaseRepository<
   BrandDBModel,

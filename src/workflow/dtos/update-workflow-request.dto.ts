@@ -1,7 +1,6 @@
 import { IsArray, IsOptional, IsString, MaxLength } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { IUpdateWorkflowDto } from '@libs/shared/dto';
+import { IUpdateWorkflowDto, WorkflowId } from '@wolf/stateless';
 
 export class UpdateWorkflowRequestDto implements IUpdateWorkflowDto {
   @ApiProperty()

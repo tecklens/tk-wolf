@@ -1,6 +1,4 @@
-import { UserId } from '@libs/shared/types';
-import { ChannelId } from '@libs/repositories/channel/types';
-import { IUserRateLimit } from '@libs/repositories/user-rate-limit/types';
+import { ChannelId, IUserRateLimit } from '@wolf/stateless';
 
 export class UserRateLimitEntity implements IUserRateLimit {
   _id?: ChannelId;

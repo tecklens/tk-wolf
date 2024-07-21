@@ -1,8 +1,5 @@
 import { Exclude } from 'class-transformer';
-
-import { UserId } from './types';
-import { AuthProviderEnum, IUserEntity } from '@libs/shared/entities/user';
-import { JobTitleEnum } from '@libs/shared/types';
+import { AuthProviderEnum, IUser, JobTitleEnum, UserId } from '@wolf/stateless';
 
 export enum UserPlan {
   free,
@@ -32,7 +29,7 @@ export interface IUserResetTokenCount {
   reqInDay: number;
 }
 
-export class UserEntity implements IUserEntity {
+export class UserEntity implements IUser {
   _id: UserId;
 
   resetToken?: string;

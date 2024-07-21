@@ -1,5 +1,5 @@
 import { CredentialsKeyEnum, ProvidersIdEnum } from './provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../entities';
 export interface IProviderConfig {
     id: ProvidersIdEnum;
     displayName: string;

@@ -1,4 +1,4 @@
-import { INodeEntity } from '@stateless/lib/entities/workflow/node.interface';
+import { INodeEntity } from '../../entities';
 export interface ICreateWorkflowDto extends INodeEntity {
     workflowId: string;
 }

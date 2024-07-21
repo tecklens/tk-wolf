@@ -1,3 +1,4 @@
+// @ts-ignore
 import { TwilioSmsProvider } from '@wolf/twilio';
 import { BaseSmsHandler } from './base.handler';
 import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';

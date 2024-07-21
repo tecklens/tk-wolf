@@ -1,12 +1,5 @@
-import {
-  IsArray,
-  IsDefined,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-} from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ICreateWorkflowDto } from '@libs/shared/dto';
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateEdgeWorkflowRequestDto {
   @ApiProperty()

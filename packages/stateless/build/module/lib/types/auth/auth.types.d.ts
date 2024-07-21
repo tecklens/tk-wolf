@@ -1,4 +1,4 @@
-import { UserPlan } from '@stateless/lib/entities';
+import { UserPlan } from '../../entities';
 export interface IJwtPayload {
     _id: string;
     firstName?: string;

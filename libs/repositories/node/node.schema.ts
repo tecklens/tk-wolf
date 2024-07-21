@@ -3,7 +3,6 @@ import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
 import { NodeDBModel } from './node.entity';
-import { ProviderId } from '@libs/repositories/provider/types';
 
 const nodeSchema = new Schema<NodeDBModel>(
   {

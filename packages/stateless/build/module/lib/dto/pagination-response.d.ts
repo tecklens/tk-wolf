@@ -1,4 +1,4 @@
-import { IPaginatedResponseDto } from '@stateless/lib/dto/shared';
+import { IPaginatedResponseDto } from '../dto';
 export declare class PaginatedResponseDto<T> implements IPaginatedResponseDto<T> {
     page: number;
     hasMore: boolean;

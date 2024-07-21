@@ -1,5 +1,4 @@
-import { BugReportId, IBugReport } from '@libs/repositories/bug-report/types';
-import { UserId } from '@libs/shared/types';
+import { BugReportId, IBugReport, UserId } from '@wolf/stateless';
 
 export class BugReportEntity implements IBugReport {
   id?: BugReportId;

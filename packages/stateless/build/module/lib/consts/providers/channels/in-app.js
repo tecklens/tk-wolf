@@ -1,6 +1,6 @@
 import { wolfInAppConfig } from '../credentials';
 import { InAppProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM, } from '../provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../../entities';
 export const inAppProviders = [
     {
         id: InAppProviderIdEnum.Novu,

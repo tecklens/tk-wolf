@@ -4,7 +4,7 @@ import {
   OrganizationId,
   UserId,
   WorkflowId,
-} from '@stateless/lib/types';
+} from '../../types';
 
 export interface ILogTrigger {
   _id?: LogId;

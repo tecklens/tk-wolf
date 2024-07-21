@@ -12,15 +12,17 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { LogService } from '@app/log/log.service';
 import { FilterLogDto } from '@app/log/dtos/filter-log.dto';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
 import { FilterLogResponse } from '@app/log/dtos/filter-log.response';
 import { DashboardInfoDto } from '@app/log/dtos/dashboard-info.dto';
+import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IJwtPayload,
+} from '@wolf/stateless';
 
 @Controller('log')
 @ApiBearerAuth()

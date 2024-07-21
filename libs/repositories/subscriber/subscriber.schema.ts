@@ -2,9 +2,9 @@ import * as mongoose from 'mongoose';
 import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
-import { SubscriptionDBModel } from './subscription.entity';
+import { SubscriberDBModel } from './subscriber.entity';
 
-const subscriptionSchema = new Schema<SubscriptionDBModel>(
+const subscriberSchema = new Schema<SubscriberDBModel>(
   {
     channelId: Schema.Types.String,
     _userId: Schema.Types.String,
@@ -20,9 +20,9 @@ const subscriptionSchema = new Schema<SubscriptionDBModel>(
   schemaOptions,
 );
 
-subscriptionSchema.index({ _userId: 1, channelId: 1 });
+subscriberSchema.index({ _userId: 1, channelId: 1 });
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const SubscriptionSchema =
-  (mongoose.models.Subscription as mongoose.Model<SubscriptionDBModel>) ||
-  mongoose.model<SubscriptionDBModel>('Subscription', subscriptionSchema);
+export const SubscriberSchema =
+  (mongoose.models.Subscriber as mongoose.Model<SubscriberDBModel>) ||
+  mongoose.model<SubscriberDBModel>('Subscriber', subscriberSchema);

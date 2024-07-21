@@ -1,36 +1,38 @@
+import { ProducerService } from '@app/kafka/producer/producer.service';
+import { EdgeRepository } from '@libs/repositories/edge';
+import { EmailTemplateRepository } from '@libs/repositories/email-templates';
+import { NodeRepository } from '@libs/repositories/node';
+import {
+  VariableRepository,
+  variableWorkflowDefault,
+} from '@libs/repositories/variable';
+import {
+  WorkflowEntity,
+  WorkflowRepository,
+} from '@libs/repositories/workflow';
 import {
   ConflictException,
   Injectable,
   NotFoundException,
   PreconditionFailedException,
 } from '@nestjs/common';
-import { WorkflowsRequestDto } from '@app/workflow/dto/workflows-request.dto';
-import { IJwtPayload } from '@libs/shared/types';
-import { WorkflowResponse } from '@app/workflow/dto/workflow-response.dto';
-import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
-import {
-  CreateWorkflowRequestDto,
-  UpdateWorkflowRequestDto,
-} from '@app/workflow/dto';
-import { AddNodeWorkflowRequestDto } from '@app/workflow/dto/add-node-workflow.request.dto';
-import { NodeRepository } from '@libs/repositories/node/node.repository';
-import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
-import { UpdateActiveWorkflowRequestDto } from '@app/workflow/dto/update-active-workflow-request.dto';
-import { AddEdgeWorkflowRequestDto } from '@app/workflow/dto/add-edge-workflow.request.dto';
-import { UpdateNodeWorkflowRequestDto } from '@app/workflow/dto/update-node-workflow.request.dto';
-import { DelEleWorkflowRequestDto } from '@app/workflow/dto/del-ele-workflow.request.dto';
+import { EventTypes, IJwtPayload, WorkflowId } from '@wolf/stateless';
 import { v4 as uuidv4 } from 'uuid';
-import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
-import { SetProviderNodeWorkflowRequestDto } from '@app/workflow/dto/set-provider-node-workflow.request.dto';
-import { VariableRepository } from '@libs/repositories/variable/variable.repository';
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { ChangeVariablesWorkflowRequestDto } from '@app/workflow/dto/change-variables-workflow.request.dto';
-import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
-import { variableWorkflowDefault } from '@libs/repositories/variable/variable.entity';
-import { CreateEmailTemplateDto } from '@app/workflow/dto/template/create-email-template.dto';
-import { UpdateViewPortWorkflowRequestDto } from '@app/workflow/dto/update-viewport-workflow.request.dto';
-import { ProducerService } from '@app/kafka/producer/producer.service';
-import { EventTypes } from '@libs/shared/types/events/event-types';
+import {
+  AddEdgeWorkflowRequestDto,
+  AddNodeWorkflowRequestDto,
+  ChangeVariablesWorkflowRequestDto,
+  CreateEmailTemplateDto,
+  CreateWorkflowRequestDto,
+  DelEleWorkflowRequestDto,
+  SetProviderNodeWorkflowRequestDto,
+  UpdateActiveWorkflowRequestDto,
+  UpdateNodeWorkflowRequestDto,
+  UpdateViewPortWorkflowRequestDto,
+  UpdateWorkflowRequestDto,
+  WorkflowResponse,
+  WorkflowsRequestDto,
+} from './dtos';
 
 @Injectable()
 export class WorkflowService {

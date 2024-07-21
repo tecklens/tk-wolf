@@ -12,18 +12,22 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { SubscriptionService } from '@app/subscription/subscription.service';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
-import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
-import { IJwtPayload } from '@libs/shared/types';
-import { CreateChannelRequest } from '@app/subscription/dtos/create-channel.request';
-import { ChannelEntity } from '@libs/repositories/channel/channel.entity';
+import { JwtAuthGuard } from '@app/auth/strategy';
+import { ChannelEntity } from '@libs/repositories/channel';
 import { UserSession } from '@libs/utils/user.session';
-import { CreateSubscriptionsRequest } from '@app/subscription/dtos/create-subscriptions.request';
-import { SubscriptionEntity } from '@libs/repositories/subscription/subscription.entity';
-import { GetSubscriptionResponse } from '@app/subscription/dtos/get-subscription.response';
-import { GetSubscriptionsRequest } from '@app/subscription/dtos/get-subscriptions.request';
-import { DelSubscriptionRequest } from '@app/subscription/dtos/del-subscription.request';
+import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IJwtPayload,
+} from '@wolf/stateless';
+import {
+  CreateChannelRequest,
+  CreateSubscribersRequest,
+  DelSubscriptionRequest,
+  GetSubscriberResponse,
+  GetSubscribersRequest,
+} from './dtos';
+import { SubscriberEntity } from '@libs/repositories/subscriber';
 
 @Controller('sub')
 @ApiBearerAuth()
@@ -49,47 +53,47 @@ export class SubscriptionController {
   @ExternalApiAccessible()
   createSubscription(
     @UserSession() user: IJwtPayload,
-    @Body() payload: CreateSubscriptionsRequest,
+    @Body() payload: CreateSubscribersRequest,
   ) {
     return this.sub.createSubscriptions(user, payload);
   }
 
   @Get('/')
-  @ApiResponse(SubscriptionEntity)
+  @ApiResponse(SubscriberEntity)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getSubscription(
     @UserSession() user: IJwtPayload,
     @Query('channel_id') channelId: string,
-    @Query() payload: GetSubscriptionsRequest,
+    @Query() payload: GetSubscribersRequest,
   ) {
     return this.sub.getSubscriptions(user, channelId, payload);
   }
 
   @Get('/all')
-  @ApiResponse(GetSubscriptionResponse)
+  @ApiResponse(GetSubscriberResponse)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getAllSubscriptionOfUser(
     @UserSession() user: IJwtPayload,
-    @Query() payload: GetSubscriptionsRequest,
+    @Query() payload: GetSubscribersRequest,
   ) {
     return this.sub.getAllSubscriptionOfUser(user, payload);
   }
 
   @Get('/channel')
-  @ApiResponse(SubscriptionEntity)
+  @ApiResponse(SubscriberEntity)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getChannels(
     @UserSession() user: IJwtPayload,
-    @Query() payload: GetSubscriptionsRequest,
+    @Query() payload: GetSubscribersRequest,
   ) {
     return this.sub.getChannels(user, payload);
   }
 
   @Get('/channel/:id')
-  @ApiResponse(SubscriptionEntity)
+  @ApiResponse(SubscriberEntity)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   getChannel(@UserSession() user: IJwtPayload, @Param('id') channelId: string) {
@@ -97,7 +101,7 @@ export class SubscriptionController {
   }
 
   @Delete('/')
-  @ApiResponse(SubscriptionEntity)
+  @ApiResponse(SubscriberEntity)
   @UseGuards(JwtAuthGuard)
   @ExternalApiAccessible()
   delSubscription(

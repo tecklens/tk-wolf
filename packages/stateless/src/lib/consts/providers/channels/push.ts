@@ -9,8 +9,8 @@ import {
 } from '../credentials';
 
 import { PushProviderIdEnum, UTM_CAMPAIGN_QUERY_PARAM } from '../provider.enum';
-import { ChannelTypeEnum } from '@stateless/lib/entities';
-import { IProviderConfig } from '@stateless/lib/consts';
+import { ChannelTypeEnum } from '../../../entities';
+import { IProviderConfig } from '../../../consts';
 
 export const pushProviders: IProviderConfig[] = [
   {

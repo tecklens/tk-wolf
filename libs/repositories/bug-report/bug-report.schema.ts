@@ -3,7 +3,6 @@ import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
 import { BugReportDBModel } from './bug-report.entity';
-import { UserId } from '@libs/shared/types';
 
 const bugReportSchema = new Schema<BugReportDBModel>(
   {

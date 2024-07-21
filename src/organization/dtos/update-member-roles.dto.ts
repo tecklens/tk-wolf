@@ -1,5 +1,5 @@
 import { IsEnum } from 'class-validator';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
+import { MemberRoleEnum } from '@wolf/stateless';
 
 export class UpdateMemberRolesDto {
   @IsEnum(MemberRoleEnum)

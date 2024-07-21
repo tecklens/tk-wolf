@@ -1,4 +1,4 @@
-import { EnvironmentId, LogId, OrganizationId, UserId, WorkflowId } from '@stateless/lib/types';
+import { EnvironmentId, LogId, OrganizationId, UserId, WorkflowId } from '../../types';
 export interface ILogTrigger {
     _id?: LogId;
     event_type: string;

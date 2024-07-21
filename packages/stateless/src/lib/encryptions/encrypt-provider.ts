@@ -1,10 +1,7 @@
 import { decrypt, encrypt } from './cipher';
-import {
-  EncryptedSecret,
-  WOLF_ENCRYPTION_SUB_MASK,
-} from '@stateless/lib/types';
-import { secureCredentials } from '@stateless/lib/consts';
-import { ICredentials } from '@stateless/lib/entities';
+import { EncryptedSecret, WOLF_ENCRYPTION_SUB_MASK } from '../types';
+import { secureCredentials } from '../consts';
+import { ICredentials } from '../entities';
 
 export function encryptSecret(text: string): EncryptedSecret {
   const encrypted = encrypt(text);

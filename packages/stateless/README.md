@@ -2,4 +2,4 @@ npm --registry=http://10.248.242.239:8081/repository/aio-hosted-repository/ publ
 
 ```shell
 npm run build
-```
+```# -wolf-stateless

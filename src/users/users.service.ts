@@ -6,27 +6,29 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserRepository } from '@libs/repositories/user';
-import { createHash } from '@pak/utils/hmac';
-import { ChangeProfileEmailDto } from '@app/users/dtos/change-profile-email.dto';
-import { normalizeEmail } from '@pak/utils/email-normalization';
-import { IJwtPayload } from '@libs/shared/types';
 import { Cache, CACHE_MANAGER, CacheKey } from '@nestjs/cache-manager';
-import {
-  buildAuthServiceKey,
-  buildUserKey,
-} from '@libs/shared/entities/key-builder';
 import { EnvironmentRepository } from '@libs/repositories/environment';
-import { decryptApiKey } from '@libs/shared/encryptions/encrypt-provider';
-import { UserOnboardingRequestDto } from '@app/users/dtos/user-onboarding-request.dto';
-import { UserOnboardingTourRequestDto } from '@app/users/dtos/user-onboarding-tour-request.dto';
-import { ChangeProfileDto } from '@app/users/dtos/change-profile.dto';
-import { BugReportRepository } from '@libs/repositories/bug-report/bug-report.repository';
-import { SubmitBugRequestDto } from '@app/users/dtos/submit-bug-request.dto';
+import { BugReportRepository } from '@libs/repositories/bug-report';
 import { v4 as uuidv4 } from 'uuid';
 import { HttpStatusCode } from 'axios';
-import { ChangePassDto } from '@app/auth/dtos/change-pass.dto';
 import * as bcrypt from 'bcrypt';
 import { HttpService } from '@nestjs/axios';
+import {
+  IJwtPayload,
+  buildAuthServiceKey,
+  buildUserKey,
+  createHash,
+  decryptApiKey,
+  normalizeEmail,
+} from '@wolf/stateless';
+import {
+  ChangePassDto,
+  ChangeProfileDto,
+  ChangeProfileEmailDto,
+  SubmitBugRequestDto,
+  UserOnboardingRequestDto,
+  UserOnboardingTourRequestDto,
+} from './dtos';
 
 // This should be a real class/interface representing a user entity
 export type User = any;

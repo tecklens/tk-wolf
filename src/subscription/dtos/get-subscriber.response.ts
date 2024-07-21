@@ -1,4 +1,4 @@
-export class GetSubscriptionResponse {
+export class GetSubscriberResponse {
   _id: string;
   _userId: string;
   channelId: string;

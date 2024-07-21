@@ -17,19 +17,23 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
-import { Roles } from '@tps/decorators/roles.decorator';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
-import { MemberResponseDto } from '@app/organization/dtos/member-response.dto';
-import { OrganizationService } from '@app/organization/organization.service';
-import { InviteMemberDto } from '@app/organization/dtos/invite-member.dto';
-import { ResendInviteDto } from '@app/organization/dtos/resend-invite.dto';
-import { IGetInviteResponseDto } from '@libs/shared/dto';
-import { BrandEntity } from '@libs/repositories/brand/brand.entity';
-import { UpdateBrandDto } from '@app/organization/dtos/update-brand.dto';
+import { BrandEntity } from '@libs/repositories/brand';
+import { OrganizationService } from './organization.service';
+import {
+  ApiResponse,
+  ExternalApiAccessible,
+  IGetInviteResponseDto,
+  IJwtPayload,
+  MemberRoleEnum,
+  Roles,
+} from '@wolf/stateless';
+import {
+  InviteMemberDto,
+  MemberResponseDto,
+  ResendInviteDto,
+  UpdateBrandDto,
+} from './dtos';
 
 @Controller('org')
 @ApiBearerAuth()

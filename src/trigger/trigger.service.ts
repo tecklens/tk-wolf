@@ -5,24 +5,25 @@ import {
   OnModuleInit,
   PreconditionFailedException,
 } from '@nestjs/common';
-import { CreateTriggerResponse } from '@app/trigger/dtos/create-trigger.response';
-import { CreateTriggerDto } from '@app/trigger/dtos/create-trigger.dto';
 import { ConsumerService } from '@app/kafka/consumer/consumer.service';
-import { INextJob } from '@libs/shared/entities/workflow';
-import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
-import { WorkflowEntity } from '@libs/repositories/workflow/workflow.entity';
 import { TaskService } from '@app/trigger/task.service';
-import { LogRepository } from '@libs/repositories/log/log.repository';
-import { IVariable } from '@libs/repositories/variable/types';
-import { VariableRepository } from '@libs/repositories/variable/variable.repository';
 import { get } from 'lodash';
-import { IJwtPayload } from '@libs/shared/types';
 import { getDateDataTimeout } from '@libs/utils';
-import { GetLogTriggerRequestDto } from '@app/trigger/dtos/get-log-trigger.request';
-import { GetLogTriggerResponseDto } from '@app/trigger/dtos/get-log-trigger.response.dto';
-import { ILogTrigger } from '@libs/repositories/log/types';
-import { CreateBulkTriggerDto } from '@app/trigger/dtos/create-bulk-trigger.dto';
 import { v4 as uuidv4 } from 'uuid';
+import { LogRepository } from '@libs/repositories/log';
+import {
+  WorkflowEntity,
+  WorkflowRepository,
+} from '@libs/repositories/workflow';
+import { VariableRepository } from '@libs/repositories/variable';
+import { IJwtPayload, ILogTrigger, INextJob, IVariable } from '@wolf/stateless';
+import {
+  CreateBulkTriggerDto,
+  CreateTriggerDto,
+  CreateTriggerResponse,
+  GetLogTriggerRequestDto,
+  GetLogTriggerResponseDto,
+} from './dtos';
 
 @Injectable()
 export class TriggerService implements OnModuleInit {

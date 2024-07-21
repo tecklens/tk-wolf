@@ -1,3 +1,3 @@
-export * from './subscription.entity';
-export * from './subscription.repository';
-export * from './subscription.schema';
+export * from './subscriber.entity';
+export * from './subscriber.repository';
+export * from './subscriber.schema';

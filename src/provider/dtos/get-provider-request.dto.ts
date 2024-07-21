@@ -1,20 +1,7 @@
-import {
-  IsArray,
-  IsBoolean,
-  IsDefined,
-  IsEnum,
-  IsMongoId,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-
-import { CredentialsDto } from './credentials.dto';
-import { ICreateProviderBodyDto } from '@libs/shared/dto';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import { StepFilter } from '@libs/shared/dto/step-filter';
+import { IsBoolean, IsEnum, IsOptional, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { ChannelTypeEnum } from '@wolf/stateless';
 
 export class GetProviderRequestDto {
   @ApiProperty({ type: String })

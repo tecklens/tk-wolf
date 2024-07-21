@@ -1,3 +1,4 @@
+// @ts-ignore
 import { GenericSmsProvider } from '@wolf/generic-sms';
 import { BaseSmsHandler } from './base.handler';
 import { ChannelTypeEnum, ICredentials } from '@wolf/stateless';

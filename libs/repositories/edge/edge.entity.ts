@@ -1,6 +1,4 @@
-import { NodeId } from '@libs/repositories/node/types';
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { IEdgeEntity } from '@libs/shared/entities/workflow/edge.interface';
+import { IEdgeEntity, NodeId, WorkflowId } from '@wolf/stateless';
 
 export class EdgeEntity implements IEdgeEntity {
   id?: NodeId;

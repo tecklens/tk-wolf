@@ -1,7 +1,6 @@
 import { IsArray, IsDate, IsObject, IsString, IsEnum } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
-import { MemberStatusEnum } from '@libs/shared/entities/user/member.interface';
+import { MemberRoleEnum, MemberStatusEnum } from '@wolf/stateless';
 
 export class MemberUserDto {
   @ApiProperty()

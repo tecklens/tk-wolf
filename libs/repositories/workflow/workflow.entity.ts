@@ -1,8 +1,12 @@
-import { EnvironmentId, OrganizationId, UserId } from '@libs/shared/types';
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { IWorkflowEntity } from '@libs/shared/entities/workflow';
+import {
+  EnvironmentId,
+  IWorkflow,
+  OrganizationId,
+  UserId,
+  WorkflowId,
+} from '@wolf/stateless';
 
-export class WorkflowEntity implements IWorkflowEntity {
+export class WorkflowEntity implements IWorkflow {
   _id?: WorkflowId;
 
   _organizationId: OrganizationId;

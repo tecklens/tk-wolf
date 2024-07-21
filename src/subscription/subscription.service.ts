@@ -3,22 +3,27 @@ import {
   PreconditionFailedException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SubscriptionRepository } from '@libs/repositories/subscription/subscription.repository';
-import { IJwtPayload } from '@libs/shared/types';
-import { CreateChannelRequest } from '@app/subscription/dtos/create-channel.request';
-import { ChannelRepository } from '@libs/repositories/channel/channel.repository';
-import { ISubscription } from '@libs/repositories/subscription/types';
-import { CreateSubscriptionsRequest } from '@app/subscription/dtos/create-subscriptions.request';
-import { UserRateLimitRepository } from '@libs/repositories/user-rate-limit/user-rate-limit.repository';
-import { getRateLimitThresh, UserRateLimitPolicy } from '@libs/shared/consts';
-import { GetSubscriptionsRequest } from '@app/subscription/dtos/get-subscriptions.request';
-import { GetSubscriptionsResponse } from '@app/subscription/dtos/get-subscriptions.response';
-import { DelSubscriptionRequest } from '@app/subscription/dtos/del-subscription.request';
+import { SubscriberRepository } from '@libs/repositories/subscriber';
+import { UserRateLimitRepository } from '@libs/repositories/user-rate-limit';
+import { ChannelRepository } from '@libs/repositories/channel';
+import {
+  CreateChannelRequest,
+  CreateSubscribersRequest,
+  DelSubscriptionRequest,
+  GetSubscribersRequest,
+  GetSubscribersResponse,
+} from './dtos';
+import {
+  IJwtPayload,
+  UserRateLimitPolicy,
+  getRateLimitThresh,
+  ISubscriber,
+} from '@wolf/stateless';
 
 @Injectable()
 export class SubscriptionService {
   constructor(
-    private readonly subscriptionRepository: SubscriptionRepository,
+    private readonly subscriptionRepository: SubscriberRepository,
     private readonly channelRepository: ChannelRepository,
     private readonly userRateLimitRepository: UserRateLimitRepository,
   ) {}
@@ -63,7 +68,7 @@ export class SubscriptionService {
       }
       await this.subscriptionRepository.insertMany(
         payload.targets.map(
-          (e): ISubscription => ({
+          (e): ISubscriber => ({
             channelId: channel._id,
             _userId: user._id,
             email: e.email,
@@ -90,7 +95,7 @@ export class SubscriptionService {
 
   async createSubscriptions(
     user: IJwtPayload,
-    payload: CreateSubscriptionsRequest,
+    payload: CreateSubscribersRequest,
   ) {
     const channelId = payload.channel_id;
     if (!channelId) {
@@ -121,7 +126,7 @@ export class SubscriptionService {
     const subscriptions = payload.targets;
     await this.subscriptionRepository.insertMany(
       subscriptions.map(
-        (e): ISubscription => ({
+        (e): ISubscriber => ({
           channelId: channelId,
           _userId: user._id,
           email: e.email,
@@ -147,8 +152,8 @@ export class SubscriptionService {
   async getSubscriptions(
     user: IJwtPayload,
     channelId: string,
-    payload: GetSubscriptionsRequest,
-  ): Promise<GetSubscriptionsResponse> {
+    payload: GetSubscribersRequest,
+  ): Promise<GetSubscribersResponse> {
     const channel = await this.channelRepository.findOne({
       _userId: user._id,
       _organizationId: user.organizationId,
@@ -159,7 +164,7 @@ export class SubscriptionService {
       throw new PreconditionFailedException('Channel does not exist');
     }
 
-    return await this.subscriptionRepository.findSubscriptionsByChannel(
+    return await this.subscriptionRepository.findSubscribersByChannel(
       user._id,
       channelId,
       payload.page * payload.limit,
@@ -169,16 +174,16 @@ export class SubscriptionService {
 
   async getAllSubscriptionOfUser(
     user: IJwtPayload,
-    payload: GetSubscriptionsRequest,
-  ): Promise<GetSubscriptionsResponse> {
-    return await this.subscriptionRepository.findAllSubscriptions(
+    payload: GetSubscribersRequest,
+  ): Promise<GetSubscribersResponse> {
+    return await this.subscriptionRepository.findAllSubscribers(
       user._id,
       payload.page * payload.page,
       payload.limit,
     );
   }
 
-  async getChannels(user: IJwtPayload, payload: GetSubscriptionsRequest) {
+  async getChannels(user: IJwtPayload, payload: GetSubscribersRequest) {
     return await this.channelRepository.getChannel(
       user._id,
       user.organizationId,

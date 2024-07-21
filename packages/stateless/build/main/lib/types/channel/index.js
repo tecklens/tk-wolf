@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CHANNELS_WITH_PRIMARY = exports.TemplateVariableTypeEnum = exports.StepTypeEnum = void 0;
-const entities_1 = require("@stateless/lib/entities");
+const entities_1 = require("../../entities");
 var StepTypeEnum;
 (function (StepTypeEnum) {
     StepTypeEnum["IN_APP"] = "in_app";

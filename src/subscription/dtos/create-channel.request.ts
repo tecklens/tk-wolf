@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsString } from 'class-validator';
-import { CreateSubscriptionRequest } from '@app/subscription/dtos/create-subscription.request';
+import { CreateSubscriberRequest } from './create-subscriber.request';
 
 export class CreateChannelRequest {
   @ApiProperty()
@@ -13,5 +13,5 @@ export class CreateChannelRequest {
 
   @ApiPropertyOptional()
   @IsArray()
-  targets: CreateSubscriptionRequest[];
+  targets: CreateSubscriberRequest[];
 }

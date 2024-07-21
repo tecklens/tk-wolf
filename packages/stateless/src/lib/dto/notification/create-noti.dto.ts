@@ -1,4 +1,4 @@
-import { EnvironmentId, OrganizationId } from '@stateless/lib/types';
+import { EnvironmentId, OrganizationId } from '../../types';
 
 export class CreateNotiDto {
   title: string;

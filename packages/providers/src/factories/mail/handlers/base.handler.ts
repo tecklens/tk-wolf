@@ -4,7 +4,7 @@ import {
   IEmailProvider,
   PlatformException,
 } from '@wolf/stateless';
-import { IMailHandler } from '@providers/mail/interfaces/send.handler.interface';
+import { IMailHandler } from '../interfaces';
 
 export abstract class BaseHandler implements IMailHandler {
   protected provider: IEmailProvider;

@@ -28,7 +28,6 @@ import {
   ISendSmsHandler,
   RingCentralHandler,
   BrevoSmsHandler,
-  ViettelHandler,
 } from './handlers';
 import { IProvider } from '@wolf/stateless';
 
@@ -62,7 +61,6 @@ export class SmsFactory implements ISmsFactory {
     new ISendSmsHandler(),
     new RingCentralHandler(),
     new BrevoSmsHandler(),
-    new ViettelHandler(),
   ];
 
   getHandler(integration: IProvider) {

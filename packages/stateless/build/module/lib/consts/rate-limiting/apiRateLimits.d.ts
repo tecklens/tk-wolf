@@ -1,4 +1,4 @@
-import { UserPlan } from '@stateless/lib/entities';
+import { UserPlan } from '../../entities';
 export declare enum UserRateLimitPolicy {
     CHANNEL = "channel",
     SUBSCRIPTION_PER_CHANNEL = "subscription_per_channel"

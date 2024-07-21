@@ -1,6 +1,6 @@
-import { EventTypes } from '@libs/shared/types/events/event-types';
 import { IsEnum, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { EventTypes } from '@wolf/stateless';
 
 export class EmailEventTrackingDto {
   @IsEnum(EventTypes)

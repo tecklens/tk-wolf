@@ -1,7 +1,4 @@
-import {
-  EmailTemplateId,
-  IEmailTemplate,
-} from '@libs/repositories/email-templates/types';
+import { EmailTemplateId, IEmailTemplate } from '@wolf/stateless';
 
 export class EmailTemplateEntity implements IEmailTemplate {
   _id: EmailTemplateId;

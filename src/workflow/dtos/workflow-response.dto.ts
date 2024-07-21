@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { INodeEntity } from '@libs/shared/entities/workflow/node.interface';
-import { IEdgeEntity } from '@libs/shared/entities/workflow/edge.interface';
+import { IEdgeEntity, INodeEntity } from '@wolf/stateless';
 
 export class WorkflowResponse {
   @ApiPropertyOptional()

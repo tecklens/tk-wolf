@@ -5,20 +5,20 @@ import { KafkaModule } from '@app/kafka/kafka.module';
 import { EventsModule } from '@app/events/events.module';
 import { EventsGateway } from '@app/events/events.gateway';
 import { JwtService } from '@nestjs/jwt';
-import { NodeRepository } from '@libs/repositories/node/node.repository';
-import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
-import { TaskRepository } from '@libs/repositories/task/task.repository';
+import { NodeRepository } from '@libs/repositories/node';
+import { EdgeRepository } from '@libs/repositories/edge';
+import { TaskRepository } from '@libs/repositories/task';
 import { ProviderRepository } from '@libs/repositories/provider';
-import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
+import { WorkflowRepository } from '@libs/repositories/workflow';
 import { MemberRepository } from '@libs/repositories/member';
 import { TaskService } from '@app/trigger/task.service';
 import { HttpModule } from '@nestjs/axios';
-import { LogRepository } from '@libs/repositories/log/log.repository';
-import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { LogRepository } from '@libs/repositories/log';
+import { VariableRepository } from '@libs/repositories/variable';
 import { NotificationModule } from '@app/notification/notification.module';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationRepository } from '@libs/repositories/notification';
-import { TaskTimelineRepository } from '@libs/repositories/task-timeline/task-timeline.repository';
+import { TaskTimelineRepository } from '@libs/repositories/task-timeline';
 
 @Module({
   imports: [

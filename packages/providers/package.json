@@ -55,14 +55,14 @@
   "dependencies": {
     "handlebars": "^4.7.7",
     "lodash.get": "^4.4.2",
-    "lodash.merge": "^4.6.2",
-    "@wolf/stateless": "file:../stateless"
+    "lodash.merge": "^4.6.2"
   },
   "devDependencies": {
     "@types/jest": "29.5.2",
     "@types/lodash.get": "^4.4.6",
     "@types/lodash.merge": "^4.6.6",
     "@types/node": "^14.6.0",
+    "@wolf/stateless": "^1.0.0",
     "codecov": "^3.5.0",
     "jest": "^27.0.6",
     "npm-run-all": "^4.1.5",
@@ -133,10 +133,15 @@
     "@wolf/telnyx": "^0.0.1",
     "@wolf/termii": "^0.0.1",
     "@wolf/twilio": "^0.0.1",
-    "@wolf/viettel": "^0.0.1",
     "@wolf/zulip": "^0.0.1"
   },
   "overrides": {
     "@types/jest": "29.5.2"
+  },
+  "workspaces": {
+    "packages": [
+      "providers/*",
+      "packages/*"
+    ]
   }
 }

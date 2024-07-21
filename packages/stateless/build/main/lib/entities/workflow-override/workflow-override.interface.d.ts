@@ -1,5 +1,5 @@
 import { EnvironmentId, OrganizationId, WorkflowOverrideId } from '../../types';
-import { IWorkflowTemplate } from '@stateless/lib/entities';
+import { IWorkflowTemplate } from '../../entities';
 export interface IWorkflowOverride {
     _id?: WorkflowOverrideId;
     _organizationId: OrganizationId;

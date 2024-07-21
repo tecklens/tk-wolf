@@ -1,2 +1,2 @@
-import { IProviderConfig } from '@stateless/lib/consts';
+import { IProviderConfig } from '../../../consts';
 export declare const smsProviders: IProviderConfig[];

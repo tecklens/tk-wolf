@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsIn, IsString } from 'class-validator';
-import { PaginationWithFiltersRequestDto } from '@libs/shared/dto/pagination-with-filters-request';
+import { PaginationWithFiltersRequestDto } from '@wolf/stateless';
 
 export class FilterLogDto extends PaginationWithFiltersRequestDto({
   defaultLimit: 10,
@@ -15,4 +15,7 @@ export class FilterLogDto extends PaginationWithFiltersRequestDto({
   @IsString()
   @IsIn(['month', 'day', 'hour'])
   period: 'month' | 'day' | 'hour';
+
+  page: number;
+  limit: number;
 }

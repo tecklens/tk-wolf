@@ -5,7 +5,7 @@ import {
 } from './environment.entity';
 import { Environment } from './environment.schema';
 import { BaseRepository } from '@libs/repositories/base-repository';
-import { EncryptedSecret, IApiRateLimitMaximum } from '@libs/shared/types';
+import { EncryptedSecret, IApiRateLimitMaximum } from '@wolf/stateless';
 
 export class EnvironmentRepository extends BaseRepository<
   EnvironmentDBModel,

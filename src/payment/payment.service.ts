@@ -4,13 +4,11 @@ import {
   StripeWebhookHandler,
 } from '@golevelup/nestjs-stripe';
 import { Stripe } from 'stripe';
-import { IJwtPayload } from '@libs/shared/types';
-import { CreatePaymentIndentDto } from '@app/payment/dtos/create-payment-indent.dto';
 import { UserPlan, UserRepository } from '@libs/repositories/user';
-import { BillingRepository } from '@libs/repositories/billing/billing.repository';
-import { IBilling } from '@libs/repositories/billing/types';
+import { BillingRepository } from '@libs/repositories/billing';
 import { LimitService } from '@app/auth/limit.service';
-import { encryptSecret } from '@libs/shared/encryptions/encrypt-provider';
+import { IBilling, IJwtPayload, encryptSecret } from '@wolf/stateless';
+import { CreatePaymentIndentDto } from './dtos';
 
 @Injectable()
 export class PaymentService {

@@ -1,4 +1,4 @@
-import { ChannelId, OrganizationId, UserId } from '@stateless/lib/types';
+import { ChannelId, OrganizationId, UserId } from '../../types';
 export interface IChannel {
     _id?: ChannelId;
     channelName: string;

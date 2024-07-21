@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 import { schemaOptions } from '../schema-default.options';
 import { NotificationDBModel } from './notification.entity';
-import { getTTLOptions } from '@pak/utils/ttl';
+import { getTTLOptions } from '@wolf/stateless';
 
 const notificationSchema = new Schema<NotificationDBModel>(
   {

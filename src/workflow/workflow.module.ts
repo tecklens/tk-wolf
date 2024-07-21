@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { WorkflowService } from '@app/workflow/workflow.service';
 import { WorkflowController } from '@app/workflow/workflow.controller';
-import { WorkflowRepository } from '@libs/repositories/workflow/workflow.repository';
-import { NodeRepository } from '@libs/repositories/node/node.repository';
-import { EdgeRepository } from '@libs/repositories/edge/edge.repository';
-import { EmailTemplateRepository } from '@libs/repositories/email-templates/email-template.repository';
-import { VariableRepository } from '@libs/repositories/variable/variable.repository';
+import { WorkflowRepository } from '@libs/repositories/workflow';
+import { NodeRepository } from '@libs/repositories/node';
+import { EdgeRepository } from '@libs/repositories/edge';
+import { EmailTemplateRepository } from '@libs/repositories/email-templates';
+import { VariableRepository } from '@libs/repositories/variable';
 import { KafkaModule } from '@app/kafka/kafka.module';
 
 @Module({

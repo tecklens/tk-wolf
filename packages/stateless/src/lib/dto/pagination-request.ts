@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, Max, Min } from 'class-validator';
 import { Constructor } from '@nestjs/common/utils/merge-with-values.util';
-import { IPaginationParams } from '@stateless/lib/types';
+import { IPaginationParams } from '../types';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export function PaginationRequestDto(

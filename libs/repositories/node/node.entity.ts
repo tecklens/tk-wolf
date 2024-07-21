@@ -1,11 +1,11 @@
-import { INodeEntity } from '@libs/shared/entities/workflow/node.interface';
-import { NodeId } from '@libs/repositories/node/types';
-import { WorkflowId } from '@libs/repositories/workflow/types';
 import {
+  INodeEntity,
+  NodeId,
   Position,
+  ProviderId,
+  WorkflowId,
   XYPosition,
-} from '@libs/shared/entities/workflow/position.interface';
-import { ProviderId } from '@libs/repositories/provider/types';
+} from '@wolf/stateless';
 
 export class NodeEntity implements INodeEntity {
   _id?: NodeId;

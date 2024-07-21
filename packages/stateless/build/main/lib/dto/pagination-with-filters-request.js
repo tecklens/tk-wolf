@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PaginationWithFiltersRequestDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const pagination_request_1 = require("@stateless/lib/dto/pagination-request");
+const dto_1 = require("../dto");
 function PaginationWithFiltersRequestDto({ defaultLimit = 10, maxLimit = 100, queryDescription, }) {
-    class PaginationWithFiltersRequest extends (0, pagination_request_1.PaginationRequestDto)(defaultLimit, maxLimit) {
+    class PaginationWithFiltersRequest extends (0, dto_1.PaginationRequestDto)(defaultLimit, maxLimit) {
     }
     __decorate([
         (0, swagger_1.ApiPropertyOptional)({

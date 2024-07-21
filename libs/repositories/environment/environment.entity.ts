@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
 import {
+  ChangePropsValueType,
   EncryptedSecret,
   IApiRateLimitMaximum,
   OrganizationId,
-} from '@libs/shared/types';
-import { ChangePropsValueType } from '@tps/helpers';
+} from '@wolf/stateless';
 
 export interface IApiKey {
   /*

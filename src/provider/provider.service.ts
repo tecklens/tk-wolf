@@ -4,14 +4,9 @@ import {
   Injectable,
 } from '@nestjs/common';
 import {
-  CHANNELS_WITH_PRIMARY,
-  IJwtPayload,
-  OrganizationId,
-} from '@libs/shared/types';
-import { CreateProviderRequestDto } from '@app/provider/dtos/create-provider-request.dto';
-import { ApiException } from '@pak/utils/exceptions';
-import { DbException } from '@libs/shared/exceptions/db.exception';
-import { InAppProviderIdEnum, providers } from '@libs/shared/consts';
+  CreateProviderRequestDto,
+  GetProviderRequestDto,
+} from '@app/provider/dtos';
 import { EmailProviderIdEnum, SmsProviderIdEnum } from '@novu/node';
 import {
   IntegrationQuery,
@@ -19,17 +14,21 @@ import {
   ProviderRepository,
 } from '@libs/repositories/provider';
 import slugify from 'slugify';
-import { MailFactory } from '@app/provider/factories';
-import { ICredentials } from '@libs/shared/entities/integration';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
-import {
-  decryptCredentials,
-  encryptCredentials,
-} from '@libs/shared/encryptions/encrypt-provider';
+import { MailFactory } from '@wolf/providers';
 import * as shortid from 'shortid';
-import { ProviderId } from '@libs/repositories/provider/types';
-import { GetProviderRequestDto } from '@app/provider/dtos/get-provider-request.dto';
-import { CacheKey } from "@nestjs/cache-manager";
+import { CacheKey } from '@nestjs/cache-manager';
+import {
+  IJwtPayload,
+  encryptCredentials,
+  providers,
+  DbException,
+  ApiException,
+  CHANNELS_WITH_PRIMARY,
+  decryptCredentials,
+  ChannelTypeEnum,
+  InAppProviderIdEnum,
+  ICredentials,
+} from '@wolf/stateless';
 
 @Injectable()
 export class ProviderService {
@@ -109,7 +108,7 @@ export class ProviderService {
         channel: payload.channel,
         credentials: encryptCredentials(payload.credentials ?? {}),
         active: payload.active,
-        conditions: payload.conditions,
+        // conditions: payload.conditions,
       };
 
       const isActiveAndChannelSupportsPrimary =
@@ -173,7 +172,7 @@ export class ProviderService {
         channel: payload.channel,
         credentials: encryptCredentials(payload.credentials ?? {}),
         active: payload.active,
-        conditions: payload.conditions,
+        // conditions: payload.conditions,
       };
 
       const isActiveAndChannelSupportsPrimary =

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailProviders = void 0;
 const credentials_1 = require("../credentials");
 const provider_enum_1 = require("../provider.enum");
-const entities_1 = require("@stateless/lib/entities");
+const entities_1 = require("../../../entities");
 exports.emailProviders = [
     {
         id: provider_enum_1.EmailProviderIdEnum.Novu,

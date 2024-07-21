@@ -1,6 +1,10 @@
-import { WorkflowId } from '@libs/repositories/workflow/types';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
+import {
+  IOverridesDataTrigger,
+  ITargetTrigger,
+  WorkflowId,
+} from '@wolf/stateless';
 
 export class CreateTriggerDto {
   @ApiProperty()
@@ -11,14 +15,6 @@ export class CreateTriggerDto {
 
   @ApiPropertyOptional()
   overrides?: IOverridesDataTrigger;
-}
-
-export interface ITargetTrigger {
-  email: string;
-  phone: string;
-  firstName: string;
-  lastName: string;
-  locale: string;
 }
 
 export class SmSTriggerDto {
@@ -36,14 +32,4 @@ export class SmSTriggerDto {
 
   @ApiPropertyOptional()
   variables?: Record<string, string>;
-}
-
-export interface IOverridesDataTrigger {
-  content?: string;
-  to?: string;
-  from?: string;
-  customData?: any;
-
-  webhookUrl?: string;
-  baseUrl?: string;
 }

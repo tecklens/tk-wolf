@@ -5,10 +5,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '@tps/decorators/roles.decorator';
 import * as jwt from 'jsonwebtoken';
-import { IJwtPayload } from '@libs/shared/types';
-import { MemberRoleEnum } from '@libs/shared/entities/user/member.enum';
+import { MemberRoleEnum, ROLES_KEY } from '@wolf/stateless';
 
 @Injectable()
 export class RolesGuard implements CanActivate {

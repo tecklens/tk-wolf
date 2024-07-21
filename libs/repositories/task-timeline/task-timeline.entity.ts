@@ -1,8 +1,10 @@
-import { WorkflowId } from '@libs/repositories/workflow/types';
-import { ITaskTimeline } from '@libs/shared/entities/workflow/task.interface';
-import { TaskId } from '@libs/repositories/task/types';
-import { UserId } from '@libs/repositories/user';
-import { EventTypes } from '@libs/shared/types/events/event-types';
+import {
+  EventTypes,
+  ITaskTimeline,
+  TaskId,
+  UserId,
+  WorkflowId,
+} from '@wolf/stateless';
 
 export class TaskTimelineEntity implements ITaskTimeline {
   _id?: TaskId;

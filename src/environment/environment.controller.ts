@@ -14,15 +14,17 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { ExternalApiAccessible } from '@tps/decorators/external-api.decorator';
 import { UserSession } from '@libs/utils/user.session';
-import { IJwtPayload } from '@libs/shared/types';
-import { ApiKey } from '@libs/shared/dto/api-key';
 import { EnvironmentService } from '@app/environment/environment.service';
 import { EnvironmentResponseDto } from '@app/environment/dtos/environment-response.dto';
-import { ApiResponse } from '@tps/decorators/api-response.decorator';
 import { CreateEnvironmentRequestDto } from '@app/environment/dtos/create-environment-request.dto';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
+import {
+  ApiKey,
+  ApiResponse,
+  ExternalApiAccessible,
+  IJwtPayload,
+} from '@wolf/stateless';
 
 @ApiBearerAuth()
 @Controller('environment')

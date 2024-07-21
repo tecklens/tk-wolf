@@ -1,4 +1,3 @@
-import { IBulkInviteRequestDto } from '@libs/shared/dto/organization';
 import { Type } from 'class-transformer';
 import {
   ArrayNotEmpty,
@@ -8,6 +7,7 @@ import {
   IsNotEmpty,
   ValidateNested,
 } from 'class-validator';
+import { IBulkInviteRequestDto } from '@wolf/stateless';
 
 class EmailInvitee {
   @IsDefined()

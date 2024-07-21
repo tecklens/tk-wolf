@@ -1,4 +1,4 @@
-import { UserPlan } from '@stateless/lib/entities';
+import { UserPlan } from '../entities';
 import { find, get } from 'lodash';
 export function makeid(length) {
     let result = '';

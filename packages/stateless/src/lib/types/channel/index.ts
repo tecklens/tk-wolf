@@ -1,4 +1,4 @@
-import { ChannelTypeEnum } from '@stateless/lib/entities';
+import { ChannelTypeEnum } from '../../entities';
 
 export type ChannelId = string;
 

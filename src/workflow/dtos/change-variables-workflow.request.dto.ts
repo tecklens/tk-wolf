@@ -1,6 +1,5 @@
-import { IsDefined, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { ICreateWorkflowDto } from '@libs/shared/dto';
+import { IsDefined, IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ChangeVariablesWorkflowRequestDto {
   @ApiPropertyOptional()

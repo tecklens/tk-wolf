@@ -1,2 +1,2 @@
-import { IWorkflowOverride } from '@stateless/lib/entities';
+import { IWorkflowOverride } from '../../entities';
 export type IUpdateWorkflowOverrideResponseDto = IWorkflowOverride;

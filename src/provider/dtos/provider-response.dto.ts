@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CredentialsDto } from './credentials.dto';
-import { StepFilter } from '@libs/shared/dto/step-filter';
-import { ChannelTypeEnum } from '@libs/provider/provider.interface';
+import { ChannelTypeEnum } from '@wolf/stateless';
 
 export class ProviderResponseDto {
   @ApiPropertyOptional()
@@ -47,8 +46,8 @@ export class ProviderResponseDto {
   @ApiProperty()
   primary: boolean;
 
-  @ApiPropertyOptional({
-    type: [StepFilter],
-  })
-  conditions?: StepFilter[];
+  // @ApiPropertyOptional({
+  //   type: [StepFilter],
+  // })
+  // conditions?: StepFilter[];
 }

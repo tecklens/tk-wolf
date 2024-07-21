@@ -1,7 +1,7 @@
 /// <reference types="node" />
 import { CheckIntegrationResponseEnum } from './provider.enum';
-import { EnvironmentId, OrganizationId } from '@stateless/lib/types';
-import { ICredentials } from '@stateless/lib/entities';
+import { EnvironmentId, OrganizationId } from '../../types';
+import { ICredentials } from '../../entities';
 export type ProviderId = string;
 export interface IProvider {
     _id?: ProviderId;

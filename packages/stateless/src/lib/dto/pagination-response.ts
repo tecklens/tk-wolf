@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IPaginatedResponseDto } from '@stateless/lib/dto/shared';
+import { IPaginatedResponseDto } from '../dto';
 
 export class PaginatedResponseDto<T> implements IPaginatedResponseDto<T> {
   @ApiProperty({

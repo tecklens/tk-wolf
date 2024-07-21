@@ -8,9 +8,7 @@ import {
   IsString,
   IsEnum,
 } from 'class-validator';
-import { passwordConstraints } from '@libs/shared/consts';
-import { JobTitleEnum, SignUpOriginEnum } from '@libs/shared/types';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { JobTitleEnum, SignUpOriginEnum, passwordConstraints } from '@wolf/stateless';
 export class UserRegistrationBodyDto {
   @IsDefined()
   @IsEmail()
