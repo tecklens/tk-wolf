@@ -19,7 +19,7 @@ import {
 import { TriggerService } from '@app/trigger/trigger.service';
 import { ApiKeyAuthGuard, JwtAuthGuard } from '@app/auth/strategy';
 import { GetTaskRequestDto } from '@app/trigger/dtos/get-task.request';
-import { TaskService } from '@app/trigger/task.service';
+import { TaskService } from '../../../tk-wolf-worker/src/task/task.service';
 import { UserSession } from '@libs/utils/user.session';
 import {
   ApiResponse,

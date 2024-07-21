@@ -6,7 +6,7 @@ import {
   PreconditionFailedException,
 } from '@nestjs/common';
 import { ConsumerService } from '@app/kafka/consumer/consumer.service';
-import { TaskService } from '@app/trigger/task.service';
+import { TaskService } from '../../../tk-wolf-worker/src/task/task.service';
 import { get } from 'lodash';
 import { getDateDataTimeout } from '@libs/utils';
 import { v4 as uuidv4 } from 'uuid';
