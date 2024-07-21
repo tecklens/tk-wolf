@@ -1,6 +1,6 @@
 # wolf Clicksend Provider
 
-A Clicksend sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Clicksend sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

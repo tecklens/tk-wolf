@@ -19,7 +19,7 @@ export const buildOauthRedirectUrl = (request: {
 
   /**
    * Make sure we only allow localhost redirects for CLI use and our own success route
-   * https://github.com/wolfhq/wolf/security/code-scanning/3
+   * https://github.com/tecklens/tk-wolf//security/code-scanning/3
    */
   if (
     redirectUrl &&

@@ -1,6 +1,6 @@
 # wolf Sendchamp Provider
 
-A Sendchamp SMS provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Sendchamp SMS provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

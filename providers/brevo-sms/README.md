@@ -1,6 +1,6 @@
 # wolf BrevoSms Provider
 
-A BrevoSms sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A BrevoSms sms provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

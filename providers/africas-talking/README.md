@@ -1,6 +1,6 @@
 # wolf Africa's Talking Provider
 
-An Africa's Talking SMS provider library for [@novu/node](https://github.com/wolfhq/wolf)
+An Africa's Talking SMS provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

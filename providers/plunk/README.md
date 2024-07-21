@@ -1,6 +1,6 @@
 # wolf Plunk Provider
 
-A Plunk email provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Plunk email provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # wolf Ses Provider
 
-A SES email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A SES email provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # wolf Expo Provider
 
-A Expo push provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Expo push provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

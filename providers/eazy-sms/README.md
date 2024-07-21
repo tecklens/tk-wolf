@@ -1,6 +1,6 @@
 # wolf Eazy SMS Provider
 
-A EazySms sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A EazySms sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

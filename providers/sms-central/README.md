@@ -1,6 +1,6 @@
 # wolf SmsCentral Provider
 
-A SmsCentral sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A SmsCentral sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

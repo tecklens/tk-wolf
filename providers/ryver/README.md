@@ -1,6 +1,6 @@
 # wolf Ryver Provider
 
-A Ryver chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Ryver chat provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

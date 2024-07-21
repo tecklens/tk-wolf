@@ -1,6 +1,6 @@
 # wolf Mailersend Provider
 
-A Mailersend email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A Mailersend email provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

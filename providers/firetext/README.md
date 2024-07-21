@@ -1,6 +1,6 @@
 # wolf Firetext Provider
 
-A Firetext sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Firetext sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

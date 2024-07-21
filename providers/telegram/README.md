@@ -1,6 +1,6 @@
 # wolf Slack Provider
 
-A Slack chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Slack chat provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

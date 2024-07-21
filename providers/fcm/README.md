@@ -1,6 +1,6 @@
 # wolf FCM Provider
 
-A FCM push provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A FCM push provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

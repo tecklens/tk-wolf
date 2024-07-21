@@ -1,6 +1,6 @@
 # wolf PushWebhook Provider
 
-This is a library that triggers a custom webhook and shows itself as a push library for [@novu/node](https://github.com/wolfhq/wolf)
+This is a library that triggers a custom webhook and shows itself as a push library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

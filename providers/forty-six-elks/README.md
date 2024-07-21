@@ -1,6 +1,6 @@
 # wolf FortySixElks Provider
 
-A 46Elks sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A 46Elks sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

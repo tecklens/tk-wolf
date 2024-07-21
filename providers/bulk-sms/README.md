@@ -1,6 +1,6 @@
 # wolf BulkSms Provider
 
-A BulkSms sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A BulkSms sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

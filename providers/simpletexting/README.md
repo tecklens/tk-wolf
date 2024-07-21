@@ -1,6 +1,6 @@
 # wolf Simpletexting Provider
 
-A Simpletexting sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Simpletexting sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

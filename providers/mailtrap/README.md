@@ -1,6 +1,6 @@
 # wolf Mailtrap Provider
 
-A Mailtrap email provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Mailtrap email provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

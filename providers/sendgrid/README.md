@@ -1,6 +1,6 @@
 # Nodejs SendGrid Provider
 
-A sendgrid email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A sendgrid email provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

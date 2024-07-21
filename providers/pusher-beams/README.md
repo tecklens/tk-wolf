@@ -1,6 +1,6 @@
 # wolf PusherBeams Provider
 
-A PusherBeams push provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A PusherBeams push provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

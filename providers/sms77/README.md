@@ -1,6 +1,6 @@
 # wolf sms77 Provider
 
-A sms77 sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A sms77 sms provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

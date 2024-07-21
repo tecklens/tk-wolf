@@ -1,6 +1,6 @@
 # wolf MsTeams Provider
 
-A MsTeams chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A MsTeams chat provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

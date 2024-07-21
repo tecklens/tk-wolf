@@ -1,6 +1,6 @@
 # wolf Mattermost Provider
 
-A Mattermost chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Mattermost chat provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

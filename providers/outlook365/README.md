@@ -1,6 +1,6 @@
 # wolf Outlook365 Provider
 
-A Outlook365 email provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Outlook365 email provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

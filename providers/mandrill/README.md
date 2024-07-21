@@ -1,6 +1,6 @@
 # Nodejs Mandrill Provider
 
-A mandrill email provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A mandrill email provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

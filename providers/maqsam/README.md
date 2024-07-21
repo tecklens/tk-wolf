@@ -1,6 +1,6 @@
 # Nodejs Maqsam Provider
 
-A Maqsam SMS provider library for [@novu/node](https://github.com/wolfhq/wolf).
+A Maqsam SMS provider library for [@novu/node](https://github.com/tecklens/tk-wolf/).
 
 ## Usage
 

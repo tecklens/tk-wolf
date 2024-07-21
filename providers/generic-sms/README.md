@@ -1,6 +1,6 @@
 # wolf GenericSms Provider
 
-A Generic sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Generic sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # wolf RocketChat Provider
 
-A RocketChat chat provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A RocketChat chat provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

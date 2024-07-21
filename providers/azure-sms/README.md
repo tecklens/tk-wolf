@@ -1,6 +1,6 @@
 # wolf AzureSms Provider
 
-A AzureSms sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A AzureSms sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

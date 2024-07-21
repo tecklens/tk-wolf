@@ -1,6 +1,6 @@
 # wolf iSend SMS Provider
 
-iSend sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+iSend sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

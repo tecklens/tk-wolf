@@ -1,6 +1,6 @@
 # Nodejs Plivo Provider
 
-A plivo sms provider library for [@novu/stateless](https://github.com/wolfhq/wolf).
+A plivo sms provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/).
 
 ## Usage
 

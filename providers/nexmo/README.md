@@ -1,6 +1,6 @@
 # wolf Nexmo Provider
 
-A Nexmo SMS provider library for [@novu/stateless](https://github.com/wolfhq/wolf)
+A Nexmo SMS provider library for [@novu/stateless](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

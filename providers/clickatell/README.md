@@ -1,6 +1,6 @@
 # wolf ClickatellSmsProvider Provider
 
-A ClickatellSmsProvider sms provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A ClickatellSmsProvider sms provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # wolf Resend Provider
 
-A Resend email provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Resend email provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 

@@ -1,6 +1,6 @@
 # wolf Braze Provider
 
-A Braze email provider library for [@novu/node](https://github.com/wolfhq/wolf)
+A Braze email provider library for [@novu/node](https://github.com/tecklens/tk-wolf/)
 
 ## Usage
 
