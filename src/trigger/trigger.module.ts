@@ -11,7 +11,6 @@ import { TaskRepository } from '@libs/repositories/task';
 import { ProviderRepository } from '@libs/repositories/provider';
 import { WorkflowRepository } from '@libs/repositories/workflow';
 import { MemberRepository } from '@libs/repositories/member';
-import { TaskService } from '../../../tk-wolf-worker/src/task/task.service';
 import { HttpModule } from '@nestjs/axios';
 import { LogRepository } from '@libs/repositories/log';
 import { VariableRepository } from '@libs/repositories/variable';
@@ -19,6 +18,7 @@ import { NotificationModule } from '@app/notification/notification.module';
 import { NotificationService } from '@app/notification/notification.service';
 import { NotificationRepository } from '@libs/repositories/notification';
 import { TaskTimelineRepository } from '@libs/repositories/task-timeline';
+import { TaskService } from '@app/trigger/task.service';
 
 @Module({
   imports: [

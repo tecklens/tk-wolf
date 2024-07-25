@@ -2,11 +2,8 @@ import {
   Injectable,
   Logger,
   NotFoundException,
-  OnModuleInit,
   PreconditionFailedException,
 } from '@nestjs/common';
-import { ConsumerService } from '@app/kafka/consumer/consumer.service';
-import { TaskService } from '../../../tk-wolf-worker/src/task/task.service';
 import { get } from 'lodash';
 import { getDateDataTimeout } from '@libs/utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,7 +13,15 @@ import {
   WorkflowRepository,
 } from '@libs/repositories/workflow';
 import { VariableRepository } from '@libs/repositories/variable';
-import { IJwtPayload, ILogTrigger, INextJob, IVariable } from '@wolfxlabs/stateless';
+import {
+  IJwtPayload,
+  ILogTrigger,
+  INextJob,
+  IOverridesDataTrigger,
+  ITargetTrigger,
+  IVariable,
+  WfNodeType,
+} from '@wolfxlabs/stateless';
 import {
   CreateBulkTriggerDto,
   CreateTriggerDto,
@@ -24,24 +29,25 @@ import {
   GetLogTriggerRequestDto,
   GetLogTriggerResponseDto,
 } from './dtos';
+import { TaskService } from '@app/trigger/task.service';
+import { NodeRepository } from '@libs/repositories/node';
+import { EdgeRepository } from '@libs/repositories/edge';
+import process from 'process';
+import { ProducerService } from '@app/kafka/producer/producer.service';
 
 @Injectable()
-export class TriggerService implements OnModuleInit {
+export class TriggerService {
   private logger = new Logger('TriggerService');
 
   constructor(
-    private readonly consumerService: ConsumerService,
+    private readonly sender: ProducerService,
     private readonly logRepository: LogRepository,
     private readonly workflowRepository: WorkflowRepository,
     private readonly variableRepository: VariableRepository,
+    private readonly nodeRepository: NodeRepository,
+    private readonly edgeRepository: EdgeRepository,
     private readonly taskService: TaskService,
-  ) {
-    this.onInit();
-  }
-
-  onModuleInit() {
-    this.logger.log('init');
-  }
+  ) {}
 
   async createTrigger(
     user: IJwtPayload,
@@ -77,17 +83,13 @@ export class TriggerService implements OnModuleInit {
 
       await this.validateVariables(variables, payload);
 
-      await this.taskService.nextJob({
+      await this.startTask({
         workflowId: wf._id,
         workflowName: wf.name,
-        orgId: wf._organizationId,
-        envId: wf._environmentId,
+        user: user,
         target: payload.target,
         overrides: payload.overrides,
-        userId: wf._userId,
-        type: 'starter',
         transactionId: transactionId,
-        previousNodeId: undefined,
       });
 
       log.status = 1;
@@ -142,16 +144,12 @@ export class TriggerService implements OnModuleInit {
           overrides: payload.overrides,
         });
 
-        await this.taskService.nextJob({
+        await this.startTask({
           workflowId: wf._id,
           workflowName: wf.name,
-          orgId: wf._organizationId,
-          envId: wf._environmentId,
+          user: user,
           target: target,
           overrides: payload.overrides,
-          userId: wf._userId,
-          type: 'starter',
-          previousNodeId: undefined,
           transactionId: transactionId,
         });
 
@@ -166,61 +164,58 @@ export class TriggerService implements OnModuleInit {
     return null;
   }
 
-  async onInit() {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const _this: TriggerService = this;
-    const nextTopicDelay = `${process.env.KAFKA_PREFIX_JOB_TOPIC}.delay`;
-    await this.consumerService.consume(
-      {
-        topics: [
-          process.env.KAFKA_NEXT_JOB_TOPIC,
-          process.env.KAFKA_LOG_TASK_TIMELINE,
-          nextTopicDelay,
-        ],
-      },
-      {
-        eachBatchAutoResolve: true,
-        eachBatch: async ({ batch, resolveOffset, heartbeat }) => {
-          for (const message of batch.messages) {
-            const topic = batch.topic,
-              partition = batch.partition;
-            if (topic === process.env.KAFKA_NEXT_JOB_TOPIC) {
-              _this.taskService
-                .exeNextJob({
-                  topic,
-                  partition,
-                  message,
-                })
-                .then(() => {});
-            } else if (topic === nextTopicDelay) {
-              const data: INextJob = JSON.parse(message.value.toString());
-              if (data.workflowId && data.organizationId) {
-                _this.taskService
-                  .nextJob({
-                    workflowId: data.workflowId,
-                    workflowName: data.workflowName,
-                    orgId: data.organizationId,
-                    envId: data.environmentId,
-                    target: data.target,
-                    overrides: data.overrides,
-                    userId: data.userId,
-                    type: 'delay',
-                    previousNodeId: data.currentNodeId,
-                    transactionId: data.transactionId,
-                  })
-                  .then(() => {});
-              }
-            } else if (topic === process.env.KAFKA_LOG_TASK_TIMELINE) {
-              _this.taskService.saveTaskTimeline(message).then(() => {});
-            }
-
-            resolveOffset(message.offset);
-            await heartbeat();
-          }
-        },
-        autoCommitInterval: 500,
-      },
+  private async startTask({
+    workflowId,
+    workflowName,
+    user,
+    transactionId,
+    target,
+    overrides,
+  }: {
+    workflowId: string;
+    workflowName: string;
+    user: IJwtPayload;
+    transactionId: string;
+    target: ITargetTrigger;
+    overrides: IOverridesDataTrigger;
+  }) {
+    const node = await this.nodeRepository.findOneByWorkflowIdAndType(
+      workflowId,
+      WfNodeType.starter,
     );
+    if (node == null)
+      throw new NotFoundException('Workflow not have starter node');
+
+    const edges = await this.edgeRepository.findBySource(node._id);
+
+    if (edges.length > 0) {
+      const nodesTarget = await this.nodeRepository.findByIdIn(
+        edges.map((e) => e.target),
+      );
+      for (const n of nodesTarget) {
+        const dataTransfer: INextJob = {
+          currentNodeId: n._id,
+          organizationId: user.organizationId,
+          environmentId: user.environmentId,
+          target: target,
+          workflowId,
+          workflowName,
+          userId: user._id,
+          overrides: overrides,
+          transactionId: transactionId,
+        };
+
+        await this.sender.produce({
+          messages: [
+            {
+              key: user._id,
+              value: JSON.stringify(dataTransfer),
+            },
+          ],
+          topic: process.env.KAFKA_NEXT_JOB_TOPIC ?? '',
+        });
+      }
+    }
   }
 
   private async validateVariables(
