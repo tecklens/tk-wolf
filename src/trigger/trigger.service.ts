@@ -208,7 +208,6 @@ export class TriggerService {
         await this.sender.produce({
           messages: [
             {
-              key: user._id,
               value: JSON.stringify(dataTransfer),
             },
           ],
