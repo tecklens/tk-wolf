@@ -7,7 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { DataWrapperDto } from '../dto';
 
-export const ApiResponse = <DataDto>(
+export const ApiResponse = <DataDto extends Type<unknown>>(
   dataDto: DataDto,
   statusCode: 200 | 201 = 200,
   isResponseArray = false,

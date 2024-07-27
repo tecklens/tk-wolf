@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { UserPlan } from '@libs/repositories/user';
+import { UserPlan } from '@wolfxlabs/stateless';
 
 export class CreatePaymentIndentDto {
   @ApiProperty()
