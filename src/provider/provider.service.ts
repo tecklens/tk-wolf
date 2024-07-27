@@ -7,7 +7,6 @@ import {
   CreateProviderRequestDto,
   GetProviderRequestDto,
 } from '@app/provider/dtos';
-import { EmailProviderIdEnum, SmsProviderIdEnum } from '@novu/node';
 import {
   IntegrationQuery,
   ProviderEntity,
@@ -28,6 +27,7 @@ import {
   ChannelTypeEnum,
   InAppProviderIdEnum,
   ICredentials,
+  SmsProviderIdEnum, EmailProviderIdEnum,
 } from '@wolfxlabs/stateless';
 
 @Injectable()
