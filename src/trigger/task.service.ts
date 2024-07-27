@@ -25,23 +25,27 @@ export class TaskService {
     u: IJwtPayload,
     payload: GetTaskRequestDto,
   ): Promise<TaskResponseDto> {
+    let query: any = {
+      _userId: u._id,
+      _environmentId: u.environmentId,
+      _organizationId: u.organizationId,
+    };
+
+    if (payload.status && payload.status.length > 0) {
+      query = {
+        ...query,
+        status: {
+          $in: payload.status,
+        },
+      };
+    }
+
     return {
       page: payload.page,
       pageSize: payload.limit,
-      totalCount: await this.taskRepository.count({
-        _userId: u._id,
-        _environmentId: u.environmentId,
-        _organizationId: u.organizationId,
-      }),
+      totalCount: await this.taskRepository.count(query),
       data: await this.taskRepository.find(
-        {
-          _userId: u._id,
-          _environmentId: u.environmentId,
-          _organizationId: u.organizationId,
-          status: {
-            $in: payload.status,
-          },
-        },
+        query,
         '_id _workflowId _userId _environmentId _organizationId workflowName _providerId providerName channel transactionId createdAt code name status priority',
         {
           skip: payload.page * payload.limit,
