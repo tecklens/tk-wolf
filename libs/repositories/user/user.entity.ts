@@ -1,18 +1,24 @@
 import { Exclude } from 'class-transformer';
-import { AuthProviderEnum, IUser, JobTitleEnum, UserId } from '@wolfxlabs/stateless';
-
-export enum UserPlan {
-  free,
-  silver,
-  gold,
-  diamond,
-}
+import {
+  AuthProviderEnum,
+  IUser,
+  JobTitleEnum,
+  UserId,
+  UserPlan,
+} from '@wolfxlabs/stateless';
 
 export const consumePoints = {
   [UserPlan.free]: 10000000,
   [UserPlan.silver]: 100000,
   [UserPlan.gold]: 10000,
   [UserPlan.diamond]: 1000,
+};
+
+export const consumeSecondPoints = {
+  [UserPlan.free]: 1000,
+  [UserPlan.silver]: 100,
+  [UserPlan.gold]: 10,
+  [UserPlan.diamond]: 10,
 };
 
 export interface IUserToken {

@@ -8,4 +8,6 @@ export class GetTaskRequestDto extends PaginationWithFiltersRequestDto({
 }) {
   page: number;
   limit: number;
+
+  status: number[];
 }

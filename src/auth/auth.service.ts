@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Inject,
   Injectable,
   NotFoundException,
@@ -19,9 +18,9 @@ import {
 } from '@libs/repositories/environment';
 import {
   consumePoints,
+  consumeSecondPoints,
   IUserResetTokenCount,
   UserEntity,
-  UserPlan,
   UserRepository,
 } from '@libs/repositories/user';
 import * as bcrypt from 'bcrypt';
@@ -43,24 +42,21 @@ import { ModuleRef } from '@nestjs/core';
 import { MemberEntity, MemberRepository } from '@libs/repositories/member';
 import { LimitService } from '@app/auth/limit.service';
 import { Types } from 'mongoose';
-import { MailFactory } from '@wolfxlabs/providers';
-import { ProviderEntity } from '@libs/repositories/provider';
 import {
   ApiException,
+  ApiServiceLevelEnum,
   AuthProviderEnum,
+  buildUserKey,
+  createHash as createHashHmac,
+  ICreateOrganizationDto,
   IJwtPayload,
+  IUser,
   JobTitleEnum,
   MemberRoleEnum,
-  SignUpOriginEnum,
-  normalizeEmail,
-  createHash as createHashHmac,
-  buildUserKey,
-  ICreateOrganizationDto,
-  ApiServiceLevelEnum,
   MemberStatusEnum,
-  ChannelTypeEnum,
-  decryptApiKey,
-  decryptCredentials,
+  normalizeEmail,
+  SignUpOriginEnum,
+  UserPlan,
 } from '@wolfxlabs/stateless';
 import {
   LoginBodyDto,
@@ -103,7 +99,7 @@ export class AuthService {
     );
   }
 
-  public async validateUser(payload: IJwtPayload): Promise<UserEntity> {
+  public async validateUser(payload: IJwtPayload): Promise<IUser> {
     // We run these in parallel to speed up the query time
     const userPromise = this.getUser({ _id: payload._id });
     const isMemberPromise = payload.organizationId
@@ -112,7 +108,10 @@ export class AuthService {
           payload.organizationId,
         )
       : true;
-    const [user, isMember] = await Promise.all([userPromise, isMemberPromise]);
+    const [user, isMember]: [IUser, boolean] = await Promise.all([
+      userPromise,
+      isMemberPromise,
+    ]);
 
     if (!user) throw new UnauthorizedException('User not found');
     if (payload.organizationId && !isMember) {
@@ -298,11 +297,16 @@ export class AuthService {
     if (!plan) plan = UserPlan.free;
 
     const cPoint = consumePoints[plan];
+    const cPointSecond = consumeSecondPoints[plan];
 
     try {
-      const rspLimit = await this.limitService
+      await this.limitService
         .getLimiter()
         .consume(`${user._id}_${environment._id}`, cPoint);
+
+      await this.limitService
+        .getLimiterSecond()
+        .consume(`${user._id}_${environment._id}`, cPointSecond);
 
       return {
         plan: user.plan,
@@ -1226,52 +1230,5 @@ export class AuthService {
     });
 
     return await this.getSignedToken(user, newOrgId, environment?._id, member);
-  }
-
-  private async sendEmail(to: string[], designHtml: string, subject: string) {
-    const mailFactory = new MailFactory();
-    const mailHandler = mailFactory.getHandler(
-      this.buildFactoryIntegration({
-        providerId: 'resend',
-        channel: ChannelTypeEnum.EMAIL,
-        _environmentId: '',
-        _organizationId: '',
-        active: false,
-        credentials: {
-          apiKey: decryptApiKey(process.env.APP_RESEND_API_KEY),
-          senderName: process.env.APP_RESEND_SENDER_NAME,
-        },
-        identifier: '',
-        name: '',
-        primary: false,
-        priority: 0,
-      }),
-      process.env.APP_DEFAULT_EMAIL,
-    );
-
-    const result = await mailHandler.send({
-      from: process.env.APP_DEFAULT_EMAIL,
-      to: [...to],
-      html: designHtml,
-      subject: subject,
-    });
-    if (!result?.id) {
-      throw new BadRequestException(
-        `Error when send email invite member ${to}.`,
-      );
-    }
-  }
-
-  public buildFactoryIntegration(
-    integration: ProviderEntity,
-    senderName?: string,
-  ) {
-    return {
-      ...integration,
-      credentials: {
-        ...decryptCredentials(integration.credentials),
-      },
-      providerId: integration.providerId,
-    };
   }
 }

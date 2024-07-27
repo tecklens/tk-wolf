@@ -7,10 +7,12 @@ import Redis from 'ioredis';
 import * as process from 'process';
 
 export const MAX_POINT_IN_MONTH = 1000000000;
+export const MAX_POINT_IN_SECOND = 5000;
 
 @Injectable()
 export class LimitService {
   private limiter: RateLimiterRedis;
+  private limiterSecond: RateLimiterRedis;
 
   constructor() {
     const redisClient = new Redis({
@@ -30,9 +32,26 @@ export class LimitService {
     };
 
     this.limiter = new RateLimiterRedis(opts);
+
+    const optsSecond: IRateLimiterRedisOptions = {
+      // Basic options
+      storeClient: redisClient,
+      points: MAX_POINT_IN_SECOND, // Number of points
+      duration: 1, // Per second(s) // * 1 tháng
+
+      // Custom
+      blockDuration: 0, // Do not block if consumed more than points
+      keyPrefix: `${process.env.NODE_ENV ?? 'production'}-w-s-limit`, // must be unique for limiters with different purpose
+    };
+
+    this.limiterSecond = new RateLimiterRedis(optsSecond);
   }
 
   getLimiter() {
     return this.limiter;
+  }
+
+  getLimiterSecond() {
+    return this.limiterSecond;
   }
 }

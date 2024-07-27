@@ -3,12 +3,12 @@ import { check, sleep } from 'k6';
 
 export let options = {
   vus: 100, // Virtual Users
-  duration: '5s', // Duration of the test
+  duration: '100s', // Duration of the test
 };
 
 export default function () {
   const data = {
-    workflowId: '669266dafdec836446fe5b62',
+    workflowId: '66a4bf70095f21bb1092806a',
     data: {},
     target: {
       subcriberId: 'abc',
@@ -35,5 +35,5 @@ export default function () {
 
   check(res, { 'success send trigger': (r) => r.status === 201 });
 
-  sleep(0.3);
+  sleep(1);
 }

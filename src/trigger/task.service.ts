@@ -38,6 +38,9 @@ export class TaskService {
           _userId: u._id,
           _environmentId: u.environmentId,
           _organizationId: u.organizationId,
+          status: {
+            $in: payload.status,
+          },
         },
         '_id _workflowId _userId _environmentId _organizationId workflowName _providerId providerName channel transactionId createdAt code name status priority',
         {
