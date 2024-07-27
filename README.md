@@ -24,34 +24,35 @@ Wolf Notification is a powerful notification infrastructure that helps you deplo
 ## Installation
 
 ```bash
-$ yarn setup
-$ yarn install
+$ npm i setup
+$ npm i install
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
+$ npm run start
 
 # watch mode
 $ yarn run start:dev
 
 # production mode
-$ yarn run start:prod
+$ npm i -g pm2
+$ pm2 start ecosystem.config.js
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ yarn run test
+$ npm run test
 
 # e2e tests
-$ yarn run test:e2e
+$ npm run test:e2e
 
 # test coverage
-$ yarn run test:cov
+$ npm run test:cov
 ```
 
 ## Support
