@@ -1,6 +1,6 @@
 {
   "name": "@wolfxlabs/providers",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
@@ -54,15 +54,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "handlebars": "^4.7.7",
-    "lodash.get": "^4.4.2",
-    "lodash.merge": "^4.6.2"
-  },
-  "devDependencies": {
-    "@types/jest": "29.5.2",
-    "@types/lodash.get": "^4.4.6",
-    "@types/lodash.merge": "^4.6.6",
-    "@types/node": "^14.6.0",
     "@wolfxlabs/africas-talking": "^1.0.1",
     "@wolfxlabs/apns": "^1.0.1",
     "@wolfxlabs/azure-sms": "^1.0.1",
@@ -79,6 +70,7 @@
     "@wolfxlabs/fcm": "^1.0.1",
     "@wolfxlabs/firetext": "^1.0.1",
     "@wolfxlabs/forty-six-elks": "^1.0.1",
+    "@wolfxlabs/generic-sms": "^1.0.1",
     "@wolfxlabs/getstream": "^1.0.1",
     "@wolfxlabs/grafana-on-call": "^1.0.1",
     "@wolfxlabs/gupshup": "^1.0.1",
@@ -125,6 +117,15 @@
     "@wolfxlabs/termii": "^1.0.1",
     "@wolfxlabs/twilio": "^1.0.1",
     "@wolfxlabs/zulip": "^1.0.1",
+    "handlebars": "^4.7.7",
+    "lodash.get": "^4.4.2",
+    "lodash.merge": "^4.6.2"
+  },
+  "devDependencies": {
+    "@types/jest": "29.5.2",
+    "@types/lodash.get": "^4.4.6",
+    "@types/lodash.merge": "^4.6.6",
+    "@types/node": "^14.6.0",
     "codecov": "^3.5.0",
     "jest": "^27.0.6",
     "npm-run-all": "^4.1.5",
