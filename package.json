@@ -8,11 +8,12 @@
   "repository": "git://github.com:tecklens/tk-wolf.git",
   "scripts": {
     "build": "nest build",
+    "build:prod": "NODE_ENV=production nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "NODE_ENV=production node dist/src/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "generate:provider": "npx hygen provider new --version 0.0.1",
     "setup": "npx lerna run build",
