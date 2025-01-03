@@ -57,6 +57,10 @@ $ npm run test:cov
 
 ## Support
 
+## Architecture
+
+![image](docs/imgs/archi.png)
+
 ## Plugin Architecture
 
 ![image](docs/imgs/plugin-arch.png)
