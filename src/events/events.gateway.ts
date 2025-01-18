@@ -23,7 +23,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   constructor(private jwtService: JwtService) {}
 
   @SubscribeMessage('message')
-  handleEvent(@ConnectedSocket() client: Socket, data: any): string {
+  handleEvent(data: any): string {
     console.log(data);
     // this.server.emit(
     //   'event',
@@ -38,5 +38,17 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleDisconnect(socket: Socket): Promise<void> {
     this.logger.log(`Socket disconnected: ${socket.id}`);
+  }
+
+  async sendMessage<T>(props: {
+    identifier: string;
+    subscriberId: string;
+    topic?: string;
+    data: T;
+  }) {
+    this.server.emit(
+      `event_${props.identifier}_${props.subscriberId}`,
+      props.data,
+    );
   }
 }

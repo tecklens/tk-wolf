@@ -10,5 +10,6 @@ import { TaskRepository } from '@libs/repositories/task/task.repository';
   imports: [KafkaModule],
   providers: [EventsGateway, JwtService, EventsService, TaskRepository],
   controllers: [EventsController],
+  exports: [EventsGateway],
 })
 export class EventsModule {}

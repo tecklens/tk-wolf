@@ -34,7 +34,6 @@ import {
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('Auth')
-@ApiExcludeController()
 export class AuthController {
   constructor(private authService: AuthService) {}
 

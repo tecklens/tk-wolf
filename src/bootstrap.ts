@@ -30,6 +30,7 @@ const corsOptionsDelegate = function (req, callback) {
     corsOptions.origin = [
       process.env.FRONT_BASE_URL,
       process.env.API_ROOT_URL,
+      'http://localhost:4173',
       'https://accounts.google.com',
     ];
     if (process.env.WIDGET_BASE_URL) {
@@ -57,7 +58,11 @@ export default async function bootstrap() {
   ];
 
   // * cors
-  app.use(helmet());
+  app.use(
+    helmet({
+      crossOriginResourcePolicy: false,
+    }),
+  );
   app.enableCors(corsOptionsDelegate);
 
   // * context path
@@ -102,12 +107,13 @@ export default async function bootstrap() {
     .setVersion(configService.get('APP_VERSION'))
     .addTag('Auth')
     .addBearerAuth()
-    .setBasePath(configService.get('CONTEXT_PATH') + apiVersion)
+    .addServer(configService.get('CONTEXT_PATH') + apiVersion)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
   const port = configService.get('PORT');
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   await app.listen(port);
   Logger.log(`Starting UserApplication using Nestjs 10.0.0 on port: ${port}`);
 

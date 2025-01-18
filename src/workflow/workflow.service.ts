@@ -172,6 +172,7 @@ export class WorkflowService {
       },
       {
         _providerId: payload.providerId,
+        providerName: payload.providerName,
         updatedAt: new Date(),
       },
     );

@@ -3,6 +3,9 @@ import { ProducerService } from '@app/kafka/producer/producer.service';
 import { TaskRepository } from '@libs/repositories/task';
 import { ITaskTimeline } from '@wolfxlabs/stateless';
 import { EmailEventTrackingDto } from './dtos';
+import { WebSocketServer } from '@nestjs/websockets';
+import { Server } from 'socket.io';
+import { EventsGateway } from '@app/events/events.gateway';
 
 @Injectable()
 export class EventsService {
@@ -11,6 +14,7 @@ export class EventsService {
   constructor(
     private readonly producerService: ProducerService,
     private readonly taskRepository: TaskRepository,
+    private readonly eventsGateway: EventsGateway,
   ) {
     this.topicTaskTimeline = process.env.KAFKA_LOG_TASK_TIMELINE;
   }
@@ -35,5 +39,15 @@ export class EventsService {
         });
       }
     }
+  }
+
+  async pingEvent() {
+    return this.eventsGateway.sendMessage<{ key: string }>({
+      identifier: 'abc',
+      subscriberId: 'iur',
+      data: {
+        key: 'ahdsk',
+      },
+    });
   }
 }

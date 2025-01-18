@@ -4,6 +4,7 @@ import { EventsGateway } from '@app/events/events.gateway';
 import {
   CreateNotiDto,
   ListNotificationDto,
+  NotificationByAiDto,
   NotificationsRequestDto,
 } from './dtos';
 import { IEvent, IJwtPayload } from '@wolfxlabs/stateless';
@@ -52,6 +53,23 @@ export class NotificationService {
       }),
     };
   }
+
+  // async getListNotificationByApplication(
+  //   params: NotificationByAiDto,
+  // ): Promise<ListNotificationDto> {
+  //   return {
+  //     data: await this.notificationRepository.findBySubscriberIdAndApplicationIdentifier(
+  //       params.applicationIdentifier,
+  //       params.subscriberId,
+  //       params.page * params.limit,
+  //       params.limit,
+  //     ),
+  //     total: await this.notificationRepository.count({
+  //       _subscriberId: params.subscriberId,
+  //       _applicationIdentifier: params.applicationIdentifier,
+  //     }),
+  //   };
+  // }
 
   async markAll(u: IJwtPayload) {
     await this.notificationRepository.update(

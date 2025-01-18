@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '@app/auth/strategy/jwt-auth.guard';
 import { NotificationService } from '@app/notification/notification.service';
 import { UserSession } from '@libs/utils/user.session';
-import { NotificationsRequestDto } from './dtos';
+import { NotificationByAiDto, NotificationsRequestDto } from './dtos';
 import { IJwtPayload } from '@wolfxlabs/stateless';
 
 @ApiBearerAuth()
@@ -30,6 +30,11 @@ export class NotificationController {
   ) {
     return this.notificationService.getListNotification(user, params);
   }
+
+  // @Get('/by-ai')
+  // getListNotificationByApplication(@Query() params: NotificationByAiDto) {
+  //   return this.notificationService.getListNotificationByApplication(params);
+  // }
 
   @Put('/mark-all')
   @UseGuards(JwtAuthGuard)

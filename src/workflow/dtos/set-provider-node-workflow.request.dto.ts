@@ -11,4 +11,8 @@ export class SetProviderNodeWorkflowRequestDto {
   @ApiProperty()
   @IsString()
   providerId: string; // * provider variant // is uuidv4
+
+  @ApiProperty()
+  @IsString()
+  providerName: string; // * provider variant // is uuidv4
 }

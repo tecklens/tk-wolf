@@ -27,12 +27,7 @@ import { LimitService } from '@app/auth/limit.service';
       }),
     }),
   ],
-  providers: [
-    PaymentService,
-    LimitService,
-    UserRepository,
-    BillingRepository,
-  ],
+  providers: [PaymentService, LimitService, UserRepository, BillingRepository],
   controllers: [PaymentController],
 })
 export class PaymentModule {}

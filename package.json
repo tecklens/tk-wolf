@@ -47,7 +47,7 @@
     "@sendgrid/mail": "^8.1.3",
     "@upstash/ratelimit": "^1.1.2",
     "@wolfxlabs/providers": "^1.0.6",
-    "@wolfxlabs/stateless": "^1.0.2",
+    "@wolfxlabs/stateless": "^1.0.4",
     "analytics-node": "^6.2.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",

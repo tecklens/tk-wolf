@@ -7,7 +7,6 @@ import { CacheModule } from '@nestjs/cache-manager';
 
 import { redisStore } from 'cache-manager-redis-yet';
 import { DbService } from '@libs/repositories/DbService';
-import { S3Module } from 'nestjs-s3';
 import { FileModule } from './file/file.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { EnvironmentModule } from './environment/environment.module';
@@ -53,18 +52,6 @@ export const dbService = {
           },
         }),
       }),
-    }),
-    S3Module.forRoot({
-      config: {
-        credentials: {
-          accessKeyId: process.env.S3_STORAGE_ACCESS_KEY_ID,
-          secretAccessKey: process.env.S3_STORAGE_SECRET_ACCESS_KEY,
-        },
-        region: 'ap-southeast-1',
-        // endpoint:
-        //   's3://arn:aws:s3:ap-southeast-1:879019563185:accesspoint/wolf-point',
-        forcePathStyle: true,
-      },
     }),
     ThrottlerModule.forRoot([
       {

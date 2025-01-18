@@ -29,10 +29,41 @@ export class LogService {
   ): Promise<FilterLogResponse> {
     const formatDateByPeriod =
       payload.period == 'hour'
-        ? '%Y-%m-%d %Hh'
+        ? '%Y-%m-%d %H'
         : payload.period == 'day'
           ? '%Y-%m-%d'
           : '%Y-%m';
+    const fromDate = new Date();
+    fromDate.setMinutes(0);
+    fromDate.setSeconds(0);
+
+    const dates: string[] = [];
+    const date = new Date();
+
+    if (payload.period == 'hour') {
+      fromDate.setHours(fromDate.getHours() - payload.limit);
+
+      for (let i = 0; i < payload.limit; i++) {
+        dates.push(moment(date).format('YYYY-MM-DD HH'));
+        date.setHours(date.getHours() - 1);
+      }
+    } else if (payload.period == 'day') {
+      fromDate.setDate(fromDate.getDate() - payload.limit);
+      fromDate.setHours(0);
+
+      for (let i = 0; i < payload.limit; i++) {
+        dates.push(moment(date).format('YYYY-MM-DD'));
+        date.setDate(date.getDate() - 1);
+      }
+    } else {
+      fromDate.setMonth(fromDate.getMonth() - payload.limit);
+      fromDate.setDate(0);
+      fromDate.setHours(0);
+      for (let i = 0; i < payload.limit; i++) {
+        dates.push(moment(date).format('YYYY-MM'));
+        date.setMonth(date.getMonth() - 1);
+      }
+    }
 
     const totalPerPeriod = await this.logRepository.aggregate([
       {
@@ -55,6 +86,7 @@ export class LogService {
             $dateToString: {
               format: formatDateByPeriod,
               date: '$createdAtDate',
+              timezone: 'Asia/Ho_Chi_Minh',
             },
           },
           count: {
@@ -74,8 +106,16 @@ export class LogService {
       { $sort: { date: 1 } },
     ]);
 
+    const rlt = [];
+    for (let i = dates.length - 1; i >= 0; i--) {
+      rlt.push({
+        count: find(totalPerPeriod, (e) => e.date == dates[i])?.count ?? 0,
+        date: dates[i],
+      });
+    }
+
     return {
-      data: totalPerPeriod,
+      data: rlt,
     };
   }
 

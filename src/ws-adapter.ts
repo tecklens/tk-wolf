@@ -75,13 +75,19 @@ export class WsAdapter implements WebSocketAdapter {
       } else if (queryData?.type === 'in-app') {
         // * for in-app react notification
 
-        const apiKey = queryData?.apiKey;
-        if (!apiKey || typeof apiKey !== 'string') return;
+        const identifier = queryData?.identifier;
+        if (!identifier || typeof identifier !== 'string') return;
 
-        const listener = (event: WebSocket, data) =>
-          client.send(JSON.stringify({ event, data }));
-        server.on('event', listener);
-        server.on(`event_${apiKey}`, listener);
+        const subscriberId = queryData?.subscriberId;
+        if (!subscriberId || typeof subscriberId !== 'string') return;
+
+        const listener = (data: any) => {
+          console.log(data, 'data');
+          client.send(JSON.stringify({ ...data }));
+        };
+        // server.on('event', listener);
+        server.on(`event_${identifier}_${subscriberId}`, listener);
+        console.log('listen event');
         this.clientData.set(client, { server, listener });
         callback(client);
       }

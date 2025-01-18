@@ -11,6 +11,7 @@ export class NodeEntity implements INodeEntity {
   _id?: NodeId;
   _workflowId: WorkflowId;
   _providerId: ProviderId;
+  providerName: string;
 
   deleted: boolean;
   connected: boolean;

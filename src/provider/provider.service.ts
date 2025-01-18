@@ -27,7 +27,8 @@ import {
   ChannelTypeEnum,
   InAppProviderIdEnum,
   ICredentials,
-  SmsProviderIdEnum, EmailProviderIdEnum,
+  SmsProviderIdEnum,
+  EmailProviderIdEnum,
 } from '@wolfxlabs/stateless';
 
 @Injectable()

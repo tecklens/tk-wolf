@@ -12,4 +12,9 @@ export class EventsController {
   ) {
     return this.eventsService.logEmailTracking(taskId, query);
   }
+
+  @Get('ping')
+  async pingEvent() {
+    await this.eventsService.pingEvent();
+  }
 }

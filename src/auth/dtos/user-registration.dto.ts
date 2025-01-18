@@ -8,7 +8,11 @@ import {
   IsString,
   IsEnum,
 } from 'class-validator';
-import { JobTitleEnum, SignUpOriginEnum, passwordConstraints } from '@wolfxlabs/stateless';
+import {
+  JobTitleEnum,
+  SignUpOriginEnum,
+  passwordConstraints,
+} from '@wolfxlabs/stateless';
 export class UserRegistrationBodyDto {
   @IsDefined()
   @IsEmail()
