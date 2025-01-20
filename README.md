@@ -45,6 +45,8 @@ $ npm i -g pm2
 $ pm2 start ecosystem.config.js
 ```
 
+Goto: [http://localhost:5173](http://localhost:5173)
+
 ## Test
 
 ```bash
