@@ -29,6 +29,7 @@ $ npm i install
 ```
 
 Install worker from repository: [https://github.com/tecklens/tk-wolf-worker](worker)
+
 Install frontend from repository: [https://github.com/tecklens/tk-wolf-admin/blob/main/README.md](Web Admin)
 
 ## Running the app
